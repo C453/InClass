@@ -4,23 +4,15 @@
     <nav  role="navigation">
   
       <div class="nav-wrapper blue ">
-        <a [routerLink]="['']" id="logo-container" class="brand-logo">&nbsp;InClass</a>
+        <a [routerLink]="['']" id="logo-container" class="brand-logo">Rails & Angular Auth</a>
   
         <ul class="right hide-on-med-and-down">
   
-          <li *ngIf="!tokenAuthService.userSignedIn()"> 
-            <a (click)="presentAuthDialog()" >LOGIN</a>
-          </li>
-          <li *ngIf="!tokenAuthService.userSignedIn()"> 
-            <a (click)="presentAuthDialog('Register')">REGISTER</a>
-          </li>
+          <li *ngIf="!(authService.userSignedIn$ | async)"> <a (click)="presentAuthDialog()" >LOGIN</a></li>
+          <li *ngIf="!(authService.userSignedIn$ | async)"> <a (click)="presentAuthDialog('register')">REGISTER</a></li>
   
-          <li *ngIf="tokenAuthService.userSignedIn()">
-            <a >PROFILE</a>
-          </li>
-          <li *ngIf="tokenAuthService.userSignedIn()">
-            <a (click)="tokenAuthService.signOut()">LOGOUT</a>
-          </li>
+          <li *ngIf="(authService.userSignedIn$ | async)"><a [routerLink]="['/profile']">PROFILE</a></li>
+          <li *ngIf="(authService.userSignedIn$ | async)"><a (click)="logOut()">LOGOUT</a></li>
   
         </ul>
   
