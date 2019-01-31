@@ -30,6 +30,10 @@ export class RegisterFormComponent implements OnInit {
 
           if (res.status == 200){
             this.onFormResult.emit({signedUp: true, res})
+
+            // log the user in
+            // FIXED BUG: remove the user login after register
+            this.authService.logInUser(this.signUpUser)
           }
 
         },
