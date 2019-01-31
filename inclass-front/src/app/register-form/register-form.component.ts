@@ -35,7 +35,6 @@ export class RegisterFormComponent implements OnInit {
             // FIXED BUG: remove the user login after register
             this.authService.logInUser(this.signUpUser)
           }
-
         },
 
         (err) => {
