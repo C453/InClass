@@ -1,5 +1,5 @@
 import {Component, OnInit, Input, EventEmitter} from '@angular/core';
-import {MaterializeAction} from "angular2-materialize";
+import { MaterializeAction } from "angular2-materialize";
 
 @Component({
   selector: 'app-auth-dialog',

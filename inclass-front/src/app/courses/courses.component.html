@@ -1,0 +1,12 @@
+<br/>
+<a (click)="presentAddCourseDialog()" class="waves-effect waves-light btn">Add Course</a>
+<table class="courses highlight">
+    <tr>
+        <th>Course Name</th>
+    </tr>
+    <tr *ngFor="let course of courseData">
+        <td>{{course.name}}</td>
+    </tr>
+</table>
+
+<app-add-course-dialog #addCourseDialog ></app-add-course-dialog>

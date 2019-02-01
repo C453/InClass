@@ -11,6 +11,7 @@
           <li *ngIf="!(authService.userSignedIn$ | async)"> <a (click)="presentAuthDialog()" >LOGIN</a></li>
           <li *ngIf="!(authService.userSignedIn$ | async)"> <a (click)="presentAuthDialog('Register')">REGISTER</a></li>
   
+          <li *ngIf="(authService.userSignedIn$ | async)"><a [routerLink]="['/courses']">COURSES</a></li>
           <li *ngIf="(authService.userSignedIn$ | async)"><a [routerLink]="['/profile']">PROFILE</a></li>
           <li *ngIf="(authService.userSignedIn$ | async)"><a (click)="logOut()">LOGOUT</a></li>
   

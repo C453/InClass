@@ -11,4 +11,6 @@ class User < ActiveRecord::Base
          :validatable, 
          :omniauthable
   include DeviseTokenAuth::Concerns::User
+
+  has_and_belongs_to_many :courses
 end

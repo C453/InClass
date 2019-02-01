@@ -8,6 +8,7 @@ import { MaterializeModule } from "angular2-materialize";
 import { AppComponent } from './app.component';
 import { Angular2TokenService } from 'angular2-token';
 import {AuthService} from "./services/auth.service";
+import { ActionCableService, Channel } from 'angular2-actioncable';
 import {AuthGuard} from "./guards/auth.guard";
 
 import { HomeComponent } from "./home/home.component";
@@ -16,6 +17,8 @@ import { AuthDialogComponent } from './auth-dialog/auth-dialog.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { ProfileComponent } from './profile/profile.component';
+import { CoursesComponent } from './courses/courses.component';
+import { AddCourseDialogComponent } from './add-course-dialog/add-course-dialog.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,9 @@ import { ProfileComponent } from './profile/profile.component';
     LoginFormComponent,
     RegisterFormComponent,
     ProfileComponent,
+    CoursesComponent,
+    CoursesComponent,
+    AddCourseDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +40,12 @@ import { ProfileComponent } from './profile/profile.component';
     AppRoutingModule,
     MaterializeModule,
   ],
-  providers: [ Angular2TokenService, AuthService, AuthGuard ],
+  providers: [ 
+    Angular2TokenService,
+    AuthService,
+    AuthGuard,
+    ActionCableService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
