@@ -19,6 +19,7 @@ import { RegisterFormComponent } from './register-form/register-form.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CoursesComponent } from './courses/courses.component';
 import { AddCourseDialogComponent } from './add-course-dialog/add-course-dialog.component';
+import { CourseDetailComponent } from './courses/course-detail.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { AddCourseDialogComponent } from './add-course-dialog/add-course-dialog.
     CoursesComponent,
     CoursesComponent,
     AddCourseDialogComponent,
+    CourseDetailComponent,
   ],
   imports: [
     BrowserModule,

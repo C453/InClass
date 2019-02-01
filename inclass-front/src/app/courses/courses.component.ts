@@ -45,6 +45,10 @@ export class CoursesComponent implements OnInit, OnDestroy {
   presentAddCourseDialog(){
     this.addCourseDialog.openDialog();
   }
+  
+  openCourse(course) {
+     this.router.navigateByUrl('courses/' + course.id)
+  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

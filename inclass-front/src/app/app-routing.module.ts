@@ -4,6 +4,8 @@ import { HomeComponent } from "./home/home.component";
 import { ProfileComponent } from "./profile/profile.component";
 import { CoursesComponent } from "./courses/courses.component";
 import { AuthGuard } from "./guards/auth.guard";
+import { CourseDetailComponent } from './courses/course-detail.component';
+import { CourseDetailResolverService } from './courses/course-detail-resolver.service';
 
 const routes: Routes = [
     {
@@ -23,13 +25,20 @@ const routes: Routes = [
     {
       path: 'courses',
       component: CoursesComponent,
-      canActivate: [AuthGuard]
+      canActivate: [AuthGuard],
+    },
+    {
+      path: 'courses/:id',
+      component: CourseDetailComponent,
+      resolve: {
+        cres: CourseDetailResolverService
+      }
     }
   ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: []
+  providers: [CourseDetailResolverService]
 })
 export class AppRoutingModule { }
