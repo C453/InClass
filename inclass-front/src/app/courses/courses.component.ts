@@ -10,12 +10,12 @@ import { CreateCourseDialogComponent } from "../create-course-dialog/create-cour
 import { Subscription } from 'rxjs';
 import { ActionCableService, Channel } from 'angular2-actioncable';
 
-
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.css']
 })
+
 export class CoursesComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   @ViewChild('addCourseDialog') addCourseDialog: AddCourseDialogComponent;

@@ -26,6 +26,19 @@ class AddUserToCourseController < ApplicationController
     render :json => output
   end
 
+  # POST /drop_course
+  def drop_course
+    unless Course.where(code: params[:code]).empty?
+      course = Course.find_by(code: params[:code])
+      current_user.courses.delete(course)
+      output = {'status' => 'success'}.to_json
+    else
+      output = {'status' => 'Course Not Found'}.to_json
+    end
+
+    render :json => output
+  end
+
   def add_user_to_course_params
     params.permit(:code)
   end
