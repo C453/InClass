@@ -18,8 +18,16 @@ class CoursesController < ApplicationController
   def create
     @course = Course.new(course_params)
     @course.code = SecureRandom.hex[0..6]
+    @course.admins << current_user.id
 
     if @course.save
+
+      ActionCable.server.broadcast "courses:#{current_user.id}_channel", status: 'saved',
+        id: @course.id,
+        name: @course.name,
+        code: @course.code,
+        admin: @course.admins.include?(current_user.id.to_s)
+
       render json: @course, status: :created, location: @course
     else
       render json: @course.errors, status: :unprocessable_entity
@@ -38,6 +46,8 @@ class CoursesController < ApplicationController
   # DELETE /courses/1
   def destroy
     @course.destroy
+
+    ActionCable.server.broadcast "courses:#{current_user.id}_channel", status: 'deleted', id: id
   end
 
   private

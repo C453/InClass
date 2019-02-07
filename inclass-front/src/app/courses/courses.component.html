@@ -1,5 +1,19 @@
 <br/>
 <a (click)="presentAddCourseDialog()" class="waves-effect waves-light btn">Add Course</a>
+<a (click)="presentCreateCourseDialog()" class="waves-effect waves-light btn">Create Course</a>
+<h3>Courses you are an instructor for</h3>
+<table class="ownedCourses highlight">
+    <tr>
+        <th>Course Name</th>
+        <th>Course Code</th>
+    </tr>
+    <tr *ngFor="let course of ownedCourseData" (click)="openCourse(course)">
+        <td>{{course.name}}</td>
+        <td>{{course.code}}</td>
+    </tr>
+</table>
+<br/>
+<h3>Courses your are enrolled in</h3>
 <table class="courses highlight">
     <tr>
         <th>Course Name</th>
@@ -10,3 +24,4 @@
 </table>
 
 <app-add-course-dialog #addCourseDialog ></app-add-course-dialog>
+<app-create-course-dialog #createCourseDialog ></app-create-course-dialog>

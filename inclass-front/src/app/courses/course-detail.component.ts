@@ -20,8 +20,5 @@ export class CourseDetailComponent implements OnInit {
       });
     }
 
-  ngOnInit() {
-    console.log("Componet Initiated")
-  }
-
+  ngOnInit() { }
 }
