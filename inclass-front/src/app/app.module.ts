@@ -20,12 +20,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { CoursesComponent } from './courses/courses.component';
 import { AddCourseDialogComponent } from './add-course-dialog/add-course-dialog.component';
 import { CourseDetailComponent } from './courses/course-detail.component';
-<<<<<<< HEAD
 import { CourseQuizComponent } from './quizzes/course-quiz/course-quiz.component';
 import { CreateQuizComponent } from './quizzes/create-quiz/create-quiz.component'
-=======
 import { CreateCourseDialogComponent } from './create-course-dialog/create-course-dialog.component';
->>>>>>> e46519962e76cb48edbf9813cff58a576ee63a5c
 
 @NgModule({
   declarations: [
@@ -41,6 +38,8 @@ import { CreateCourseDialogComponent } from './create-course-dialog/create-cours
     AddCourseDialogComponent,
     CourseDetailComponent,
     CreateCourseDialogComponent,
+    CourseQuizComponent,
+    CreateQuizComponent
   ],
   imports: [
     BrowserModule,
