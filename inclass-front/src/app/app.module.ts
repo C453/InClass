@@ -20,8 +20,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { CoursesComponent } from './courses/courses.component';
 import { AddCourseDialogComponent } from './add-course-dialog/add-course-dialog.component';
 import { CourseDetailComponent } from './courses/course-detail.component';
-import { CourseQuizComponent } from './courses/course-quiz/course-quiz.component';
-import { CreateQuizComponent } from './create-quiz/create-quiz.component';
+import { CourseQuizComponent } from './quizzes/course-quiz/course-quiz.component';
+import { CreateQuizComponent } from './quizzes/create-quiz/create-quiz.component'
 
 @NgModule({
   declarations: [
