@@ -1,0 +1,49 @@
+<div class="modal" materialize="modal" [materializeActions]="modalActions">
+
+
+  <div class="modal-content">
+
+    <div class="row">
+
+      <div class="row">
+
+        <span class="modal-close right">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </span>
+      </div>
+
+      <div class="row">
+        <h3 class="grey-text text-darken-2">Create Course</h3>
+        <form (ngSubmit)="onCreateCourseSubmit()" #f="ngForm">
+
+
+          <div class="row">
+
+            <div class="input-field col s12">
+              <input id="name" type="text" required name='name' [(ngModel)]="createCourse.name" class="validate">
+              <label for="name">Course Name</label>
+            </div>
+
+            <div class="input-field col s12">
+              <input id="expires" type="text" required name='expires' [(ngModel)]="createCourse.expires" class="validate">
+              <label for="expires">Expires</label>
+            </div>
+
+            <div class="col s12">
+
+              <button type="submit" [disabled]="!(f.valid)" class="waves-effect waves-light btn blue right">
+                Create Course
+              </button>
+
+            </div>
+
+          </div>
+
+
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+</div>
