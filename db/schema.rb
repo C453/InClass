@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_01_013014) do
+ActiveRecord::Schema.define(version: 2019_02_07_005030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,26 @@ ActiveRecord::Schema.define(version: 2019_02_01_013014) do
     t.bigint "course_id", null: false
     t.index ["course_id", "user_id"], name: "index_courses_users_on_course_id_and_user_id"
     t.index ["user_id", "course_id"], name: "index_courses_users_on_user_id_and_course_id"
+  end
+
+  create_table "quiz_answers", force: :cascade do |t|
+    t.string "text"
+    t.boolean "correct"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "quiz_questions", force: :cascade do |t|
+    t.string "question_text"
+    t.integer "possible_answers"
+    t.integer "correct_answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "quizzes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
