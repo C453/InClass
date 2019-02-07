@@ -21,6 +21,7 @@ import { CoursesComponent } from './courses/courses.component';
 import { AddCourseDialogComponent } from './add-course-dialog/add-course-dialog.component';
 import { CourseDetailComponent } from './courses/course-detail.component';
 import { CourseQuizComponent } from './courses/course-quiz/course-quiz.component';
+import { CreateQuizComponent } from './create-quiz/create-quiz.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { CourseQuizComponent } from './courses/course-quiz/course-quiz.component
     AddCourseDialogComponent,
     CourseDetailComponent,
     CourseQuizComponent,
+    CreateQuizComponent,
   ],
   imports: [
     BrowserModule,
