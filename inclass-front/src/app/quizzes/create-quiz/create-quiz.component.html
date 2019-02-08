@@ -7,20 +7,49 @@
         </span>
       </div>
       <div class="row">
-        <h3 class="grey-text text-darken-2">Add Course</h3>
+        <h4 class="grey-text text-darken-2">Create New Quiz</h4>
         <form (ngSubmit)="onAddCourseSubmit()" #f="ngForm">
           <div class="row">
-            <div class="input-field col s12">
-              <input id="code" type="text" required name='code' [(ngModel)]="addCourse.code" class="validate">
-              <label for="name">Course Code</label>
+            <div class="input-field col s9">
+              <textarea id="textarea1" class="materialize-textarea" [(ngModel)]="newQuestionText" name="newQuestionText"></textarea>
+              <label for="textarea1">Type question text here</label>
             </div>
-            <div class="col s12">
-              <button type="submit" [disabled]="!(f.valid)" class="waves-effect waves-light btn blue right">
-                Add Course
-              </button>
+            <div class="input-field col s3">
+                <div class="btn" (click)="addQuestion()">Add Question</div>
             </div>
           </div>
         </form>
+        
+        <div *ngIf="quizQuestions.length > 0">
+          <h5 class="grey-text text-darken-2">Questions</h5>
+          <div *ngFor="let question of quizQuestions">
+            <div class="row">
+              <h6 class="col s6">{{ question.text }}</h6>
+              <div class="btn col s3" (click)="addAnswer(question.id)">Add Answer</div>
+              <div class="btn col s3" (click)="deleteQuestion(question.id)">Delete Question</div>
+            </div>
+            <div class="row">
+              <div class="col s1"></div> <!-- Indentation. -->
+              <div *ngFor="let i of generateDummyArray(question.answersCount)">
+                  <div class="input-field col s9">
+                      <input type="text" id="answer">
+                      <label for="answer">Type answer text here</label>
+                      <label class="col s2">
+                          <input type="checkbox" class="filled" />
+                          <span>Correct</span>
+                      </label>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="quizQuestions.length > 0">
+          <div class="col s12 input-field">
+              <input type="time" id="due-time" class="col s3">
+              <label for="due-time">Time To Complete</label>
+              <div class="btn col s3">Send Quiz</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

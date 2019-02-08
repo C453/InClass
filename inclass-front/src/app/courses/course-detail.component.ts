@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from "../services/auth.service";
 import { Angular2TokenService } from "angular2-token";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from '../models/course.model';
 import { RouterModule, Routes } from '@angular/router';
+import { CreateQuizComponent } from '../quizzes/create-quiz/create-quiz.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-course-detail',
@@ -12,6 +14,8 @@ import { RouterModule, Routes } from '@angular/router';
 })
 export class CourseDetailComponent implements OnInit {
 
+  subscription: Subscription;
+  @ViewChild('createQuizDialog') createQuizComponent: CreateQuizComponent;
   courseData: Course;
 
   constructor(public authTokenService: Angular2TokenService,
@@ -30,5 +34,10 @@ export class CourseDetailComponent implements OnInit {
         this.router.navigate(['courses'])
       }
     })
+  }
+
+  createQuiz() {
+    console.log(this.createQuizComponent);
+    this.createQuizComponent.openDialog();
   }
 }
