@@ -29,11 +29,17 @@ export class CreateQuizComponent implements OnInit {
   }
 
   addQuestion() {
+    // Handle empty questions
+    if (this.newQuestionText.trim() === '') {
+      this.newQuestionText = '';
+      return;
+    }
+
     this.quizQuestions.push({ 
       id: this.quizCount++,
       text: this.newQuestionText,
-      answers: [],
-      answerCount: 0
+      answerCount: 0,
+      answers: [{}],
     });
 
     this.newQuestionText = '';
@@ -41,10 +47,10 @@ export class CreateQuizComponent implements OnInit {
 
   addAnswer(questionIndex) {
     this.quizQuestions[questionIndex].answersCount++;
+    this.quizQuestions[questionIndex].answers.push({});
   }
 
-  // Stupid hack because Angular is dumb and doesn't allow *ngFor without some type of generic to iterate over.
-  generateDummyArray(count) {
-    return new Array(count).fill(1);
+  deleteQuestion(questionIndex) {
+    this.quizQuestions.splice(questionIndex, 1);
   }
 }

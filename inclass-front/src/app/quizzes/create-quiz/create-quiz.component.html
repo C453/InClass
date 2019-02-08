@@ -6,13 +6,12 @@
           <i class="fa fa-times" aria-hidden="true"></i>
         </span>
       </div>
-      <div class="row">
+      <div class="">
         <h4 class="grey-text text-darken-2">Create New Quiz</h4>
         <form (ngSubmit)="onAddCourseSubmit()" #f="ngForm">
           <div class="row">
             <div class="input-field col s9">
-              <textarea id="textarea1" class="materialize-textarea" [(ngModel)]="newQuestionText" name="newQuestionText"></textarea>
-              <label for="textarea1">Type question text here</label>
+              <textarea id="questionTextArea" class="materialize-textarea" placeholder="Type question text here" [(ngModel)]="newQuestionText" name="newQuestionText"></textarea>
             </div>
             <div class="input-field col s3">
                 <div class="btn" (click)="addQuestion()">Add Question</div>
@@ -28,26 +27,24 @@
               <div class="btn col s3" (click)="addAnswer(question.id)">Add Answer</div>
               <div class="btn col s3" (click)="deleteQuestion(question.id)">Delete Question</div>
             </div>
-            <div class="row">
-              <div class="col s1"></div> <!-- Indentation. -->
-              <div *ngFor="let i of generateDummyArray(question.answersCount)">
-                  <div class="input-field col s9">
-                      <input type="text" id="answer">
-                      <label for="answer">Type answer text here</label>
-                      <label class="col s2">
-                          <input type="checkbox" class="filled" />
-                          <span>Correct</span>
-                      </label>
+            <div class="">
+              <div *ngFor="let answer of question.answers">
+                  <div class="input-field">
+                      <input type="text" id="answer" class="col s10" placeholder="Type answer text here">
+                  </div>
+                  <div class="col s2">
+                      <label>
+                          <input type="checkbox" />
+                          <span>Correct?</span>
+                     </label>
                   </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="row" *ngIf="quizQuestions.length > 0">
+        <div class="" *ngIf="quizQuestions.length > 0">
           <div class="col s12 input-field">
-              <input type="time" id="due-time" class="col s3">
-              <label for="due-time">Time To Complete</label>
-              <div class="btn col s3">Send Quiz</div>
+              <div class="btn col s12">Send Quiz</div>
           </div>
         </div>
       </div>
