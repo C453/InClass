@@ -1,13 +1,17 @@
 <h1>{{ courseData.name }}</h1>
 <div *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
   <a (click)="dropCourse()" class="waves-effect waves-light btn">Drop Course</a>
+  <a (click)="seeQuizResults()" class="waves-effect waves-light btn">Check Quiz</a>
+  <a (click)="takeTheQuiz()" class="waves-effect waves-light btn">Take Quiz</a>
 </div>
+
 <div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
   <a (click)="createQuiz()" class="waves-effect waves-light btn">Create New Quiz</a>
+  <a (click)="seeQuizResults()" class="waves-effect waves-light btn">Check Quiz</a>
 </div>
 
 <div>
-  <a (click)="seeQuizResults()" class="waves-effect waves-light btn">Check Quiz</a>
+  
 </div>
 
 <div class="row">
@@ -24,3 +28,4 @@
 
 <app-create-quiz #createQuizDialog></app-create-quiz>
 <app-course-quiz #openQuiz></app-course-quiz>
+<app-take-quiz #takeQuiz></app-take-quiz>

@@ -1,0 +1,39 @@
+<div class="modal" materialize="modal" [materializeActions]="modalActions">
+  <div class="modal-content">
+      <div class="row">
+          <div class="">
+              <h4 class="grey-text text-darken-2">Quiz</h4>
+              <h3 class="grey-text text-darken-2">What is the EIP Register?</h3>
+              <form (ngSubmit)="submitQuiz()" #f="ngForm">
+                  <p>
+                      <label>
+                        <input class="with-gap" name="group1" type="radio" checked />
+                        <span>Register that is for next instruction</span>
+                      </label>
+                    </p>
+                    <p>
+                      <label>
+                        <input class="with-gap" name="group1" type="radio" />
+                        <span>General Use Register</span>
+                      </label>
+                    </p>
+                    <p>
+                      <label>
+                        <input class="with-gap" name="group1" type="radio"  />
+                        <span>A different name for BP register</span>
+                      </label>
+                    </p>
+                    <p>
+                      <label>
+                        <input class="with-gap" name="group1" type="radio"/>
+                        <span>None of the above</span>
+                      </label>
+                    </p>
+                  <button type="submit" class="btn waves-effect waves-light">Submit Answer
+                    <i class="material-icons right">send</i>
+                  </button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>

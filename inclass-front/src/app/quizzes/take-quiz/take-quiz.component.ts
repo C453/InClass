@@ -2,21 +2,26 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 import { MaterializeAction } from 'angular2-materialize';
 
 @Component({
-  selector: 'app-course-quiz',
-  templateUrl: './course-quiz.component.html',
-  styleUrls: ['./course-quiz.component.css']
+  selector: 'app-take-quiz',
+  templateUrl: './take-quiz.component.html',
+  styleUrls: ['./take-quiz.component.css']
 })
-export class CourseQuizComponent implements OnInit {
+export class TakeQuizComponent implements OnInit {
 
   modalActions = new EventEmitter<string|MaterializeAction>();
-  
+
   constructor() { }
 
   ngOnInit() {
   }
 
-  openQuiz () {
+  takeQuiz () {
     this.modalActions.emit({action:"modal", params:['open']});
+  }
+
+  submitQuiz () {
+    console.log("QUIZ SUBMITTED");
+    this.closeQuiz();
   }
 
   closeQuiz () {

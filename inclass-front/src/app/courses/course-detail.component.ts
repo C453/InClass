@@ -4,8 +4,11 @@ import { Angular2TokenService } from "angular2-token";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from '../models/course.model';
 import { RouterModule, Routes } from '@angular/router';
+
 import { CreateQuizComponent } from '../quizzes/create-quiz/create-quiz.component';
 import { CourseQuizComponent } from "../quizzes/course-quiz/course-quiz.component";
+import { TakeQuizComponent } from "../quizzes/take-quiz/take-quiz.component";
+
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -18,6 +21,7 @@ export class CourseDetailComponent implements OnInit {
   subscription: Subscription;
   @ViewChild('createQuizDialog') createQuizComponent: CreateQuizComponent;
   @ViewChild('openQuiz') courseQuizComponent: CourseQuizComponent;
+  @ViewChild('takeQuiz') takeQuizComponent: TakeQuizComponent;
 
   courseData: Course;
 
@@ -46,5 +50,9 @@ export class CourseDetailComponent implements OnInit {
 
   seeQuizResults() {
     this.courseQuizComponent.openQuiz();
+  }
+
+  takeTheQuiz () {
+    this.takeQuizComponent.takeQuiz();
   }
 }
