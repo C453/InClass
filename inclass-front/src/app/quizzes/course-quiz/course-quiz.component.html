@@ -1,3 +1,38 @@
-<p>
-  course-quiz works!
-</p>
+<div class="modal" materialize="modal" [materializeActions]="modalActions">
+    <div class="modal-content">
+        <div class="row">
+            <div class="">
+                <h4 class="grey-text text-darken-2">Quiz Results</h4>
+                <h3 class="grey-text text-darken-2">What is the EIP register?</h3>
+                <form (ngSubmit)="openQuiz()" #f="ngForm">
+                    <ul class="bar-graph">
+                        <li class="bar-graph-axis">
+                          <div class="bar-graph-label">100%</div>
+                          <div class="bar-graph-label">80%</div>
+                          <div class="bar-graph-label">60%</div>
+                          <div class="bar-graph-label">40%</div>
+                          <div class="bar-graph-label">20%</div>
+                          <div class="bar-graph-label">0%</div>
+                        </li>
+                        <li class="bar primary" style="height: 95%;" title="95">
+                          <div class="percent">95<span>%</span></div>
+                          <div class="description">Register that for next instruction</div>
+                        </li>
+                        <li class="bar secondary" style="height: 90%;" title="90">
+                          <div class="percent">90<span>%</span></div>
+                          <div class="description">General Use Register</div>
+                        </li>
+                        <li class="bar success" style="height: 80%;" title="80">
+                          <div class="percent">80<span>%</span></div>
+                          <div class="description">A different name for BP register</div>
+                        </li>
+                        <li class="bar warning" style="height: 75%;" title="75">
+                          <div class="percent">75<span>%</span></div>
+                          <div class="description">None of the above</div>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
