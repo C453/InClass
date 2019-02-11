@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :documents
   post 'get_courses', to: 'get_courses#get_courses'
   post 'get_owned_courses', to: 'get_courses#get_owned_courses'
   resources :courses

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_07_021330) do
+ActiveRecord::Schema.define(version: 2019_02_10_214341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,20 @@ ActiveRecord::Schema.define(version: 2019_02_07_021330) do
     t.bigint "course_id", null: false
     t.index ["course_id", "user_id"], name: "index_courses_users_on_course_id_and_user_id"
     t.index ["user_id", "course_id"], name: "index_courses_users_on_user_id_and_course_id"
+  end
+
+  create_table "documents", force: :cascade do |t|
+    t.string "name"
+    t.date "expires"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "file_file_name"
+    t.string "file_content_type"
+    t.bigint "file_file_size"
+    t.datetime "file_updated_at"
+    t.bigint "course_id"
+    t.boolean "public"
+    t.index ["course_id"], name: "index_documents_on_course_id"
   end
 
   create_table "quiz_answers", force: :cascade do |t|
@@ -88,6 +102,7 @@ ActiveRecord::Schema.define(version: 2019_02_07_021330) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "documents", "courses"
   add_foreign_key "quiz_answers", "quiz_questions"
   add_foreign_key "quiz_questions", "quizzes"
   add_foreign_key "quizzes", "courses"
