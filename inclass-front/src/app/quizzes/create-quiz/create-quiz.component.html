@@ -30,11 +30,13 @@
             <div class="">
               <div *ngFor="let answer of question.answers">
                   <div class="input-field">
-                      <input type="text" id="answer" class="col s10" placeholder="Type answer text here">
+                      <input type="text" id="answer" class="col s10" 
+                          (change)="changeAnswer(answer, $event)"
+                          placeholder="Type answer text here">
                   </div>
                   <div class="col s2">
                       <label>
-                          <input type="checkbox" />
+                          <input type="radio" name="{{ question.id }}" (change)="selectCorrectAnswer(question, answer)" [checked]="answer.correct" />
                           <span>Correct?</span>
                      </label>
                   </div>
@@ -44,7 +46,7 @@
         </div>
         <div class="" *ngIf="quizQuestions.length > 0">
           <div class="col s12 input-field">
-              <div class="btn col s12">Send Quiz</div>
+              <div class="btn col s12" (click)="submitQuiz()">Send Quiz</div>
           </div>
         </div>
       </div>

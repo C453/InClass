@@ -38,19 +38,39 @@ export class CreateQuizComponent implements OnInit {
     this.quizQuestions.push({ 
       id: this.quizCount++,
       text: this.newQuestionText,
-      answerCount: 0,
-      answers: [{}],
+      answers: [{
+        text: '',
+        correct: true,
+      }],
     });
 
     this.newQuestionText = '';
   }
 
   addAnswer(questionIndex) {
-    this.quizQuestions[questionIndex].answersCount++;
-    this.quizQuestions[questionIndex].answers.push({});
+    this.quizQuestions[questionIndex].answers.push({
+      text: '',
+      correct: false,
+    });
+  }
+
+  changeAnswer(answer, event) {
+    answer.text = event.target.value;
+  }
+
+  selectCorrectAnswer(question, newAnswer) {
+    question.answers.forEach(answer => {
+      answer.correct = false;
+    });
+
+    newAnswer.correct = true;
   }
 
   deleteQuestion(questionIndex) {
     this.quizQuestions.splice(questionIndex, 1);
+  }
+
+  submitQuiz() {
+    console.log(this.quizQuestions);
   }
 }
