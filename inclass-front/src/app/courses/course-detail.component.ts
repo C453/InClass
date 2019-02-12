@@ -70,19 +70,21 @@ export class CourseDetailComponent implements OnInit {
         .channel('CourseChannel', { course_id: this.courseData.id });
       console.log(courseChannel);
 
-      this.subscription = courseChannel.received().subscribe(question => {
-        console.log(question);
-        var newQuestion = new Question();
-        newQuestion.id = question.id;
-        newQuestion.user_id = question.user_id;
-        newQuestion.question = question.question;
-        newQuestion.yeah_count = question.yeah_count;
-        newQuestion.course_id = question.course_id;
-        newQuestion.answered = question.answered;
-        newQuestion.created_at = question.created_at;
-        newQuestion.updated_at = question.updated_at;
+      this.subscription = courseChannel.received().subscribe(data => {
+        console.log(data);
+        if(data.status === 'new_question') {
+          var newQuestion = new Question();
+          newQuestion.id = data.id;
+          newQuestion.user_id = data.user_id;
+          newQuestion.question = data.question;
+          newQuestion.yeah_count = data.yeah_count;
+          newQuestion.course_id = data.course_id;
+          newQuestion.answered = data.answered;
+          newQuestion.created_at = data.created_at;
+          newQuestion.updated_at = data.updated_at;
 
-        this.courseQuestions.push(newQuestion);
+          this.courseQuestions.push(newQuestion);
+        }
       });
     })
   }
