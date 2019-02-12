@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterializeModule } from "angular2-materialize";
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatGridListModule, MatCardModule } from '@angular/material';
 import { AppComponent } from './app.component';
 import { Angular2TokenService } from 'angular2-token';
 import {AuthService} from "./services/auth.service";
@@ -47,6 +49,9 @@ import { CreateCourseDialogComponent } from './create-course-dialog/create-cours
     HttpModule,
     AppRoutingModule,
     MaterializeModule,
+    MatGridListModule,
+    MatCardModule,
+    FlexLayoutModule,
   ],
   providers: [ 
     Angular2TokenService,
