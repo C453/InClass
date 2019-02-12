@@ -6,6 +6,7 @@ import { Course } from '../models/course.model';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateQuizComponent } from '../quizzes/create-quiz/create-quiz.component';
 import { Subscription } from 'rxjs';
+import { Question } from '../models/question.model';
 import { ActionCableService, Channel } from 'angular2-actioncable';
 
 @Component({
@@ -14,20 +15,19 @@ import { ActionCableService, Channel } from 'angular2-actioncable';
   styleUrls: ['./course-detail.component.css']
 })
 export class CourseDetailComponent implements OnInit {
-
+  subscription: Subscription;
   addQuizSubscription: Subscription;
   closeQuizSubscription: Subscription;
 
   @ViewChild('createQuizDialog') createQuizComponent: CreateQuizComponent;
   courseData: Course;
   courseDocuments: Object[];
+  courseQuestions: Question[];
   activeQuiz;
   activeQuizQuestions;
 
   constructor(public authTokenService: Angular2TokenService,
-    public authService: AuthService, private actr: ActivatedRoute, 
-    private router: Router,
-    private cableService: ActionCableService) {
+    public authService: AuthService, private actr: ActivatedRoute, private router: Router, private cableService: ActionCableService) {
       this.actr.data.map(data => data.cres.json()).subscribe(res => {
         this.courseData = res;
         this.getActiveQuiz();
@@ -60,6 +60,31 @@ export class CourseDetailComponent implements OnInit {
         this.activeQuiz = undefined;
       }
     });
+
+    this.authTokenService.get('questions', { params: { course: this.courseData.id }}).subscribe(res => {
+      this.courseDocuments = res.json();
+      console.log(this.courseDocuments);
+
+      const courseChannel: Channel = this.cableService
+        .cable('ws://127.0.0.1:3000/cable')
+        .channel('CourseChannel', { course_id: this.courseData.id });
+      console.log(courseChannel);
+
+      this.subscription = courseChannel.received().subscribe(question => {
+        console.log(question);
+        var newQuestion = new Question();
+        newQuestion.id = question.id;
+        newQuestion.user_id = question.user_id;
+        newQuestion.question = question.question;
+        newQuestion.yeah_count = question.yeah_count;
+        newQuestion.course_id = question.course_id;
+        newQuestion.answered = question.answered;
+        newQuestion.created_at = question.created_at;
+        newQuestion.updated_at = question.updated_at;
+
+        this.courseQuestions.push(newQuestion);
+      });
+    })
   }
 
   getActiveQuiz() {
