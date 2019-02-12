@@ -1,12 +1,9 @@
 Rails.application.routes.draw do
   resources :quiz_submissions
-  post 'create_quiz_submission', to: 'quiz_submissions#create'
 
   resources :quiz_questions
-  post 'create_question', to: 'quiz_questions#create'
 
   resources :quizzes
-  post 'create_quiz', to: 'quizzes#create'
 
   post 'get_courses', to: 'get_courses#get_courses'
   post 'get_owned_courses', to: 'get_courses#get_owned_courses'
