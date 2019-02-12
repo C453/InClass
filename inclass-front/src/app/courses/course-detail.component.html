@@ -40,9 +40,10 @@
     </mat-card-header>
     <mat-card-content>
         <table class="courses highlight">
-            <tr>
-              <th>Question</th>
-            </tr>
+				<mat-form-field class="full-width">
+				<textarea matInput placeholder="Leave a comment"></textarea>
+				</mat-form-field>
+			<a (click)="postQuestion()" style="float:right;" class="waves-effect waves-light btn button blue">Ask Question</a>
             <tr *ngFor="let question of courseQuestions">
               <td>{{question.question}}</td>
             </tr>

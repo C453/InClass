@@ -6,7 +6,8 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterializeModule } from "angular2-materialize";
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatGridListModule, MatCardModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatGridListModule, MatCardModule, MatInputModule } from '@angular/material';
 import { AppComponent } from './app.component';
 import { Angular2TokenService } from 'angular2-token';
 import {AuthService} from "./services/auth.service";
@@ -41,7 +42,7 @@ import { CreateCourseDialogComponent } from './create-course-dialog/create-cours
     CourseDetailComponent,
     CreateCourseDialogComponent,
     CourseQuizComponent,
-    CreateQuizComponent
+    CreateQuizComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,6 +53,8 @@ import { CreateCourseDialogComponent } from './create-course-dialog/create-cours
     MatGridListModule,
     MatCardModule,
     FlexLayoutModule,
+	MatInputModule,
+	BrowserAnimationsModule
   ],
   providers: [ 
     Angular2TokenService,

@@ -110,7 +110,13 @@ export class CourseDetailComponent implements OnInit {
       }
     })
   }
+  
+  postQuestion(){
+	  
+  }
+InputOverviewExample() {} 
 
+	
   createQuiz() {
     this.createQuizComponent.openDialog();
   }
