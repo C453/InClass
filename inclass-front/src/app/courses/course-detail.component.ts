@@ -8,6 +8,7 @@ import { CreateQuizComponent } from '../quizzes/create-quiz/create-quiz.componen
 import { Subscription } from 'rxjs';
 import { Question } from '../models/question.model';
 import { ActionCableService, Channel } from 'angular2-actioncable';
+import { NavbarService } from '../services/navbar.service';
 
 @Component({
   selector: 'app-course-detail',
@@ -27,7 +28,7 @@ export class CourseDetailComponent implements OnInit {
   activeQuizQuestions;
 
   constructor(public authTokenService: Angular2TokenService,
-    public authService: AuthService, private actr: ActivatedRoute, private router: Router, private cableService: ActionCableService) {
+    public authService: AuthService, private actr: ActivatedRoute, private router: Router, private cableService: ActionCableService, public nav: NavbarService) {
       this.actr.data.map(data => data.cres.json()).subscribe(res => {
         this.courseData = res;
         this.getActiveQuiz();
@@ -62,8 +63,8 @@ export class CourseDetailComponent implements OnInit {
     });
 
     this.authTokenService.get('questions', { params: { course: this.courseData.id }}).subscribe(res => {
-      this.courseDocuments = res.json();
-      console.log(this.courseDocuments);
+      this.courseQuestions = res.json();
+      console.log(this.courseQuestions);
 
       const courseChannel: Channel = this.cableService
         .cable('ws://127.0.0.1:3000/cable')
@@ -87,6 +88,8 @@ export class CourseDetailComponent implements OnInit {
         }
       });
     })
+
+    this.nav.title = this.courseData.name;
   }
 
   getActiveQuiz() {

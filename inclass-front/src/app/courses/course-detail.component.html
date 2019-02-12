@@ -1,6 +1,5 @@
-<h1>{{ courseData.name }}</h1>
 <div *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
-  <a (click)="dropCourse()" class="waves-effect waves-light btn">Drop Course</a>
+  <a (click)="dropCourse()" class="waves-effect waves-light btn button blue">Drop Course</a>
 </div>
 <div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
             && !activeQuiz">
@@ -13,13 +12,45 @@
 <div class="row">
   <div class="card blue-grey lighten-5 z-depth-4" style="margin-top: 5em">
 
-    <div class="card-content">
-
-      <div style="margin-bottom: 0" class="row ">
-        <h6>Course Code: {{ courseData.code }}</h6>
-      </div>
-    </div>
-  </div>
-</div>
+<div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="32px" fxLayoutAlign="flex-start" class="courseLayout">
+  <mat-card class="course-card" fxFlex="0 1 calc(50% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%">
+    <mat-card-header>
+      <mat-card-title>Course Documents</mat-card-title>
+      <mat-card-subtitle>Avaliable Files</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <table class="courses highlight">
+        <tr>
+          <th>File Name</th>
+        </tr>
+        <tr *ngFor="let file of courseDocuments">
+          <td>{{file.name}}</td>
+        </tr>
+        <tr *ngIf="courseDocuments?.length == 0">
+          <td>No course files</td>
+        </tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="course-card" fxFlex="0 1 calc(50% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)"
+    fxFlex.lt-sm="100%">
+    <mat-card-header>
+      <mat-card-title>Questions</mat-card-title>
+      <mat-card-subtitle>In-Class Questions</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <table class="courses highlight">
+            <tr>
+              <th>Question</th>
+            </tr>
+            <tr *ngFor="let question of courseQuestions">
+              <td>{{question.question}}</td>
+            </tr>
+            <tr *ngIf="courseQuestions?.length == 0">
+              <td>There are no questions for this course</td>
+            </tr>
+          </table>
+    </mat-card-content>
+  </mat-card>
 
 <app-create-quiz #createQuizDialog [courseID]="courseData.id"></app-create-quiz>

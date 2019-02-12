@@ -9,6 +9,7 @@ import { CreateCourseDialogComponent } from "../create-course-dialog/create-cour
 
 import { Subscription } from 'rxjs';
 import { ActionCableService, Channel } from 'angular2-actioncable';
+import { NavbarService } from '../services/navbar.service';
 
 @Component({
   selector: 'app-courses',
@@ -27,7 +28,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
   constructor(public authTokenService: Angular2TokenService,
     public authService: AuthService,
     private cableService: ActionCableService,
-    private router: Router) { }
+    private router: Router,
+    public nav: NavbarService) { }
 
   ngOnInit() {
     this.authTokenService.post("get_courses", {}).subscribe(response => {
@@ -53,6 +55,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
     this.authTokenService.post("get_owned_courses", {}).subscribe(response => {
       this.ownedCourseData = response.json();
     });
+
+    this.nav.title = "Courses";
   }
 
   presentAddCourseDialog() {
