@@ -2,8 +2,10 @@ Rails.application.routes.draw do
   resources :quiz_submissions
 
   resources :quiz_questions
+  get 'get_active_quiz_questions/:quiz_id', to: 'quiz_questions#get_active_quiz_questions'
 
   resources :quizzes
+  get 'get_active_quiz/:course_id', to: 'quizzes#get_active_quiz'
 
   resources :documents
   post 'get_courses', to: 'get_courses#get_courses'
