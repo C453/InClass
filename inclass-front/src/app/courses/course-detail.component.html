@@ -2,8 +2,13 @@
 <div *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
   <a (click)="dropCourse()" class="waves-effect waves-light btn">Drop Course</a>
 </div>
-<div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
+<div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
+            && !activeQuiz">
   <a (click)="createQuiz()" class="waves-effect waves-light btn">Create New Quiz</a>
+</div>
+<div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
+            && activeQuiz">
+  <a (click)="closeQuiz()" class="waves-effect waves-light btn red">Close Current Quiz</a>
 </div>
 <div class="row">
   <div class="card blue-grey lighten-5 z-depth-4" style="margin-top: 5em">

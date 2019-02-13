@@ -81,10 +81,7 @@ export class CreateQuizComponent implements OnInit {
       let body = JSON.parse(result['_body']);
       let newQuizID = body.id;
       this.sendAnswers(newQuizID);
-      
-      if(result.json().status === 'success') {
-        this.closeDialog();
-      }
+      this.closeDialog();
     });
   }
 

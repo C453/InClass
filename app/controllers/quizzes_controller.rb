@@ -43,6 +43,17 @@ class QuizzesController < ApplicationController
     render json: @active_quiz
   end
 
+  def close_quiz
+    @quiz = Quiz.find_by(id: params[:id])
+    @quiz.status = false
+    
+    if @quiz.save
+      render json: @quiz, status: :created, location: @quiz
+    else
+      render json: @quiz.errors, status: :unprocessable_entity
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz
