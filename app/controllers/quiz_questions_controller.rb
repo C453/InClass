@@ -16,7 +16,8 @@ class QuizQuestionsController < ApplicationController
   # POST /quiz_questions
   def create
     @quiz_question = QuizQuestion.new(quiz_question_params)
-
+    @quiz_question.answers = JSON.parse(quiz_question_params['answers'])
+    
     if @quiz_question.save
       render json: @quiz_question, status: :created, location: @quiz_question
     else
@@ -46,6 +47,6 @@ class QuizQuestionsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def quiz_question_params
-      params.require(:quiz_question).permit(:text, :answers, :correct)
+      params.require(:quiz_question).permit(:text, :answers, :correct, :quiz_id)
     end
 end
