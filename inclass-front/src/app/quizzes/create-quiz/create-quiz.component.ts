@@ -78,14 +78,10 @@ export class CreateQuizComponent implements OnInit {
       course_id: 1, // TODO not working for some reason
       title: 'Quiz for CS 408', 
     }).subscribe(result => {
-      console.log(JSON.parse(result['_body']));
-      let body = result['_body'];
+      let body = JSON.parse(result['_body']);
       let newQuizID = body.id;
       this.sendAnswers(newQuizID);
-
     });
-    // Create quiz questions
-
   }
 
   sendAnswers(quizID) {
@@ -99,12 +95,16 @@ export class CreateQuizComponent implements OnInit {
         }
       }
 
-      this.authTokenService.post('quiz_questions', {
+      let questionObject = {
         text: question.text,
         quiz_id: quizID,
-        answers: rawAnswers,
-        correct: correctIndex
-      })
+        answers: JSON.stringify(rawAnswers),
+        correct: correctIndex,
+      }
+
+      console.log(questionObject);
+
+      this.authTokenService.post('quiz_questions', questionObject);
     });
   }
 }
