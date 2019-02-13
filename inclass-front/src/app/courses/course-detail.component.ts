@@ -24,6 +24,7 @@ export class CourseDetailComponent implements OnInit {
   @ViewChild('takeQuiz') takeQuizComponent: TakeQuizComponent;
 
   courseData: Course;
+  courseDocuments: Object[];
 
   constructor(public authTokenService: Angular2TokenService,
     public authService: AuthService, private actr: ActivatedRoute, private router: Router) {
@@ -33,7 +34,13 @@ export class CourseDetailComponent implements OnInit {
       });
     }
 
-  ngOnInit() { }
+  ngOnInit() {
+    // returns either all documents if the user is an admin, or only public documents if the user is just a student
+    this.authTokenService.get('documents', { params: { course: this.courseData.id }}).subscribe(res => {
+      this.courseDocuments = res.json();
+      console.log(this.courseDocuments);
+    })
+  }
 
   dropCourse() {
     this.authTokenService.post('drop_course', { code: this.courseData.code }).subscribe(res => {
