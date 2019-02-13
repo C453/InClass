@@ -57,7 +57,15 @@ export class CourseDetailComponent implements OnInit {
   }
 
   createQuiz() {
-    console.log(this.createQuizComponent);
     this.createQuizComponent.openDialog();
+  }
+
+  closeQuiz() {
+    this.authTokenService.post('close_quiz', { id: this.activeQuiz.id }).subscribe(response => {
+      if (response.json().success) {
+        this.activeQuiz = undefined;
+        this.activeQuizQuestions = undefined;
+      }
+    });
   }
 }

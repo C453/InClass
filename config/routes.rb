@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   resources :quizzes
   get 'get_active_quiz/:course_id', to: 'quizzes#get_active_quiz'
+  post 'close_quiz', to: 'quizzes#close_quiz'
 
   resources :documents
   post 'get_courses', to: 'get_courses#get_courses'

@@ -43,6 +43,17 @@ class QuizzesController < ApplicationController
     render json: @active_quiz
   end
 
+  def close_quiz
+    @quiz = Quiz.find_by(id: params[:id])
+    @quiz.status = false
+    
+    if @quiz.save
+      render json: @quiz, status: :created, location: @quiz
+    else
+      render json: @quiz.errors, status: :unprocessable_entity
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz
@@ -51,6 +62,6 @@ class QuizzesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def quiz_params
-      params.require(:quiz).permit(:status, :title, :course_id)
+      params.require(:quiz).permit(:status, :course_id)
     end
 end
