@@ -23,15 +23,13 @@
               <input id="name" type="text" required name='name' [(ngModel)]="createCourse.name" class="validate">
               <label for="name">Course Name</label>
             </div>
-
-            <div class="input-field col s12">
-              <input id="expires" type="text" required name='expires' [(ngModel)]="createCourse.expires" class="validate">
-              <label for="expires">Expires</label>
+            <div class="input-field col s12"  style="display: inline-flex;">
+              <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="createCourse.expires" name="expires" >
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker class="validate"></mat-datepicker>
             </div>
-
             <div class="col s12">
-
-              <button type="submit" [disabled]="!(f.valid)" class="waves-effect waves-light btn blue right">
+              <button type="submit" [disabled]="!(f.valid)"  mat-raised-button color="primary" class="button">
                 Create Course
               </button>
 

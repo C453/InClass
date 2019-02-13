@@ -12,9 +12,8 @@ import {Router} from "@angular/router";
 export class NavbarComponent implements OnInit {
 
   @ViewChild('authDialog') authDialog: AuthDialogComponent;
-
-
-  constructor(public authService:AuthService, private router:Router, public nav: NavbarService) { }
+  
+  constructor(public authService:AuthService, private router:Router, public nav: NavbarService) {}
 
   ngOnInit(){}
 
@@ -26,5 +25,4 @@ export class NavbarComponent implements OnInit {
     this.authDialog.openDialog(mode);
 
   }
-
 }

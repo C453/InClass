@@ -1,9 +1,8 @@
 <div *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
-  <a (click)="dropCourse()" class="waves-effect waves-light btn button blue">Drop Course</a>
+  <a (click)="dropCourse()" mat-raised-button color="primary" class="button">Drop Course</a>
 </div>
-<div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
-            && !activeQuiz">
-  <a (click)="createQuiz()" class="waves-effect waves-light btn">Create New Quiz</a>
+<div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
+  <a (click)="createQuiz()" mat-raised-button color="primary" class="button">Create New Quiz</a>
 </div>
 <div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
             && activeQuiz">
@@ -43,7 +42,7 @@
 				<textarea [(ngModel)]="questionArea" matInput placeholder="Leave a question" (keyup)="autoGrowTextZone($event)"></textarea>
 				</mat-form-field>
 				<div class="row">
-				<a (click)="postQuestion()" style="float:right;" class="waves-effect waves-light btn button blue">Ask Question</a>
+				<a (click)="postQuestion()" style="float:right;" mat-raised-button color="primary" class="button">Ask Question</a>
 			</div>
 		<div class="table-container">
 	   <table class="courses highlight">
