@@ -71,7 +71,13 @@ export class CourseDetailComponent implements OnInit {
         .cable('ws://127.0.0.1:3000/cable')
         .channel('CourseChannel', { course_id: this.courseData.id });
       console.log(courseChannel);
-
+	  
+	  this.courseQuestions.sort((left, right): number => {
+		if(left.yeah_count > right.yeah_count) return -1;
+		if(left.yeah_count < right.yeah_count) return 1;
+		return 0;
+		});
+		  
       this.subscription = courseChannel.received().subscribe(data => {
         console.log(data);
         if(data.status === 'new_question') {
@@ -85,7 +91,8 @@ export class CourseDetailComponent implements OnInit {
           newQuestion.created_at = data.created_at;
           newQuestion.updated_at = data.updated_at;
 
-          this.courseQuestions.push(newQuestion);
+          this.courseQuestions.push(newQuestion);		  
+		  
         }
       });
     })
