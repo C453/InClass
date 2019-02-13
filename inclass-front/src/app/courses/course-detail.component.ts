@@ -26,6 +26,7 @@ export class CourseDetailComponent implements OnInit {
   courseQuestions: Question[];
   activeQuiz;
   activeQuizQuestions;
+  questionArea: string;
 
   constructor(public authTokenService: Angular2TokenService,
     public authService: AuthService, private actr: ActivatedRoute, private router: Router, private cableService: ActionCableService, public nav: NavbarService) {
@@ -112,11 +113,19 @@ export class CourseDetailComponent implements OnInit {
   }
   
   postQuestion(){
-	  
+	this.authTokenService.post('questions', { question : { user_id: this.authTokenService.currentUserData.id, question: this.questionArea, yeah_count: 0, course_id: this.courseData.id, answered: false } } ).subscribe(res => {  
+      this.questionArea = null;
+    }) 
   }
 InputOverviewExample() {} 
 
-	
+autoGrowTextZone(e) {
+  e.target.style.height = "0px";
+  e.target.style.height = (e.target.scrollHeight + 25)+"px";
+  if(e.target.scrollHeight > 300){
+	  e.target.style.height = "200px"; 
+}
+}
   createQuiz() {
     this.createQuizComponent.openDialog();
   }

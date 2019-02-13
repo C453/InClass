@@ -36,14 +36,17 @@
     fxFlex.lt-sm="100%">
     <mat-card-header>
       <mat-card-title>Questions</mat-card-title>
-      <mat-card-subtitle>In-Class Questions</mat-card-subtitle>
+      <mat-card-subtitle>Live Questions</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <table class="courses highlight">
-				<mat-form-field class="full-width">
-				<textarea matInput placeholder="Leave a comment"></textarea>
+	<mat-form-field class="full-width">
+				<textarea [(ngModel)]="questionArea" matInput placeholder="Leave a question" (keyup)="autoGrowTextZone($event)"></textarea>
 				</mat-form-field>
-			<a (click)="postQuestion()" style="float:right;" class="waves-effect waves-light btn button blue">Ask Question</a>
+				<div class="row">
+				<a (click)="postQuestion()" style="float:right;" class="waves-effect waves-light btn button blue">Ask Question</a>
+			</div>
+		<div class="table-container">
+	   <table class="courses highlight">
             <tr *ngFor="let question of courseQuestions">
               <td>{{question.question}}</td>
             </tr>
@@ -51,6 +54,7 @@
               <td>There are no questions for this course</td>
             </tr>
           </table>
+		  </div> 
     </mat-card-content>
   </mat-card>
 

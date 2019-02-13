@@ -11,3 +11,13 @@
 .full-width {
   width: 100%;
 }
+
+textarea {
+	resize: none !important; 
+}
+
+.table-container {
+	max-height:200px;
+	overflow: auto; 
+	
+}
