@@ -25,12 +25,14 @@ export class CourseDetailComponent implements OnInit {
 
   courseData: Course;
   courseDocuments: Object[];
+  activeQuiz;
+  activeQuizQuestions;
 
   constructor(public authTokenService: Angular2TokenService,
     public authService: AuthService, private actr: ActivatedRoute, private router: Router) {
       this.actr.data.map(data => data.cres.json()).subscribe(res => {
         this.courseData = res;
-        console.log(this.courseData);
+        this.getActiveQuiz();
       });
     }
 
@@ -40,6 +42,17 @@ export class CourseDetailComponent implements OnInit {
       this.courseDocuments = res.json();
       console.log(this.courseDocuments);
     })
+  }
+
+  getActiveQuiz() {
+    this.authTokenService.get('get_active_quiz/' + this.courseData.id).subscribe(res => {
+      this.activeQuiz = res.json();
+      
+      this.authTokenService.get('get_active_quiz_questions/' + this.activeQuiz.id)
+        .subscribe(questionRes => {
+        this.activeQuizQuestions = questionRes.json();
+      });
+    });
   }
 
   dropCourse() {

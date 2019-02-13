@@ -38,6 +38,11 @@ class QuizzesController < ApplicationController
     @quiz.destroy
   end
 
+  def get_active_quiz
+    @active_quiz = Quiz.find_by(course_id: params[:course_id], status: true)
+    render json: @active_quiz
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz
