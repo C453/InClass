@@ -93,7 +93,10 @@ export class CourseDetailComponent implements OnInit {
 
           this.courseQuestions.push(newQuestion);		  
 		  
-        }
+        } else if (data.status === 'yeah') {
+			this.courseQuestions.filter(q => q.id === data.id)[0].yeah_count = data.yeah_count
+			// do stuff
+		}
       });
     })
 
@@ -122,16 +125,18 @@ export class CourseDetailComponent implements OnInit {
   postQuestion(){
 	  if(this.questionArea === ''){
 		  alert("No blank questions!"); 
-		  
 	  }
+	  
 	this.authTokenService.post('questions', { question : { user_id: this.authTokenService.currentUserData.id, question: this.questionArea, yeah_count: 0, course_id: this.courseData.id, answered: false } } ).subscribe(res => {  
       this.questionArea = null;
     }) 
   }
   
-  yeahQuestion(){
-	  
-	  
+  yeahQuestion(id){
+	  this.authTokenService.post('yeah', { question: id } ).subscribe(res => {
+		  console.log(res.json());
+	  })
+	  this.questionArea = null;
   }
   
   answerQuestion(){

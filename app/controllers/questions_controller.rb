@@ -28,6 +28,7 @@ class QuestionsController < ApplicationController
         yeah_count: @question.yeah_count,
         course_id: @question.course.id,
         answered: @question.answered,
+		yeahs: @question.yeahs,
         created_at: @question.created_at,
         updated_at: @question.updated_at
 

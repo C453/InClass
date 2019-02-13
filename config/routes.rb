@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  post 'yeah', to: 'yeah_question#yeah'
+  
   resources :questions
   resources :quiz_submissions
 

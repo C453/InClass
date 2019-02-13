@@ -49,8 +49,8 @@
 	   <table class="courses highlight">
             <tr *ngFor="let question of courseQuestions">
               <td>{{question.question}} <span class="timestamp">{{question.created_at | date : "hh:mm a"}}</span></td>
-			  	<td *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())"><a (click)="yeahQuestion()" style="float:right;" class="yeahButton">Yeah! {{ question.yeah_count }}</a></td>
-				<td *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())"><a (click)="yeahQuestion()" style="float:right;" class="yeahButton">Answer Question! {{ question.yeah_count }} Yeahs</a></td>
+			  	<td *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())"><a (click)="yeahQuestion(question.id)" style="float:right;" class="yeahButton">Yeah! {{ question.yeah_count }}</a></td>
+				<td *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())"><a (click)="yeahQuestion(question.id)" style="float:right;" class="yeahButton">Answer Question! {{ question.yeah_count }} Yeahs</a></td>
             </tr>	
             <tr *ngIf="courseQuestions?.length == 0">
               <td>There are no questions for this course</td>
