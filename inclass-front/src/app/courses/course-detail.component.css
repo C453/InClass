@@ -21,3 +21,8 @@ textarea {
 	overflow: auto; 
 	
 }
+
+.timestamp{
+	color: LightGrey;
+	font-size: 10px;
+}

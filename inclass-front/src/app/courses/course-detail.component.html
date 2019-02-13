@@ -48,7 +48,7 @@
 		<div class="table-container">
 	   <table class="courses highlight">
             <tr *ngFor="let question of courseQuestions">
-              <td>{{question.question}}</td>
+              <td>{{question.question}} <span class="timestamp">{{question.created_at | date : "hh:mm a"}}</span></td>
             </tr>
             <tr *ngIf="courseQuestions?.length == 0">
               <td>There are no questions for this course</td>
