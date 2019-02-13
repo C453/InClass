@@ -9,14 +9,22 @@ import { MaterializeAction } from 'angular2-materialize';
 export class TakeQuizComponent implements OnInit {
 
   modalActions = new EventEmitter<string|MaterializeAction>();
+  curQuizQuestion;
 
-  constructor() { }
+  constructor() {
+    this.curQuizQuestion = {
+      text: "",
+      answers: [],
+      correct: -1
+    }
+   }
 
   ngOnInit() {
   }
 
-  takeQuiz () {
+  takeQuiz (QuizQuestion) {
     this.modalActions.emit({action:"modal", params:['open']});
+    this.curQuizQuestion = QuizQuestion;
   }
 
   submitQuiz () {

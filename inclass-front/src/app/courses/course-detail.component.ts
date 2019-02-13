@@ -47,7 +47,6 @@ export class CourseDetailComponent implements OnInit {
   getActiveQuiz() {
     this.authTokenService.get('get_active_quiz/' + this.courseData.id).subscribe(res => {
       this.activeQuiz = res.json();
-      
       this.authTokenService.get('get_active_quiz_questions/' + this.activeQuiz.id)
         .subscribe(questionRes => {
         this.activeQuizQuestions = questionRes.json();
@@ -73,6 +72,6 @@ export class CourseDetailComponent implements OnInit {
   }
 
   takeTheQuiz () {
-    this.takeQuizComponent.takeQuiz();
+    this.takeQuizComponent.takeQuiz(this.activeQuizQuestions);
   }
 }

@@ -45,6 +45,15 @@ ActiveRecord::Schema.define(version: 2019_02_11_175126) do
     t.index ["course_id"], name: "index_documents_on_course_id"
   end
 
+  create_table "quiz_answers", force: :cascade do |t|
+    t.string "text"
+    t.boolean "correct"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "quiz_question_id"
+    t.index ["quiz_question_id"], name: "index_quiz_answers_on_quiz_question_id"
+  end
+
   create_table "quiz_questions", force: :cascade do |t|
     t.string "text"
     t.string "answers", default: [], array: true
