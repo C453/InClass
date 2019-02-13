@@ -117,12 +117,19 @@ export class CourseDetailComponent implements OnInit {
       this.questionArea = null;
     }) 
   }
+  
+  yeahQuestion(){
+	  
+	  
+  }
+  
+  
 InputOverviewExample() {} 
 
 autoGrowTextZone(e) {
   e.target.style.height = "0px";
   e.target.style.height = (e.target.scrollHeight + 25)+"px";
-  if(e.target.scrollHeight > 300){
+  if(e.target.scrollHeight > 200){
 	  e.target.style.height = "200px"; 
 }
 }

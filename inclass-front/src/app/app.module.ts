@@ -43,6 +43,7 @@ import { CreateCourseDialogComponent } from './create-course-dialog/create-cours
     CreateCourseDialogComponent,
     CourseQuizComponent,
     CreateQuizComponent,
+	
   ],
   imports: [
     BrowserModule,
