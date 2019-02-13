@@ -113,6 +113,10 @@ export class CourseDetailComponent implements OnInit {
   }
   
   postQuestion(){
+	  if(this.questionArea === ''){
+		  alert("No blank questions!"); 
+		  
+	  }
 	this.authTokenService.post('questions', { question : { user_id: this.authTokenService.currentUserData.id, question: this.questionArea, yeah_count: 0, course_id: this.courseData.id, answered: false } } ).subscribe(res => {  
       this.questionArea = null;
     }) 
@@ -123,6 +127,9 @@ export class CourseDetailComponent implements OnInit {
 	  
   }
   
+  answerQuestion(){
+	  
+  }
   
 InputOverviewExample() {} 
 
