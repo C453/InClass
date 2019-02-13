@@ -72,11 +72,11 @@ export class CourseDetailComponent implements OnInit {
         .channel('CourseChannel', { course_id: this.courseData.id });
       console.log(courseChannel);
 	  
-	  this.courseQuestions.sort((left, right): number => {
-		if(left.yeah_count > right.yeah_count) return -1;
-		if(left.yeah_count < right.yeah_count) return 1;
-		return 0;
-		});
+      this.courseQuestions.sort((left, right): number => {
+      if(left.yeah_count > right.yeah_count) return -1;
+      if(left.yeah_count < right.yeah_count) return 1;
+      return 0;
+      });
 		  
       this.subscription = courseChannel.received().subscribe(data => {
         console.log(data);
@@ -94,8 +94,13 @@ export class CourseDetailComponent implements OnInit {
           this.courseQuestions.push(newQuestion);		  
 		  
         } else if (data.status === 'yeah') {
-			this.courseQuestions.filter(q => q.id === data.id)[0].yeah_count = data.yeah_count
-			// do stuff
+      this.courseQuestions.filter(q => q.id === data.id)[0].yeah_count = data.yeah_count
+      
+      this.courseQuestions.sort((left, right): number => {
+        if(left.yeah_count > right.yeah_count) return -1;
+        if(left.yeah_count < right.yeah_count) return 1;
+        return 0;
+        });
 		}
       });
     })
@@ -123,7 +128,7 @@ export class CourseDetailComponent implements OnInit {
   }
   
   postQuestion(){
-	  if(this.questionArea === ''){
+	  if(this.questionArea === null || this.questionArea === ''){
 		  alert("No blank questions!"); 
 	  }
 	  
