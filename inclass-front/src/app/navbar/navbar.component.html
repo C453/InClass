@@ -1,26 +1,41 @@
-<!--Navigation-->
-<div class="navbar-fixed">
-
-    <nav  role="navigation">
-  
-      <div class="nav-wrapper blue ">
-        <a [routerLink]="['']" id="logo-container" class="brand-logo">InClass</a>
-  
-        <ul class="right hide-on-med-and-down">
-  
-          <li *ngIf="!(authService.userSignedIn$ | async)"> <a (click)="presentAuthDialog()" >LOGIN</a></li>
-          <li *ngIf="!(authService.userSignedIn$ | async)"> <a (click)="presentAuthDialog('Register')">REGISTER</a></li>
-  
-          <li *ngIf="(authService.userSignedIn$ | async)"><a [routerLink]="['/courses']">COURSES</a></li>
-          <li *ngIf="(authService.userSignedIn$ | async)"><a [routerLink]="['/profile']">PROFILE</a></li>
-          <li *ngIf="(authService.userSignedIn$ | async)"><a (click)="logOut()">LOGOUT</a></li>
-  
-        </ul>
-  
+<div style="height: 90vh;">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="brand-title">{{nav.title}}</span>
+      <span class="menu-spacer"></span>
+      <div fxShow="true" fxHide.lt-md>
+          <a mat-button [routerLink]="['/home']">HOME</a>
+          <a mat-button (click)="presentAuthDialog()" *ngIf="!(authService.userSignedIn$ | async)">LOGIN</a>
+          <a mat-button (click)="presentAuthDialog('Register')" *ngIf="!(authService.userSignedIn$ | async)">REGISTER</a>
+          <a mat-button *ngIf="(authService.userSignedIn$ | async)" [routerLink]="['/courses']">COURSES</a>
+          <a mat-button *ngIf="(authService.userSignedIn$ | async)" [routerLink]="['/profile']">PROFILE</a>
+          <a mat-button *ngIf="(authService.userSignedIn$ | async)" (click)="logOut()">LOGOUT</a>
       </div>
-  
-    </nav>
-  
-  </div>
-  
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-sidenav-container fxFlexFill>
+    <mat-sidenav #sidenav>
+      <mat-nav-list>
+          <a mat-list-item [routerLink]="['/home']">HOME</a>
+          <a mat-list-item (click)="presentAuthDialog()" *ngIf="!(authService.userSignedIn$ | async)">LOGIN</a>
+          <a mat-list-item (click)="presentAuthDialog('Register')" *ngIf="!(authService.userSignedIn$ | async)">REGISTER</a>
+          <a mat-list-item  *ngIf="(authService.userSignedIn$ | async)" [routerLink]="['/courses']">COURSES</a>
+          <a mat-list-item  *ngIf="(authService.userSignedIn$ | async)" [routerLink]="['/profile']">PROFILE</a>
+          <a mat-list-item  *ngIf="(authService.userSignedIn$ | async)" (click)="logOut()">LOGOUT</a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content fxFlexFill>
+        <div class="container">
+            <router-outlet></router-outlet>
+          </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
   <app-auth-dialog #authDialog ></app-auth-dialog>
+
+  

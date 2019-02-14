@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  post 'yeah', to: 'yeah_question#yeah'
+  post 'unyeah', to: 'yeah_question#unyeah'
+  post 'answer_question', to: 'yeah_question#answer_question'
+  resources :questions
   resources :quiz_submissions
 
   resources :quiz_questions
@@ -6,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :quizzes
   get 'get_active_quiz/:course_id', to: 'quizzes#get_active_quiz'
+  post 'close_quiz', to: 'quizzes#close_quiz'
 
   resources :documents
   post 'get_courses', to: 'get_courses#get_courses'

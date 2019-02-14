@@ -1,31 +1,73 @@
-<h1>{{ courseData.name }}</h1>
 <div *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
-  <a (click)="dropCourse()" class="waves-effect waves-light btn">Drop Course</a>
-  <a (click)="seeQuizResults()" class="waves-effect waves-light btn">Check Quiz</a>
-  <a (click)="takeTheQuiz()" class="waves-effect waves-light btn">Take Quiz</a>
+  <a (click)="dropCourse()" mat-raised-button color="warn" class="button">Drop Course</a>
 </div>
 
 <div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
-  <a (click)="createQuiz()" class="waves-effect waves-light btn">Create New Quiz</a>
-  <a (click)="seeQuizResults()" class="waves-effect waves-light btn">Check Quiz</a>
+  <a (click)="createQuiz()" mat-raised-button color="primary" class="button">Create New Quiz</a>
 </div>
-
-<div>
-  
+<div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
+            && activeQuiz">
+  <a (click)="closeQuiz()" mat-raised-button color="warn" class="button">Close Current Quiz</a>
 </div>
-
-<div class="row">
-  <div class="card blue-grey lighten-5 z-depth-4" style="margin-top: 5em">
-
-    <div class="card-content">
-
-      <div style="margin-bottom: 0" class="row ">
-        <h6>Course Code: {{ courseData.code }}</h6>
+<div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="32px" fxLayoutAlign="flex-start" class="courseLayout">
+  <mat-card class="course-card" fxFlex="0 1 calc(50% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%">
+    <mat-card-header>
+      <mat-card-title>Course Documents</mat-card-title>
+      <mat-card-subtitle>Avaliable Files</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <table class="courses highlight">
+        <tr>
+          <th>File Name</th>
+        </tr>
+        <tr *ngFor="let file of courseDocuments">
+          <td>{{file.name}}</td>
+        </tr>
+        <tr *ngIf="courseDocuments?.length == 0">
+          <td>No course files</td>
+        </tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="course-card" fxFlex="0 1 calc(50% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%">
+    <mat-card-header>
+      <mat-card-title>Questions</mat-card-title>
+      <mat-card-subtitle>Live Questions</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field class="full-width">
+        <textarea [(ngModel)]="questionArea" matInput placeholder="Leave a question" (keyup)="autoGrowTextZone($event)"></textarea>
+      </mat-form-field>
+      <div class="row">
+        <a (click)="postQuestion()" style="float:right;" mat-raised-button color="primary" class="button">Ask Question</a>
       </div>
-    </div>
-  </div>
-</div>
+      <div class="table-container">
+        <table class="courses highlight">
+          <tr *ngFor="let question of courseQuestions">
+            <td>{{question.question}} <span class="timestamp">{{question.created_at | date : "hh:mm a"}}</span></td>
+            <td *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()); else instructor">
+              <a (click)="yeahQuestion(question)" style="float:right;"
+                class="yeahButton" id="yeah_{{question.id}}">
+                {{ question.yeahs.includes(this.authTokenService.currentUserData.id.toString()) ? "Unyeah! " + question.yeah_count : "Yeah! " + question.yeah_count }}
+              </a>
+            </td>
+            <ng-template #instructor>
+              <td><a (click)="answerQuestion(question)" style="float:right;" class="yeahButton">Mark Answered
+                </a></td>
+            </ng-template>
+          </tr>
+          <tr *ngIf="courseQuestions?.length == 0">
+            <td>There are no questions for this course</td>
+          </tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
 
+<<<<<<< HEAD
 <app-create-quiz #createQuizDialog></app-create-quiz>
 <app-course-quiz #openQuiz></app-course-quiz>
 <app-take-quiz #takeQuiz></app-take-quiz>
+=======
+<app-create-quiz #createQuizDialog [courseID]="courseData.id"></app-create-quiz>
+>>>>>>> master

@@ -13,9 +13,10 @@ class AddUserToCourseController < ApplicationController
         course.users.push user
         course.save!
 
-        ActionCable.server.broadcast "add_course:#{current_user.id}_channel", status: 'saved',
+        ActionCable.server.broadcast "courses:#{current_user.id}_channel", status: 'register',
         id: course.id,
-        name: course.name
+        name: course.name,
+        code: course.code
 
         output = {'status' => 'success'}.to_json
       end

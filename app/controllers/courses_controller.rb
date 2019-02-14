@@ -22,7 +22,7 @@ class CoursesController < ApplicationController
 
     if @course.save
 
-      ActionCable.server.broadcast "courses:#{current_user.id}_channel", status: 'saved',
+      ActionCable.server.broadcast "courses:#{current_user.id}_channel", status: 'create',
         id: @course.id,
         name: @course.name,
         code: @course.code,

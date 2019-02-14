@@ -9,6 +9,7 @@ import { CreateCourseDialogComponent } from "../create-course-dialog/create-cour
 
 import { Subscription } from 'rxjs';
 import { ActionCableService, Channel } from 'angular2-actioncable';
+import { NavbarService } from '../services/navbar.service';
 
 @Component({
   selector: 'app-courses',
@@ -27,31 +28,26 @@ export class CoursesComponent implements OnInit, OnDestroy {
   constructor(public authTokenService: Angular2TokenService,
     public authService: AuthService,
     private cableService: ActionCableService,
-    private router: Router) { }
+    private router: Router,
+    public nav: NavbarService) { }
 
   ngOnInit() {
     this.authTokenService.post("get_courses", {}).subscribe(response => {
       this.courseData = response.json();
-
-      const addCourseChannel: Channel = this.cableService
-        .cable('ws://127.0.0.1:3000/cable')
-        .channel('AddCourseChannel', { user_id: this.authTokenService.currentUserData.id });
-      console.log(addCourseChannel);
 
       const coursesChannel: Channel = this.cableService
         .cable('ws://127.0.0.1:3000/cable')
         .channel('CoursesChannel', { user_id: this.authTokenService.currentUserData.id });
       console.log(coursesChannel);
 
-      this.subscription = addCourseChannel.received().subscribe(course => {
-        console.log(course);
-        this.courseData.push({ id: course.id, name: course.name });
-      });
-
       this.subscription = coursesChannel.received().subscribe(course => {
         console.log(course);
-        if(course.admin) {
-          this.ownedCourseData.push({ id: course.id, name: course.name });
+        if(course.status === 'create') {
+          if(course.admin) {
+            this.ownedCourseData.push({ id: course.id, name: course.name, code: course.code });
+          }
+        } else if(course.status === 'register') {
+          this.courseData.push({ id: course.id, name: course.name });
         }
       });
     })
@@ -59,6 +55,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
     this.authTokenService.post("get_owned_courses", {}).subscribe(response => {
       this.ownedCourseData = response.json();
     });
+
+    this.nav.title = "Courses";
   }
 
   presentAddCourseDialog() {

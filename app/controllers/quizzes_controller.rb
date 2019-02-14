@@ -18,6 +18,11 @@ class QuizzesController < ApplicationController
     @quiz = Quiz.new(quiz_params)
     puts quiz_params
     if @quiz.save
+      ActionCable.server.broadcast "add_quiz_channel", status: 'saved',
+      id: @quiz.id,
+      status: @quiz.status,
+      course_id: @quiz.course_id
+
       render json: @quiz, status: :created, location: @quiz
     else
       render json: @quiz.errors, status: :unprocessable_entity
@@ -43,6 +48,22 @@ class QuizzesController < ApplicationController
     render json: @active_quiz
   end
 
+  def close_quiz
+    @quiz = Quiz.find_by(id: params[:id])
+    @quiz.status = false
+    
+    if @quiz.save
+      ActionCable.server.broadcast "close_quiz_channel", status: 'saved',
+      id: @quiz.id,
+      status: @quiz.status,
+      course_id: @quiz.course_id
+
+      render json: @quiz, status: :created, location: @quiz
+    else
+      render json: @quiz.errors, status: :unprocessable_entity
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz
@@ -51,6 +72,6 @@ class QuizzesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def quiz_params
-      params.require(:quiz).permit(:status, :title, :course_id)
+      params.require(:quiz).permit(:status, :course_id)
     end
 end

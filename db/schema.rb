@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_11_175126) do
+ActiveRecord::Schema.define(version: 2019_02_13_051002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 2019_02_11_175126) do
     t.index ["course_id"], name: "index_documents_on_course_id"
   end
 
+<<<<<<< HEAD
   create_table "quiz_answers", force: :cascade do |t|
     t.string "text"
     t.boolean "correct"
@@ -52,6 +53,19 @@ ActiveRecord::Schema.define(version: 2019_02_11_175126) do
     t.datetime "updated_at", null: false
     t.bigint "quiz_question_id"
     t.index ["quiz_question_id"], name: "index_quiz_answers_on_quiz_question_id"
+=======
+  create_table "questions", force: :cascade do |t|
+    t.bigint "user_id"
+    t.text "question"
+    t.integer "yeah_count"
+    t.bigint "course_id"
+    t.boolean "answered"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "yeahs", default: [], array: true
+    t.index ["course_id"], name: "index_questions_on_course_id"
+    t.index ["user_id"], name: "index_questions_on_user_id"
+>>>>>>> master
   end
 
   create_table "quiz_questions", force: :cascade do |t|
@@ -78,7 +92,6 @@ ActiveRecord::Schema.define(version: 2019_02_11_175126) do
 
   create_table "quizzes", force: :cascade do |t|
     t.boolean "status"
-    t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "course_id"
@@ -116,6 +129,8 @@ ActiveRecord::Schema.define(version: 2019_02_11_175126) do
   end
 
   add_foreign_key "documents", "courses"
+  add_foreign_key "questions", "courses"
+  add_foreign_key "questions", "users"
   add_foreign_key "quiz_questions", "quizzes"
   add_foreign_key "quiz_submissions", "courses"
   add_foreign_key "quiz_submissions", "quizzes"

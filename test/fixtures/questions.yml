@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  question: MyText
+  yeah_count: 1
+  course: one
+  answered: false
+
+two:
+  user: two
+  question: MyText
+  yeah_count: 1
+  course: two
+  answered: false

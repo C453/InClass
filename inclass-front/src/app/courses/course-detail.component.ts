@@ -10,6 +10,9 @@ import { CourseQuizComponent } from "../quizzes/course-quiz/course-quiz.componen
 import { TakeQuizComponent } from "../quizzes/take-quiz/take-quiz.component";
 
 import { Subscription } from 'rxjs';
+import { Question } from '../models/question.model';
+import { ActionCableService, Channel } from 'angular2-actioncable';
+import { NavbarService } from '../services/navbar.service';
 
 @Component({
   selector: 'app-course-detail',
@@ -17,19 +20,23 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./course-detail.component.css']
 })
 export class CourseDetailComponent implements OnInit {
-
   subscription: Subscription;
+  addQuizSubscription: Subscription;
+  closeQuizSubscription: Subscription;
+
   @ViewChild('createQuizDialog') createQuizComponent: CreateQuizComponent;
   @ViewChild('openQuiz') courseQuizComponent: CourseQuizComponent;
   @ViewChild('takeQuiz') takeQuizComponent: TakeQuizComponent;
 
   courseData: Course;
   courseDocuments: Object[];
+  courseQuestions: Question[];
   activeQuiz;
   activeQuizQuestions;
+  questionArea: string;
 
   constructor(public authTokenService: Angular2TokenService,
-    public authService: AuthService, private actr: ActivatedRoute, private router: Router) {
+    public authService: AuthService, private actr: ActivatedRoute, private router: Router, private cableService: ActionCableService, public nav: NavbarService) {
       this.actr.data.map(data => data.cres.json()).subscribe(res => {
         this.courseData = res;
         this.getActiveQuiz();
@@ -38,10 +45,85 @@ export class CourseDetailComponent implements OnInit {
 
   ngOnInit() {
     // returns either all documents if the user is an admin, or only public documents if the user is just a student
-    this.authTokenService.get('documents', { params: { course: this.courseData.id }}).subscribe(res => {
+    this.authTokenService.get('documents', { params: { course: this.courseData.id } }).subscribe(res => {
       this.courseDocuments = res.json();
       console.log(this.courseDocuments);
+    });
+
+    const addQuizChannel: Channel = this.cableService
+    .cable('ws://127.0.0.1:3000/cable')
+    .channel('AddQuizChannel', { user_id: this.authTokenService.currentUserData.id });
+
+    const closeQuizChannel: Channel = this.cableService
+    .cable('ws://127.0.0.1:3000/cable')
+    .channel('CloseQuizChannel', { user_id: this.authTokenService.currentUserData.id });
+
+    this.addQuizSubscription = addQuizChannel.received().subscribe(quiz => {
+      if (quiz.course_id === this.courseData.id) {
+        this.getActiveQuiz();
+      }
+    });
+
+    this.closeQuizSubscription = closeQuizChannel.received().subscribe(quiz => {
+      if (quiz.course_id === this.courseData.id) {
+        this.activeQuiz = undefined;
+      }
+    });
+
+    // get all questions via REST
+    this.authTokenService.get('questions', { params: { course: this.courseData.id } }).subscribe(res => {
+      this.courseQuestions = res.json();
+      console.log(this.courseQuestions);
+
+      // create connection to stream course data
+      const courseChannel: Channel = this.cableService
+        .cable('ws://127.0.0.1:3000/cable')
+        .channel('CourseChannel', { course_id: this.courseData.id });
+      console.log(courseChannel);
+
+      // sort the questions by yeah count
+      this.courseQuestions.sort((left, right): number => {
+        if (left.yeah_count > right.yeah_count) return -1;
+        if (left.yeah_count < right.yeah_count) return 1;
+        return 0;
+      });
+
+      // when the server streams us course data
+      this.subscription = courseChannel.received().subscribe(data => {
+        console.log(data);
+        if (data.status === 'new_question') {
+          // create a new question
+          var newQuestion = new Question();
+          newQuestion.id = data.id;
+          newQuestion.user_id = data.user_id;
+          newQuestion.question = data.question;
+          newQuestion.yeah_count = data.yeah_count;
+          newQuestion.course_id = data.course_id;
+          newQuestion.answered = data.answered;
+          newQuestion.created_at = data.created_at;
+          newQuestion.updated_at = data.updated_at;
+
+          // add new question to question array
+          this.courseQuestions.push(newQuestion);
+
+        } else if (data.status === 'yeah') {
+          // find the question that has been yeahd
+          var q: Question = this.courseQuestions.filter(q => q.id === data.id)[0];
+          q.yeah_count = data.yeah_count
+
+          this.courseQuestions.sort((left, right): number => {
+            if (left.yeah_count > right.yeah_count) return -1;
+            if (left.yeah_count < right.yeah_count) return 1;
+            return 0;
+          });
+        } else if (data.status === 'question_answered') {
+          this.courseQuestions = this.courseQuestions.filter(q => q.id !== data.id);
+        }
+      });
     })
+
+    // set the title of the navbar to the course name
+    this.nav.title = this.courseData.name;
   }
 
   getActiveQuiz() {
@@ -56,22 +138,69 @@ export class CourseDetailComponent implements OnInit {
 
   dropCourse() {
     this.authTokenService.post('drop_course', { code: this.courseData.code }).subscribe(res => {
-      if(res.json().status === 'success') {
+      if (res.json().status === 'success') {
         this.router.navigate(['courses'])
       }
     })
   }
 
+  postQuestion() {
+    if (this.questionArea === null || this.questionArea === '') {
+      alert("No blank questions!");
+      return;
+    }
+
+    this.authTokenService.post('questions', { question: { user_id: this.authTokenService.currentUserData.id, question: this.questionArea, yeah_count: 0, course_id: this.courseData.id, answered: false } }).subscribe(res => {
+      this.questionArea = null;
+    }) 
+  }
+
+  yeahQuestion(question: Question) {
+    this.authTokenService.post('yeah', { question: question.id }).subscribe(res => {
+      console.log(res.json());
+      this.questionArea = null;
+
+      if (question.yeahs.includes(this.authTokenService.currentUserData.id.toString())) {
+        question.yeahs = question.yeahs.filter(id => id != this.authTokenService.currentUserData.id.toString());
+      } else {
+        question.yeahs.push(this.authTokenService.currentUserData.id.toString());
+      }
+
+      console.log(question.yeahs.includes(this.authTokenService.currentUserData.id.toString()));
+      
+      document.getElementById("yeah_" + question.id).innerHTML = question.yeahs.includes(this.authTokenService.currentUserData.id.toString()) ? "Unyeah! " + question.yeah_count : "Yeah! " + question.yeah_count
+    })
+  }
+
+  questionYeahed(id: number) {
+    return this.courseQuestions.filter(q => q.id === id)[0].yeahs.includes(this.authTokenService.currentUserData.id.toString());
+  }
+
+  answerQuestion(question: Question) {
+    this.authTokenService.post('answer_question', { question: question.id }).subscribe(res => {
+      console.log(res.json());
+    });
+  }
+
+  InputOverviewExample() { }
+
+  autoGrowTextZone(e) {
+    e.target.style.height = "0px";
+    e.target.style.height = (e.target.scrollHeight + 25) + "px";
+    if (e.target.scrollHeight > 200) {
+      e.target.style.height = "200px";
+    }
+  }
   createQuiz() {
-    console.log(this.createQuizComponent);
     this.createQuizComponent.openDialog();
   }
 
-  seeQuizResults() {
-    this.courseQuizComponent.openQuiz();
-  }
-
-  takeTheQuiz () {
-    this.takeQuizComponent.takeQuiz(this.activeQuizQuestions);
+  closeQuiz() {
+    this.authTokenService.post('close_quiz', { id: this.activeQuiz.id }).subscribe(response => {
+      if (response.json().success) {
+        this.activeQuiz = undefined;
+        this.activeQuizQuestions = undefined;
+      }
+    });
   }
 }

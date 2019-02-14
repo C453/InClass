@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input } from '@angular/core';
 import { MaterializeAction } from 'angular2-materialize';
 import { Angular2TokenService } from 'angular2-token';
 
@@ -12,6 +12,7 @@ export class CreateQuizComponent implements OnInit {
   modalActions = new EventEmitter<string|MaterializeAction>();
   expiresActions = new EventEmitter<string|MaterializeAction>();
 
+  @Input() courseID;
   quizQuestions = [];
   newQuestionText = '';
   quizCount = 0;
@@ -75,12 +76,12 @@ export class CreateQuizComponent implements OnInit {
     // Create quiz
     this.authTokenService.post('quizzes', {
       status: true,
-      course_id: 1, // TODO not working for some reason
-      title: 'Quiz for CS 408', 
+      course_id: this.courseID
     }).subscribe(result => {
       let body = JSON.parse(result['_body']);
       let newQuizID = body.id;
       this.sendAnswers(newQuizID);
+      this.closeDialog();
     });
   }
 
@@ -101,8 +102,6 @@ export class CreateQuizComponent implements OnInit {
         answers: JSON.stringify(rawAnswers),
         correct: correctIndex,
       }
-
-      console.log(questionObject);
 
       this.authTokenService.post('quiz_questions', questionObject);
     });

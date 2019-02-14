@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../services/auth.service";
 import {Angular2TokenService} from "angular2-token";
+import { NavbarService } from '../services/navbar.service';
 
 @Component({
   selector: 'app-profile',
@@ -13,13 +14,15 @@ export class ProfileComponent implements OnInit {
 
   constructor(public authTokenService:Angular2TokenService,
               public authService:AuthService,
-              private router:Router) {}
+              private router:Router,
+              public nav: NavbarService) {}
 
   logOut(){
     this.authService.logOutUser().subscribe(() => this.router.navigate(['/']));
   }
 
   ngOnInit() {
+    this.nav.title = "Profile"
   }
 
 }
