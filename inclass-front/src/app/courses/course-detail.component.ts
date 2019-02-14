@@ -67,7 +67,7 @@ export class CourseDetailComponent implements OnInit {
     this.authTokenService.get('questions', { params: { course: this.courseData.id } }).subscribe(res => {
       this.courseQuestions = res.json();
       console.log(this.courseQuestions);
-
+      
       // create connection to stream course data
       const courseChannel: Channel = this.cableService
         .cable('ws://127.0.0.1:3000/cable')
@@ -100,11 +100,10 @@ export class CourseDetailComponent implements OnInit {
           this.courseQuestions.push(newQuestion);
 
         } else if (data.status === 'yeah') {
-
           // find the question that has been yeahd
-          this.courseQuestions.filter(q => q.id === data.id)[0].yeah_count = data.yeah_count
+          var q: Question = this.courseQuestions.filter(q => q.id === data.id)[0];
+          q.yeah_count = data.yeah_count
 
-          // sort by yeah count after yeahing
           this.courseQuestions.sort((left, right): number => {
             if (left.yeah_count > right.yeah_count) return -1;
             if (left.yeah_count < right.yeah_count) return 1;
@@ -148,11 +147,25 @@ export class CourseDetailComponent implements OnInit {
     }) 
   }
 
-  yeahQuestion(id) {
-    this.authTokenService.post('yeah', { question: id }).subscribe(res => {
+  yeahQuestion(question: Question) {
+    this.authTokenService.post('yeah', { question: question.id }).subscribe(res => {
       console.log(res.json());
+      this.questionArea = null;
+
+      if (question.yeahs.includes(this.authTokenService.currentUserData.id.toString())) {
+        question.yeahs = question.yeahs.filter(id => id != this.authTokenService.currentUserData.id.toString());
+      } else {
+        question.yeahs.push(this.authTokenService.currentUserData.id.toString());
+      }
+
+      console.log(question.yeahs.includes(this.authTokenService.currentUserData.id.toString()));
+      
+      document.getElementById("yeah_" + question.id).innerHTML = question.yeahs.includes(this.authTokenService.currentUserData.id.toString()) ? "Unyeah! " + question.yeah_count : "Yeah! " + question.yeah_count
     })
-    this.questionArea = null;
+  }
+
+  questionYeahed(id: number) {
+    return this.courseQuestions.filter(q => q.id === id)[0].yeahs.includes(this.authTokenService.currentUserData.id.toString());
   }
 
   answerQuestion() {

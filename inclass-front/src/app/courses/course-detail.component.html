@@ -31,31 +31,38 @@
       </table>
     </mat-card-content>
   </mat-card>
-  <mat-card class="course-card" fxFlex="0 1 calc(50% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)"
-    fxFlex.lt-sm="100%">
+  <mat-card class="course-card" fxFlex="0 1 calc(50% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%">
     <mat-card-header>
       <mat-card-title>Questions</mat-card-title>
       <mat-card-subtitle>Live Questions</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-	<mat-form-field class="full-width">
-				<textarea [(ngModel)]="questionArea" matInput placeholder="Leave a question" (keyup)="autoGrowTextZone($event)"></textarea>
-				</mat-form-field>
-				<div class="row">
-				<a (click)="postQuestion()" style="float:right;" mat-raised-button color="primary" class="button">Ask Question</a>
-			</div>
-		<div class="table-container">
-	   <table class="courses highlight">
-            <tr *ngFor="let question of courseQuestions">
-              <td>{{question.question}} <span class="timestamp">{{question.created_at | date : "hh:mm a"}}</span></td>
-			  	<td *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())"><a (click)="yeahQuestion(question.id)" style="float:right;" class="yeahButton">Yeah! {{ question.yeah_count }}</a></td>
-				<td *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())"><a (click)="yeahQuestion(question.id)" style="float:right;" class="yeahButton">Answer Question! {{ question.yeah_count }} Yeahs</a></td>
-            </tr>	
-            <tr *ngIf="courseQuestions?.length == 0">
-              <td>There are no questions for this course</td>
-            </tr>
-          </table>
-		  </div> 
+      <mat-form-field class="full-width">
+        <textarea [(ngModel)]="questionArea" matInput placeholder="Leave a question" (keyup)="autoGrowTextZone($event)"></textarea>
+      </mat-form-field>
+      <div class="row">
+        <a (click)="postQuestion()" style="float:right;" mat-raised-button color="primary" class="button">Ask Question</a>
+      </div>
+      <div class="table-container">
+        <table class="courses highlight">
+          <tr *ngFor="let question of courseQuestions">
+            <td>{{question.question}} <span class="timestamp">{{question.created_at | date : "hh:mm a"}}</span></td>
+            <td *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()); else instructor">
+              <a (click)="yeahQuestion(question)" style="float:right;"
+                class="yeahButton" id="yeah_{{question.id}}">
+                {{ question.yeahs.includes(this.authTokenService.currentUserData.id.toString()) ? "Unyeah! " + question.yeah_count : "Yeah! " + question.yeah_count }}
+              </a>
+            </td>
+            <ng-template #instructor>
+              <td><a (click)="yeahQuestion(question)" style="float:right;" class="yeahButton">Mark Answered
+                </a></td>
+            </ng-template>
+          </tr>
+          <tr *ngIf="courseQuestions?.length == 0">
+            <td>There are no questions for this course</td>
+          </tr>
+        </table>
+      </div>
     </mat-card-content>
   </mat-card>
 
