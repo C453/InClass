@@ -11,10 +11,10 @@
         <form (ngSubmit)="onAddCourseSubmit()" #f="ngForm">
           <div class="row">
             <div class="input-field col s9">
-              <textarea id="questionTextArea" class="materialize-textarea" placeholder="Type question text here" [(ngModel)]="newQuestionText" name="newQuestionText"></textarea>
+              <input matInput id="questionTextArea" color="primary" placeholder="Type question text here" [(ngModel)]="newQuestionText" name="newQuestionText" />
             </div>
             <div class="input-field col s3">
-                <div class="btn" (click)="addQuestion()">Add Question</div>
+              <button mat-raised-button color="primary" class="button" (click)="addQuestion()">Add Question</button>
             </div>
           </div>
         </form>
@@ -24,19 +24,19 @@
           <div *ngFor="let question of quizQuestions">
             <div class="row">
               <h6 class="col s6">{{ question.text }}</h6>
-              <div class="btn col s3" (click)="addAnswer(question.id)">Add Answer</div>
-              <div class="btn col s3" (click)="deleteQuestion(question.id)">Delete Question</div>
+              <button mat-raised-button color="primary" class="button s3 add-answer" (click)="addAnswer(question.id)">Add Answer</button>
+              <button mat-raised-button color="warn" class="button s3" (click)="deleteQuestion(question.id)">Delete Question</button>
             </div>
             <div class="">
               <div *ngFor="let answer of question.answers">
                   <div class="input-field">
-                      <input type="text" id="answer" class="col s10" 
+                      <input matInput required type="text" id="answer" color="primary" class="col s10" 
                           (change)="changeAnswer(answer, $event)"
                           placeholder="Type answer text here">
                   </div>
                   <div class="col s2">
                       <label>
-                          <input type="radio" name="{{ question.id }}" (change)="selectCorrectAnswer(question, answer)" [checked]="answer.correct" />
+                          <input matRadioButton type="radio" name="{{ question.id }}" (change)="selectCorrectAnswer(question, answer)" [checked]="answer.correct" />
                           <span>Correct?</span>
                      </label>
                   </div>
@@ -46,7 +46,7 @@
         </div>
         <div class="" *ngIf="quizQuestions.length > 0">
           <div class="col s12 input-field">
-              <div class="btn col s12" (click)="submitQuiz()">Send Quiz</div>
+              <button mat-raised-button color="primary" class="button" (click)="submitQuiz()">Send Quiz</button>
           </div>
         </div>
       </div>

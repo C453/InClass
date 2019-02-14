@@ -1,7 +1,8 @@
 <div *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
   <a (click)="dropCourse()" mat-raised-button color="warn" class="button">Drop Course</a>
 </div>
-<div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
+<div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
+            && !activeQuiz">
   <a (click)="createQuiz()" mat-raised-button color="primary" class="button">Create New Quiz</a>
 </div>
 <div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
