@@ -103,8 +103,6 @@ export class CreateQuizComponent implements OnInit {
         correct: correctIndex,
       }
 
-      console.log(questionObject);
-
       this.authTokenService.post('quiz_questions', questionObject);
     });
   }
