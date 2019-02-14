@@ -5,9 +5,9 @@
               <h4 class="grey-text text-darken-2">Quiz</h4>
               <h3 class="grey-text text-darken-2">{{curQuizQuestion.text}}</h3>
               <form (ngSubmit)="submitQuiz()" #f="ngForm">
-                  <p *ngFor="let answer of curQuizQuestion.answers">
+                  <p *ngFor="let answer of curQuizQuestion.answers; let i = index">
                       <label>
-                        <input class="with-gap" name="group1" type="radio" checked />
+                        <input class="with-gap" name="selectedAnswer" value="index" type="radio" checked />
                         <span>{{answer}}</span>
                       </label>
                     </p>

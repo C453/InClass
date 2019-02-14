@@ -10,13 +10,17 @@ export class TakeQuizComponent implements OnInit {
 
   modalActions = new EventEmitter<string|MaterializeAction>();
   curQuizQuestion;
+  selectedAnswer;
 
   constructor() {
+
     this.curQuizQuestion = {
       text: "",
       answers: [],
       correct: -1
-    }
+    };
+
+    this.selectedAnswer = -1
    }
 
   ngOnInit() {
@@ -27,8 +31,10 @@ export class TakeQuizComponent implements OnInit {
     this.curQuizQuestion = QuizQuestion;
   }
 
+
   submitQuiz () {
-    console.log("QUIZ SUBMITTED");
+    var selectedAnswer = document.getElementsByName("selectedAnswer")
+    console.log(selectedAnswer)
     this.closeQuiz();
   }
 
