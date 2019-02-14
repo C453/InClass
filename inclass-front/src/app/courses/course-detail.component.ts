@@ -6,6 +6,7 @@ import { Course } from '../models/course.model';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateQuizComponent } from '../quizzes/create-quiz/create-quiz.component';
 import { Subscription } from 'rxjs';
+import { ActionCableService, Channel } from 'angular2-actioncable';
 
 @Component({
   selector: 'app-course-detail',
@@ -14,7 +15,9 @@ import { Subscription } from 'rxjs';
 })
 export class CourseDetailComponent implements OnInit {
 
-  subscription: Subscription;
+  addQuizSubscription: Subscription;
+  closeQuizSubscription: Subscription;
+
   @ViewChild('createQuizDialog') createQuizComponent: CreateQuizComponent;
   courseData: Course;
   courseDocuments: Object[];
@@ -22,7 +25,9 @@ export class CourseDetailComponent implements OnInit {
   activeQuizQuestions;
 
   constructor(public authTokenService: Angular2TokenService,
-    public authService: AuthService, private actr: ActivatedRoute, private router: Router) {
+    public authService: AuthService, private actr: ActivatedRoute, 
+    private router: Router,
+    private cableService: ActionCableService) {
       this.actr.data.map(data => data.cres.json()).subscribe(res => {
         this.courseData = res;
         this.getActiveQuiz();
@@ -34,7 +39,27 @@ export class CourseDetailComponent implements OnInit {
     this.authTokenService.get('documents', { params: { course: this.courseData.id }}).subscribe(res => {
       this.courseDocuments = res.json();
       console.log(this.courseDocuments);
-    })
+    });
+
+    const addQuizChannel: Channel = this.cableService
+    .cable('ws://127.0.0.1:3000/cable')
+    .channel('AddQuizChannel', { user_id: this.authTokenService.currentUserData.id });
+
+    const closeQuizChannel: Channel = this.cableService
+    .cable('ws://127.0.0.1:3000/cable')
+    .channel('CloseQuizChannel', { user_id: this.authTokenService.currentUserData.id });
+
+    this.addQuizSubscription = addQuizChannel.received().subscribe(quiz => {
+      if (quiz.course_id === this.courseData.id) {
+        this.getActiveQuiz();
+      }
+    });
+
+    this.closeQuizSubscription = closeQuizChannel.received().subscribe(quiz => {
+      if (quiz.course_id === this.courseData.id) {
+        this.activeQuiz = undefined;
+      }
+    });
   }
 
   getActiveQuiz() {

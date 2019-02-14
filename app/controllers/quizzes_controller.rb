@@ -18,6 +18,11 @@ class QuizzesController < ApplicationController
     @quiz = Quiz.new(quiz_params)
     puts quiz_params
     if @quiz.save
+      ActionCable.server.broadcast "add_quiz_channel", status: 'saved',
+      id: @quiz.id,
+      status: @quiz.status,
+      course_id: @quiz.course_id
+
       render json: @quiz, status: :created, location: @quiz
     else
       render json: @quiz.errors, status: :unprocessable_entity
@@ -48,6 +53,11 @@ class QuizzesController < ApplicationController
     @quiz.status = false
     
     if @quiz.save
+      ActionCable.server.broadcast "close_quiz_channel", status: 'saved',
+      id: @quiz.id,
+      status: @quiz.status,
+      course_id: @quiz.course_id
+
       render json: @quiz, status: :created, location: @quiz
     else
       render json: @quiz.errors, status: :unprocessable_entity
