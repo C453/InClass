@@ -67,7 +67,7 @@ export class CourseDetailComponent implements OnInit {
     this.authTokenService.get('questions', { params: { course: this.courseData.id } }).subscribe(res => {
       this.courseQuestions = res.json();
       console.log(this.courseQuestions);
-      
+
       // create connection to stream course data
       const courseChannel: Channel = this.cableService
         .cable('ws://127.0.0.1:3000/cable')
@@ -109,6 +109,8 @@ export class CourseDetailComponent implements OnInit {
             if (left.yeah_count < right.yeah_count) return 1;
             return 0;
           });
+        } else if (data.status === 'question_answered') {
+          this.courseQuestions = this.courseQuestions.filter(q => q.id !== data.id);
         }
       });
     })
@@ -168,8 +170,10 @@ export class CourseDetailComponent implements OnInit {
     return this.courseQuestions.filter(q => q.id === id)[0].yeahs.includes(this.authTokenService.currentUserData.id.toString());
   }
 
-  answerQuestion() {
-
+  answerQuestion(question: Question) {
+    this.authTokenService.post('answer_question', { question: question.id }).subscribe(res => {
+      console.log(res.json());
+    });
   }
 
   InputOverviewExample() { }

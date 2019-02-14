@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
   # GET /questions
   def index
     params.require(:course)
-    @questions = Course.find(params[:course]).questions
+    @questions = Course.find(params[:course]).questions.select {|q| q.answered == false}
 
     render json: @questions
   end

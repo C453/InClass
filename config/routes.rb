@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   post 'yeah', to: 'yeah_question#yeah'
   post 'unyeah', to: 'yeah_question#unyeah'
-  
+  post 'answer_question', to: 'yeah_question#answer_question'
   resources :questions
   resources :quiz_submissions
 
