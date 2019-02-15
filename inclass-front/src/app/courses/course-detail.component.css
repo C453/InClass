@@ -9,6 +9,7 @@
 	
 }
 
+
 .full-width {
   width: 100%;
 }
@@ -26,6 +27,7 @@ textarea {
 .timestamp{
 	color: LightGrey;
 	font-size: 10px;
+	
 }
 
 .yeahButton {
@@ -68,7 +70,5 @@ textarea {
 	position:relative;
 	top:1px;
 }
-
-        
 
         
