@@ -39,7 +39,7 @@ export class TakeQuizComponent implements OnInit {
     }
 
     this.authTokenService.post("quiz_submissions",
-      { quiz_id: this.curQuiz.id, score: score, course_id: this.curQuiz.course_id}).subscribe(result => {
+      { quiz_id: this.curQuiz.id, score: score, course_id: this.curQuiz.course_id }).subscribe(result => {
       if(result.status == 201) {
         this.closeQuiz();
       }

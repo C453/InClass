@@ -58,18 +58,6 @@ export class CourseDetailComponent implements OnInit {
     .cable('ws://127.0.0.1:3000/cable')
     .channel('CloseQuizChannel', { user_id: this.authTokenService.currentUserData.id });
 
-    this.addQuizSubscription = addQuizChannel.received().subscribe(quiz => {
-      if (quiz.course_id === this.courseData.id) {
-        this.getActiveQuiz();
-      }
-    });
-
-    this.closeQuizSubscription = closeQuizChannel.received().subscribe(quiz => {
-      if (quiz.course_id === this.courseData.id) {
-        this.activeQuiz = undefined;
-      }
-    });
-
     // get all questions via REST
     this.authTokenService.get('questions', { params: { course: this.courseData.id } }).subscribe(res => {
       this.courseQuestions = res.json();
@@ -90,7 +78,6 @@ export class CourseDetailComponent implements OnInit {
 
       // when the server streams us course data
       this.subscription = courseChannel.received().subscribe(data => {
-        console.log(data);
         if (data.status === 'new_question') {
           // create a new question
           var newQuestion = new Question();
@@ -118,6 +105,10 @@ export class CourseDetailComponent implements OnInit {
           });
         } else if (data.status === 'question_answered') {
           this.courseQuestions = this.courseQuestions.filter(q => q.id !== data.id);
+        } else if (data.status === 'new_quiz') {
+          this.getActiveQuiz();
+        } else if (data.status === 'close_quiz') {
+          this.activeQuiz = undefined;
         }
       });
     })

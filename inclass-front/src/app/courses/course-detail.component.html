@@ -48,9 +48,9 @@
         <a (click)="postQuestion()" style="float:right;" mat-raised-button color="primary" class="button">Ask Question</a>
       </div>
       <div class="table-container">
-        <table class="courses highlight">
+        <table class="courseshighlight" margin="0px">
           <tr *ngFor="let question of courseQuestions">
-            <td>{{question.question}} <span class="timestamp">{{question.created_at | date : "hh:mm a"}}</span></td>
+            <td>{{question.question}} <span class="timestamp">{{question.created_at | date : "hh:mm a"}} {{"(" + question.yeah_count + " Yeahs)"}}</span></td>
             <td *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()); else instructor">
               <a (click)="yeahQuestion(question)" style="float:right;"
                 class="yeahButton" id="yeah_{{question.id}}">
@@ -58,8 +58,7 @@
               </a>
             </td>
             <ng-template #instructor>
-              <td><a (click)="answerQuestion(question)" style="float:right;" class="yeahButton">Mark Answered
-                </a></td>
+              <td><a (click)="answerQuestion(question)" padding="0px" style="float:right" class="yeahButton">Mark Answered</a> </td>
             </ng-template>
           </tr>
           <tr *ngIf="courseQuestions?.length == 0">
