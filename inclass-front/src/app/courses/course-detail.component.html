@@ -55,7 +55,16 @@
       <div class="table-container">
         <table class="courseshighlight" margin="0px">
           <tr *ngFor="let question of courseQuestions">
-            <td>{{question.question}} <span class="timestamp">{{question.created_at | date : "hh:mm a"}} {{"(" + question.yeah_count + " Yeahs)"}}</span></td>
+            <td>{{question.question}}
+              <span *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()); else instructor_yeahs" class="timestamp">
+                {{question.created_at | date : "hh:mm a"}}
+              </span>
+              <ng-template #instructor_yeahs>
+                  <span class="timestamp">
+                      {{question.created_at | date : "hh:mm a"}} {{"(" + question.yeah_count + " Yeahs)"}}
+                    </span>
+              </ng-template>
+            </td>
             <td *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()); else instructor">
               <a (click)="yeahQuestion(question)" style="float:right;"
                 class="yeahButton" id="yeah_{{question.id}}">

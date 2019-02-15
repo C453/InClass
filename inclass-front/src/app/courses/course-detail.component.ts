@@ -85,6 +85,7 @@ export class CourseDetailComponent implements OnInit {
           newQuestion.user_id = data.user_id;
           newQuestion.question = data.question;
           newQuestion.yeah_count = data.yeah_count;
+          newQuestion.yeahs = data.yeahs;
           newQuestion.course_id = data.course_id;
           newQuestion.answered = data.answered;
           newQuestion.created_at = data.created_at;
@@ -164,10 +165,6 @@ export class CourseDetailComponent implements OnInit {
       
       document.getElementById("yeah_" + question.id).innerHTML = question.yeahs.includes(this.authTokenService.currentUserData.id.toString()) ? "Unyeah! " + question.yeah_count : "Yeah! " + question.yeah_count
     })
-  }
-
-  questionYeahed(id: number) {
-    return this.courseQuestions.filter(q => q.id === id)[0].yeahs.includes(this.authTokenService.currentUserData.id.toString());
   }
 
   answerQuestion(question: Question) {
