@@ -129,9 +129,12 @@ export class CourseDetailComponent implements OnInit {
   getActiveQuiz() {
     this.authTokenService.get('get_active_quiz/' + this.courseData.id).subscribe(res => {
       this.activeQuiz = res.json();
+      console.log(this.activeQuiz)
       this.authTokenService.get('get_active_quiz_questions/' + this.activeQuiz.id)
         .subscribe(questionRes => {
         this.activeQuizQuestions = questionRes.json();
+        console.log(this.activeQuizQuestions)
+        // this.takeQuizComponent.takeQuiz(this.activeQuizQuestions)
       });
     });
   }
@@ -193,6 +196,10 @@ export class CourseDetailComponent implements OnInit {
   }
   createQuiz() {
     this.createQuizComponent.openDialog();
+  }
+
+  displayQuiz () {
+    this.takeQuizComponent.takeQuiz(this.activeQuizQuestions, this.activeQuiz)
   }
 
   closeQuiz() {

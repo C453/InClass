@@ -45,15 +45,6 @@ ActiveRecord::Schema.define(version: 2019_02_13_051002) do
     t.index ["course_id"], name: "index_documents_on_course_id"
   end
 
-<<<<<<< HEAD
-  create_table "quiz_answers", force: :cascade do |t|
-    t.string "text"
-    t.boolean "correct"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "quiz_question_id"
-    t.index ["quiz_question_id"], name: "index_quiz_answers_on_quiz_question_id"
-=======
   create_table "questions", force: :cascade do |t|
     t.bigint "user_id"
     t.text "question"
@@ -65,7 +56,15 @@ ActiveRecord::Schema.define(version: 2019_02_13_051002) do
     t.string "yeahs", default: [], array: true
     t.index ["course_id"], name: "index_questions_on_course_id"
     t.index ["user_id"], name: "index_questions_on_user_id"
->>>>>>> master
+  end
+
+  create_table "quiz_answers", force: :cascade do |t|
+    t.string "text"
+    t.boolean "correct"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "quiz_question_id"
+    t.index ["quiz_question_id"], name: "index_quiz_answers_on_quiz_question_id"
   end
 
   create_table "quiz_questions", force: :cascade do |t|
