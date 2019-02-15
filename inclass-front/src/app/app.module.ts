@@ -63,6 +63,7 @@ import { CourseDetailComponent } from './courses/course-detail.component';
 import { CourseQuizComponent } from './quizzes/course-quiz/course-quiz.component';
 import { CreateQuizComponent } from './quizzes/create-quiz/create-quiz.component'
 import { CreateCourseDialogComponent } from './create-course-dialog/create-course-dialog.component';
+import { TakeQuizComponent } from './quizzes/take-quiz/take-quiz.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { CreateCourseDialogComponent } from './create-course-dialog/create-cours
     CreateCourseDialogComponent,
     CourseQuizComponent,
     CreateQuizComponent,
+    TakeQuizComponent
   ],
   imports: [
     BrowserModule,

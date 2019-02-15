@@ -4,7 +4,11 @@ import { Angular2TokenService } from "angular2-token";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from '../models/course.model';
 import { RouterModule, Routes } from '@angular/router';
+
 import { CreateQuizComponent } from '../quizzes/create-quiz/create-quiz.component';
+import { CourseQuizComponent } from "../quizzes/course-quiz/course-quiz.component";
+import { TakeQuizComponent } from "../quizzes/take-quiz/take-quiz.component";
+
 import { Subscription } from 'rxjs';
 import { Question } from '../models/question.model';
 import { ActionCableService, Channel } from 'angular2-actioncable';
@@ -21,6 +25,9 @@ export class CourseDetailComponent implements OnInit {
   closeQuizSubscription: Subscription;
 
   @ViewChild('createQuizDialog') createQuizComponent: CreateQuizComponent;
+  @ViewChild('openQuiz') courseQuizComponent: CourseQuizComponent;
+  @ViewChild('takeQuiz') takeQuizComponent: TakeQuizComponent;
+
   courseData: Course;
   courseDocuments: Object[];
   courseQuestions: Question[];
@@ -113,10 +120,12 @@ export class CourseDetailComponent implements OnInit {
   getActiveQuiz() {
     this.authTokenService.get('get_active_quiz/' + this.courseData.id).subscribe(res => {
       this.activeQuiz = res.json();
-      
+      console.log(this.activeQuiz)
       this.authTokenService.get('get_active_quiz_questions/' + this.activeQuiz.id)
         .subscribe(questionRes => {
         this.activeQuizQuestions = questionRes.json();
+        console.log(this.activeQuizQuestions)
+        // this.takeQuizComponent.takeQuiz(this.activeQuizQuestions)
       });
     });
   }
@@ -178,6 +187,10 @@ export class CourseDetailComponent implements OnInit {
   }
   createQuiz() {
     this.createQuizComponent.openDialog();
+  }
+
+  displayQuiz () {
+    this.takeQuizComponent.takeQuiz(this.activeQuizQuestions, this.activeQuiz)
   }
 
   closeQuiz() {

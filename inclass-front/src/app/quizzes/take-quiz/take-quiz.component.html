@@ -1,0 +1,24 @@
+<div class="modal" materialize="modal" [materializeActions]="modalActions">
+    <div class="modal-content">
+         <div class="row">
+            <div class="">
+                <h4 class="grey-text text-darken-2">Quiz</h4>
+                <form (ngSubmit)="submitQuiz()" #f="ngForm">
+                        <h3 class="grey-text text-darken-2">{{curQuiz.text}}</h3>
+                        <p *ngFor="let answer of curQuizQuestion.answers; let i = index">
+                            
+                            
+                                <label>
+                                    <input class="with-gap" name="selectedAnswer" value={{i}} type="radio" (change)="changeAnswer($event)" />
+                                    <span>{{answer}}</span>
+                                </label>
+                            
+                        </p>
+                    <button type="submit" class="btn waves-effect waves-light">Submit Answer
+                        <i class="material-icons right">send</i>
+                    </button> 
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
