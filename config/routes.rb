@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   post 'unyeah', to: 'yeah_question#unyeah'
   post 'answer_question', to: 'yeah_question#answer_question'
   resources :questions
+
   resources :quiz_submissions
+  get 'get_quiz_submissions/:course_id/:quiz_id', to: 'quiz_submissions#get_quiz_submissions'
 
   resources :quiz_questions
   get 'get_active_quiz_questions/:quiz_id', to: 'quiz_questions#get_active_quiz_questions'

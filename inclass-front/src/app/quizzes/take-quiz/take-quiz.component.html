@@ -3,20 +3,22 @@
          <div class="row">
             <div class="">
                 <h3 class="grey-text text-darken-2">Quiz</h3>
-                <form (ngSubmit)="submitQuiz()" #f="ngForm" *ngFor="let question of curQuizQuestions; let i = index">
+                <form (ngSubmit)="submitQuiz()" #f="ngForm" id="quiz">
+                    <form *ngFor="let question of curQuizQuestions; let i = index" id="quiz{{i}}">
                     <p></p>
                         <h4 class="grey-text text-darken-2">{{question.text}}</h4>
                         <p *ngFor="let answer of question.answers; let j = index">
                                 <label>
-                                    <input class="with-gap" name="selectedAnswer" value={{j}} type="radio" (change)="changeAnswer($event)" />
+                                    <input class="with-gap" name="selectedAnswer" value={{j}} type="radio" />
                                     <span>{{answer}}</span>
                                 </label>
                         </p>
+                    </form>
+                    <p></p>
+                    <button type="submit" mat-raised-button color="primary">Submit Answer
+                            <i class="material-icons">send</i>
+                    </button> 
                 </form>
-                <p></p>
-                <button type="submit" class="btn waves-effect waves-light">Submit Answer
-                        <i class="material-icons right">send</i>
-                </button> 
             </div>
         </div>
     </div>

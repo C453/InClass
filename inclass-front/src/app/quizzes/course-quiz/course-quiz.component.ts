@@ -13,21 +13,49 @@ export class CourseQuizComponent implements OnInit {
 
   recentQuizQuestions;
   submissions;
+  quiz;
+  course;
+  average;
 
   modalActions = new EventEmitter<string|MaterializeAction>();
   
   constructor(public authTokenService: Angular2TokenService,
-    public authService: AuthService) { }
+    public authService: AuthService) {
+      this.submissions = []
+     }
 
   ngOnInit() {
+    
   }
 
-  seeResults (quizId) {
+  seeResults (quizId, courseId) {
+    this.quiz = quizId
+    this.course = courseId
+
     this.authTokenService.get('get_recent_quiz_questions/' + quizId).subscribe(result =>{
       this.recentQuizQuestions = result.json()
-      console.log(this.recentQuizQuestions)
+
+      this.authTokenService.get('get_quiz_submissions/' + this.course + '/' + this.quiz).subscribe(result => {
+        this.submissions = result.json()
+        this.processSubmissions()
+      })
     })
+
+    
+
     this.modalActions.emit({action:"modal", params:['open']});
+  }
+
+  processSubmissions () {
+    this.average = 0;
+    var total = this.recentQuizQuestions.length
+    var amt = this.submissions.length
+
+    for (var i = 0; i < amt; i++) {
+      this.average += this.submissions[i].score
+    }
+    this.average = (this.average / total) * 100
+    
   }
 
   closeResults () {

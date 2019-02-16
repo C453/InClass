@@ -2,7 +2,7 @@
     <div class="modal-content">
         <div class="row">
             <div class="">
-                <h4 class="grey-text text-darken-2">Quiz Results</h4>
+                <h4 class="grey-text text-darken-2">Quiz Results | Average: {{this.average}}%</h4>
                     <div *ngFor="let question of recentQuizQuestions; let i = index">
                     <h3 class="grey-text text-darken-2">{{question.text}}</h3>
                     <form (ngSubmit)="openQuiz()" #f="ngForm">

@@ -136,7 +136,6 @@ export class CourseDetailComponent implements OnInit {
   getRecentQuiz () {
     this.authTokenService.get('get_recent_quiz/' + this.courseData.id).subscribe(result =>{
         this.recentQuiz = result.json();
-        console.log(this.recentQuiz)
     });
   }
 
@@ -209,8 +208,7 @@ export class CourseDetailComponent implements OnInit {
   }
 
   openResults () {
-    console.log(this.recentQuiz)
-    this.courseQuizComponent.seeResults(this.recentQuiz.id)
+    this.courseQuizComponent.seeResults(this.recentQuiz.id, this.courseData.id)
   }
 }
 
