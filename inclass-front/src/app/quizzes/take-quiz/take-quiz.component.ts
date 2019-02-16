@@ -13,38 +13,43 @@ export class TakeQuizComponent implements OnInit {
   modalActions = new EventEmitter<string|MaterializeAction>();
   selectedAnswer;
 
-  curQuizQuestion;
+  curQuizQuestions;
   curQuiz;
 
   constructor(public authTokenService: Angular2TokenService,
     public authService: AuthService) {
     this.curQuiz = {}
-    this.curQuizQuestion = {}
+    this.selectedAnswer = -1;
   }
 
   ngOnInit() {
   }
 
-  takeQuiz (quizQuestion, quiz) {
+  takeQuiz (quizQuestions, quiz) {
     this.curQuiz = quiz
-    this.curQuizQuestion = quizQuestion;
+    this.curQuizQuestions = quizQuestions;
+    console.log(this.curQuizQuestions)
     this.modalActions.emit({action:"modal", params:['open']});
-    
   }
 
   submitQuiz () {
-    var score = 0;
-    if (this.curQuizQuestion.correct == this.selectedAnswer) {
-      score += 1
-    }
 
-    this.authTokenService.post("quiz_submissions",
-      { quiz_id: this.curQuiz.id, score: score, course_id: this.curQuiz.course_id }).subscribe(result => {
-      if(result.status == 201) {
-        this.closeQuiz();
+    if (this.selectedAnswer == -1) {
+      alert("Please select an answer.")
+    }
+    else {
+      var score = 0;
+      if (this.curQuizQuestions.correct == this.selectedAnswer) {
+        score += 1
       }
-    })
-    
+
+      this.authTokenService.post("quiz_submissions",
+        { quiz_id: this.curQuiz.id, score: score, course_id: this.curQuiz.course_id }).subscribe(result => {
+        if(result.status == 201) {
+          this.closeQuiz();
+        }
+      })
+    }
   }
 
   closeQuiz () {
