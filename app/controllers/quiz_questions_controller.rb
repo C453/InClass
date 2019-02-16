@@ -40,8 +40,13 @@ class QuizQuestionsController < ApplicationController
   end
 
   def get_active_quiz_questions
-    @active_quiz_questions = QuizQuestion.find_by(quiz_id: params[:quiz_id])
+    @active_quiz_questions = QuizQuestion.where(quiz_id: params[:quiz_id])
     render json: @active_quiz_questions
+  end
+
+  def get_recent_quiz_questions
+    @recent_questions = QuizQuestion.where(quiz_id: params[:quiz_id])
+    render json: @recent_questions
   end
 
   private

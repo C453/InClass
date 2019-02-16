@@ -24,6 +24,11 @@ class QuizSubmissionsController < ApplicationController
     end
   end
 
+  def get_quiz_submissions
+    @quiz_sub = QuizSubmission.where(quiz_id: params[:quiz_id], course_id: params[:course_id])
+    render json: @quiz_sub
+  end
+
   # PATCH/PUT /quiz_submissions/1
   def update
     if @quiz_submission.update(quiz_submission_params)
@@ -46,6 +51,6 @@ class QuizSubmissionsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def quiz_submission_params
-      params.require(:quiz_submission).permit(:score)
+      params.require(:quiz_submission).permit(:score, :quiz_id, :course_id)
     end
 end

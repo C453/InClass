@@ -25,7 +25,7 @@ export class CourseDetailComponent implements OnInit {
   closeQuizSubscription: Subscription;
 
   @ViewChild('createQuizDialog') createQuizComponent: CreateQuizComponent;
-  @ViewChild('openQuiz') courseQuizComponent: CourseQuizComponent;
+  @ViewChild('seeResults') courseQuizComponent: CourseQuizComponent;
   @ViewChild('takeQuiz') takeQuizComponent: TakeQuizComponent;
 
   courseData: Course;
@@ -34,6 +34,8 @@ export class CourseDetailComponent implements OnInit {
   activeQuiz;
   activeQuizQuestions;
   questionArea: string;
+  recentQuiz;
+  recentQuizQuestions;
 
   constructor(public authTokenService: Angular2TokenService,
     public authService: AuthService, private actr: ActivatedRoute, private router: Router, private cableService: ActionCableService, public nav: NavbarService) {
@@ -114,6 +116,9 @@ export class CourseDetailComponent implements OnInit {
       });
     })
 
+    // Get the most recent quiz that isn't active
+    this.getRecentQuiz();
+    
     // set the title of the navbar to the course name
     this.nav.title = this.courseData.name;
   }
@@ -121,13 +126,16 @@ export class CourseDetailComponent implements OnInit {
   getActiveQuiz() {
     this.authTokenService.get('get_active_quiz/' + this.courseData.id).subscribe(res => {
       this.activeQuiz = res.json();
-      console.log(this.activeQuiz)
       this.authTokenService.get('get_active_quiz_questions/' + this.activeQuiz.id)
         .subscribe(questionRes => {
         this.activeQuizQuestions = questionRes.json();
-        console.log(this.activeQuizQuestions)
-        // this.takeQuizComponent.takeQuiz(this.activeQuizQuestions)
       });
+    });
+  }
+
+  getRecentQuiz () {
+    this.authTokenService.get('get_recent_quiz/' + this.courseData.id).subscribe(result =>{
+        this.recentQuiz = result.json();
     });
   }
 
@@ -198,4 +206,10 @@ export class CourseDetailComponent implements OnInit {
       }
     });
   }
+
+  openResults () {
+    this.courseQuizComponent.seeResults(this.recentQuiz.id, this.courseData.id)
+  }
 }
+
+

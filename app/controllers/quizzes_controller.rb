@@ -47,6 +47,11 @@ class QuizzesController < ApplicationController
     render json: @active_quiz
   end
 
+  def get_recent_quiz
+    @quiz = Quiz.where(course_id: params[:course_id], status: false).last
+    render json: @quiz
+  end
+
   def close_quiz
     @quiz = Quiz.find_by(id: params[:id])
     @quiz.status = false

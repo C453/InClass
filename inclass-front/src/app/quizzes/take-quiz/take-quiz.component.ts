@@ -11,48 +11,95 @@ import { Angular2TokenService } from "angular2-token";
 })
 export class TakeQuizComponent implements OnInit {
   modalActions = new EventEmitter<string|MaterializeAction>();
-  selectedAnswer;
+  selectedAnswers;
 
-  curQuizQuestion;
+  curQuizQuestions;
   curQuiz;
+  grade;
 
   constructor(public authTokenService: Angular2TokenService,
     public authService: AuthService) {
     this.curQuiz = {}
-    this.curQuizQuestion = {}
+    this.selectedAnswers = [];
+    
   }
 
   ngOnInit() {
+    this.grade = 0;
   }
 
-  takeQuiz (quizQuestion, quiz) {
+  takeQuiz (quizQuestions, quiz) {
     this.curQuiz = quiz
-    this.curQuizQuestion = quizQuestion;
+    this.curQuizQuestions = quizQuestions;
     this.modalActions.emit({action:"modal", params:['open']});
-    
   }
 
   submitQuiz () {
-    var score = 0;
-    if (this.curQuizQuestion.correct == this.selectedAnswer) {
-      score += 1
+    if (this.validForm()){
+      this.grade = 0;
+      this.processQuestions()
+      // Put this out side of conditional for bug, it will keep adding score
+      this.authTokenService.post("quiz_submissions",
+        { quiz_id: this.curQuiz.id, score: this.grade, course_id: this.curQuiz.course_id }).subscribe(result => {
+        if(result.status == 201) {
+          this.closeQuiz();
+        }
+      })
+      
+    }
+    else{
+      alert("Please fill out the whole quiz")
+    }
+    
+  }
+
+  processQuestions () {
+    var quizToGrade;
+    var correctAnswer;
+
+    for(var i = 0; i < this.curQuizQuestions.length; i++) {
+
+        quizToGrade = document.forms[`quiz${i}`]
+        correctAnswer = this.curQuizQuestions[i].correct
+
+        var inputs = quizToGrade.getElementsByTagName("input")
+
+        for (var j = 0; j < inputs.length; j++) {
+          if ((inputs[j].checked == true) && (j == correctAnswer)) {
+            this.grade++
+          }
+        }
+      }
+  }
+
+  validForm () {
+    var buttons = 0
+    var form;
+
+    for(var i = 0; i < this.curQuizQuestions.length; i++) {
+
+      form = document.forms[`quiz${i}`]
+
+
+      var inputs = form.getElementsByTagName("input")
+
+      for (var j = 0; j < inputs.length; j++) {
+        if ((inputs[j].checked == true)) {
+          buttons++;
+        }
+        else {
+          buttons--;
+        }
+      }
     }
 
-    this.authTokenService.post("quiz_submissions",
-      { quiz_id: this.curQuiz.id, score: score, course_id: this.curQuiz.course_id }).subscribe(result => {
-      if(result.status == 201) {
-        this.closeQuiz();
-      }
-    })
-    
+    if (buttons < 0) {
+      return false
+    }
+    return true
   }
 
   closeQuiz () {
     this.modalActions.emit({action: "modal", params:['close']});
   }
-
-  changeAnswer (event: any) {
-    this.selectedAnswer = event.target.value
-  }
-
 }
