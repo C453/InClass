@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import { Question } from '../models/question.model';
 import { ActionCableService, Channel } from 'angular2-actioncable';
 import { NavbarService } from '../services/navbar.service';
+import { ViewPowerpointDialogComponent } from '../view-powerpoint-dialog/view-powerpoint-dialog.component';
 
 @Component({
   selector: 'app-course-detail',
@@ -27,6 +28,7 @@ export class CourseDetailComponent implements OnInit {
   @ViewChild('createQuizDialog') createQuizComponent: CreateQuizComponent;
   @ViewChild('seeResults') courseQuizComponent: CourseQuizComponent;
   @ViewChild('takeQuiz') takeQuizComponent: TakeQuizComponent;
+  @ViewChild('viewPowerpoint') viewPowerpointDialogComponent: ViewPowerpointDialogComponent;
 
   courseData: Course;
   courseDocuments: Object[];
@@ -36,6 +38,7 @@ export class CourseDetailComponent implements OnInit {
   questionArea: string;
   recentQuiz;
   recentQuizQuestions;
+  activePowerpoint = "../../../assets/Test Presentation.pdf";
 
   constructor(public authTokenService: Angular2TokenService,
     public authService: AuthService, private actr: ActivatedRoute, private router: Router, private cableService: ActionCableService, public nav: NavbarService) {
@@ -209,6 +212,10 @@ export class CourseDetailComponent implements OnInit {
 
   openResults () {
     this.courseQuizComponent.seeResults(this.recentQuiz.id, this.courseData.id)
+  }
+
+  displayPowerpoint() {
+    this.viewPowerpointDialogComponent.openDialog();
   }
 }
 

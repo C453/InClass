@@ -1,0 +1,12 @@
+<div class="modal modal-form" materialize="modal" [materializeActions]="modalActions">
+  <div class="modal-content">
+    <div style="width: 500px; height: 300px; border: 1px solid black;">
+      <pdf-viewer 
+      [show-all]="false"
+      [original-size]="false"
+      [src]="powerpointSource" 
+      [render-text]="true"
+      [page]="3"
+    ></pdf-viewer>
+  </div>
+</div>

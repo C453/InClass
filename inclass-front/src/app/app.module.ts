@@ -12,6 +12,7 @@ import { Angular2TokenService } from 'angular2-token';
 import {AuthService} from "./services/auth.service";
 import { ActionCableService, Channel } from 'angular2-actioncable';
 import {AuthGuard} from "./guards/auth.guard";
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 import {
   MatAutocompleteModule,
@@ -64,6 +65,7 @@ import { CourseQuizComponent } from './quizzes/course-quiz/course-quiz.component
 import { CreateQuizComponent } from './quizzes/create-quiz/create-quiz.component'
 import { CreateCourseDialogComponent } from './create-course-dialog/create-course-dialog.component';
 import { TakeQuizComponent } from './quizzes/take-quiz/take-quiz.component';
+import { ViewPowerpointDialogComponent } from './view-powerpoint-dialog/view-powerpoint-dialog.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +83,8 @@ import { TakeQuizComponent } from './quizzes/take-quiz/take-quiz.component';
     CreateCourseDialogComponent,
     CourseQuizComponent,
     CreateQuizComponent,
-    TakeQuizComponent
+    TakeQuizComponent,
+    ViewPowerpointDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -126,6 +129,7 @@ import { TakeQuizComponent } from './quizzes/take-quiz/take-quiz.component';
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+    PdfViewerModule
   ],
   providers: [ 
     Angular2TokenService,
