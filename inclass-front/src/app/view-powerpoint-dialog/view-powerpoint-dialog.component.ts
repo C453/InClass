@@ -10,6 +10,9 @@ import { Angular2TokenService } from 'angular2-token';
 })
 export class ViewPowerpointDialogComponent implements OnInit {
   @Input() powerpointSource: string;
+  @Input() professorPage: number;
+  page: number;
+
   modalActions = new EventEmitter<string|MaterializeAction>();
 
   constructor(public authTokenService: Angular2TokenService,
@@ -24,5 +27,17 @@ export class ViewPowerpointDialogComponent implements OnInit {
 
   closeDialog(){
     this.modalActions.emit({action:"modal", params:['close']});
+  }
+
+  goBack() {
+    this.page--;
+  }
+
+  goForward() {
+    this.page++;
+  }
+
+  catchUpPage() {
+    this.page = this.professorPage;
   }
 }

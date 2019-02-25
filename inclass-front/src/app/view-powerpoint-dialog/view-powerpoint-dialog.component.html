@@ -1,12 +1,21 @@
 <div class="modal modal-form" materialize="modal" [materializeActions]="modalActions">
   <div class="modal-content">
-    <div style="width: 500px; height: 300px; border: 1px solid black;">
-      <pdf-viewer 
-      [show-all]="false"
-      [original-size]="false"
-      [src]="powerpointSource" 
-      [render-text]="true"
-      [page]="3"
-    ></pdf-viewer>
+    <div class="pdf-container">
+      <div class="viewer-container">
+        <pdf-viewer
+          [original-size]="false"
+          [src]="powerpointSource" 
+          [render-text]="true"
+          [page]="3"
+          [show-all]="false"
+          ></pdf-viewer>
+        </div>
+    </div>
+    <div class="buttons"> 
+      <a (click)="goBack()" mat-raised-button class="button mat-primary"><i class="fas fa-chevron-left"></i></a>
+      <a (click)="catchUpPage()" mat-raised-button class="button mat-primary">Catch Up</a>
+      <a (click)="goForward()" mat-raised-button class="button mat-primary"><i class="fas fa-chevron-right"></i></a>
+    </div>
   </div>
 </div>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
