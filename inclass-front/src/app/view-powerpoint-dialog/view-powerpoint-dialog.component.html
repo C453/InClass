@@ -6,15 +6,16 @@
           [original-size]="false"
           [src]="powerpointSource" 
           [render-text]="true"
-          [page]="3"
+          [page]="page"
           [show-all]="false"
           ></pdf-viewer>
         </div>
     </div>
     <div class="buttons"> 
       <a (click)="goBack()" mat-raised-button class="button mat-primary"><i class="fas fa-chevron-left"></i></a>
-      <a (click)="catchUpPage()" mat-raised-button class="button mat-primary">Catch Up</a>
+      <a (click)="catchUpPage()" mat-raised-button class="button mat-primary ">Go to Current</a>
       <a (click)="goForward()" mat-raised-button class="button mat-primary"><i class="fas fa-chevron-right"></i></a>
+      <a (click)="downloadSlides()" mat-raised-button class="button mat-primary green" href="{{powerpointSource}}" download><i class="fas fa-download"></i> Download Slides</a>
     </div>
   </div>
 </div>

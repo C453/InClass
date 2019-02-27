@@ -10,13 +10,16 @@ import { Angular2TokenService } from 'angular2-token';
 })
 export class ViewPowerpointDialogComponent implements OnInit {
   @Input() powerpointSource: string;
-  @Input() professorPage: number;
-  page: number;
+  @Input() professorPage: number = 1;
+  page: number = 1;
 
   modalActions = new EventEmitter<string|MaterializeAction>();
 
   constructor(public authTokenService: Angular2TokenService,
-    public authService: AuthService) { }
+    public authService: AuthService) { 
+      this.page++;
+      this.page--;
+    }
 
   ngOnInit() {
   }
@@ -30,10 +33,11 @@ export class ViewPowerpointDialogComponent implements OnInit {
   }
 
   goBack() {
-    this.page--;
+    if (this.page > 1) this.page--;
   }
 
   goForward() {
+    // TODO max page length
     this.page++;
   }
 
