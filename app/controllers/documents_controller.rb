@@ -30,7 +30,8 @@ class DocumentsController < ApplicationController
 
   # POST /documents
   def create
-    @document = Document.new(document_params)
+    course = Course.find(document_params[:course])
+    @document = Document.new(name: document_params[:name], expires: document_params[:expires], file: document_params[:file], public: true, course: course)
 
     if @document.save
       render json: @document, status: :created, location: @document
@@ -61,6 +62,6 @@ class DocumentsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def document_params
-      params.require(:document).permit(:name, :expires, :file, :public, :course)
+      params.permit(:name, :expires, :file, :public, :course)
     end
 end

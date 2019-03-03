@@ -66,6 +66,7 @@ import { CreateQuizComponent } from './quizzes/create-quiz/create-quiz.component
 import { CreateCourseDialogComponent } from './create-course-dialog/create-course-dialog.component';
 import { TakeQuizComponent } from './quizzes/take-quiz/take-quiz.component';
 import { ViewPowerpointDialogComponent } from './view-powerpoint-dialog/view-powerpoint-dialog.component';
+import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dialog.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { ViewPowerpointDialogComponent } from './view-powerpoint-dialog/view-pow
     CourseQuizComponent,
     CreateQuizComponent,
     TakeQuizComponent,
-    ViewPowerpointDialogComponent
+    ViewPowerpointDialogComponent,
+    FileUploadDialogComponent
   ],
   imports: [
     BrowserModule,

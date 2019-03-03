@@ -8,6 +8,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CreateQuizComponent } from '../quizzes/create-quiz/create-quiz.component';
 import { CourseQuizComponent } from "../quizzes/course-quiz/course-quiz.component";
 import { TakeQuizComponent } from "../quizzes/take-quiz/take-quiz.component";
+import { FileUploadDialogComponent } from "../file-upload-dialog/file-upload-dialog.component";
 
 import { Subscription } from 'rxjs';
 import { Question } from '../models/question.model';
@@ -25,6 +26,7 @@ export class CourseDetailComponent implements OnInit {
   addQuizSubscription: Subscription;
   closeQuizSubscription: Subscription;
 
+  @ViewChild('fileUploadDialog') uploadFileDialogComponet: FileUploadDialogComponent;
   @ViewChild('createQuizDialog') createQuizComponent: CreateQuizComponent;
   @ViewChild('seeResults') courseQuizComponent: CourseQuizComponent;
   @ViewChild('takeQuiz') takeQuizComponent: TakeQuizComponent;
@@ -208,6 +210,14 @@ export class CourseDetailComponent implements OnInit {
         this.activeQuizQuestions = undefined;
       }
     });
+  }
+
+  downloadFile(file) {
+    window.open("http://127.0.0.1:3000" + file.url);
+  }
+
+  uploadFile() {
+    this.uploadFileDialogComponet.openDialog();
   }
 
   openResults () {

@@ -79,4 +79,7 @@ textarea {
 	top:1px;
 }
 
-        
+.downloadBtn {
+	float: right;
+	margin-right: 5px;
+}
