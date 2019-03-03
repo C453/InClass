@@ -4,6 +4,7 @@ import { Angular2TokenService } from "angular2-token";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from '../models/course.model';
 import { RouterModule, Routes } from '@angular/router';
+import {formatDate} from '@angular/common';
 
 import { CreateQuizComponent } from '../quizzes/create-quiz/create-quiz.component';
 import { CourseQuizComponent } from "../quizzes/course-quiz/course-quiz.component";
@@ -114,6 +115,12 @@ export class CourseDetailComponent implements OnInit {
           this.getActiveQuiz();
         } else if (data.status === 'close_quiz') {
           this.activeQuiz = undefined;
+        } else if (data.status === 'open_attendance') {
+          // TODO: when attendance is opened
+        } else if (data.status === 'close_attendance') {
+          // TODO: when attendance is closed
+        } else if (data.status === 'attendance') {
+          // TODO: when someone marks themselves present
         }
       });
     })
@@ -219,6 +226,17 @@ export class CourseDetailComponent implements OnInit {
 
   openResults () {
     this.courseQuizComponent.seeResults(this.recentQuiz.id, this.courseData.id)
+  }
+
+  takeAttendance() {
+    var date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+
+    this.authTokenService.post('attendances', { date: date, course_id: this.courseData.id }).subscribe(res => {
+      res = res.json();
+      console.log(res);
+    });
+
+    // TODO: Get generated QR Code from response and display it in a dialog.
   }
 }
 

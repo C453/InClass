@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :attendances
+  post 'take_attendance', to: 'take_attendance#take_attendance'
   post 'yeah', to: 'yeah_question#yeah'
   post 'unyeah', to: 'yeah_question#unyeah'
   post 'answer_question', to: 'yeah_question#answer_question'
