@@ -17,7 +17,8 @@ class TakeAttendanceController < ApplicationController
                 attendance.users.push(current_user)
                 output = {'status' => 'success'}.to_json
 
-                ActionCable.server.broadcast "course:#{attendance.course_id}_channel", status: 'attendance'
+                ActionCable.server.broadcast "course:#{attendance.course_id}_channel", status: 'attendance',
+                user: current_user.id
             else
                 output = {'status' => 'already marked present'}.to_json
             end

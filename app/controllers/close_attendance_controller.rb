@@ -11,6 +11,8 @@ class CloseAttendanceController < ApplicationController
 
             attendance.open = false
             attendance.save!
+
+            ActionCable.server.broadcast "course:#{attendance.course_id}_channel", status: 'close_attendance'
         
             output = { status: 'success' }.to_json
         else
