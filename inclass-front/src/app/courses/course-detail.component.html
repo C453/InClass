@@ -10,6 +10,7 @@
 <div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
   <a (click)="createQuiz()" mat-raised-button color="primary" class="button">Create New Quiz</a>
   <a (click)="openResults()" mat-raised-button color="primary" class="button">Check Quiz Results</a>
+  <a (click)="showSlideUploadDialog()" mat-raised-button color="primary" class="button">Upload New Slides</a>
 </div>
 
 <div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
@@ -100,3 +101,4 @@
 <app-course-quiz #seeResults></app-course-quiz>
 <app-view-powerpoint-dialog #viewPowerpoint [powerpointSource]="activePowerpoint"></app-view-powerpoint-dialog>
 <app-file-upload-dialog #fileUploadDialog></app-file-upload-dialog>
+<app-slide-upload-dialog #slideUploadDialog></app-slide-upload-dialog>

@@ -15,6 +15,7 @@ import { Question } from '../models/question.model';
 import { ActionCableService, Channel } from 'angular2-actioncable';
 import { NavbarService } from '../services/navbar.service';
 import { ViewPowerpointDialogComponent } from '../view-powerpoint-dialog/view-powerpoint-dialog.component';
+import { SlideUploadDialogComponent } from '../slide-upload-dialog/slide-upload-dialog.component';
 
 @Component({
   selector: 'app-course-detail',
@@ -31,6 +32,7 @@ export class CourseDetailComponent implements OnInit {
   @ViewChild('seeResults') courseQuizComponent: CourseQuizComponent;
   @ViewChild('takeQuiz') takeQuizComponent: TakeQuizComponent;
   @ViewChild('viewPowerpoint') viewPowerpointDialogComponent: ViewPowerpointDialogComponent;
+  @ViewChild('slideUploadDialog') slideUploadDialogComponent: SlideUploadDialogComponent
 
   courseData: Course;
   courseDocuments: Object[];
@@ -226,6 +228,10 @@ export class CourseDetailComponent implements OnInit {
 
   displayPowerpoint() {
     this.viewPowerpointDialogComponent.openDialog();
+  }
+
+  showSlideUploadDialog() {
+    this.slideUploadDialogComponent.openDialog();
   }
 }
 
