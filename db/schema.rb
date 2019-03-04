@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_13_051002) do
+ActiveRecord::Schema.define(version: 2019_03_04_203248) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,15 +58,6 @@ ActiveRecord::Schema.define(version: 2019_02_13_051002) do
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
-  create_table "quiz_answers", force: :cascade do |t|
-    t.string "text"
-    t.boolean "correct"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "quiz_question_id"
-    t.index ["quiz_question_id"], name: "index_quiz_answers_on_quiz_question_id"
-  end
-
   create_table "quiz_questions", force: :cascade do |t|
     t.string "text"
     t.string "answers", default: [], array: true
@@ -95,6 +86,11 @@ ActiveRecord::Schema.define(version: 2019_02_13_051002) do
     t.datetime "updated_at", null: false
     t.bigint "course_id"
     t.index ["course_id"], name: "index_quizzes_on_course_id"
+  end
+
+  create_table "slides", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

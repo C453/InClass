@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :slides
   post 'yeah', to: 'yeah_question#yeah'
   post 'unyeah', to: 'yeah_question#unyeah'
   post 'answer_question', to: 'yeah_question#answer_question'

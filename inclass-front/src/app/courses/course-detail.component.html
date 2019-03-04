@@ -1,10 +1,16 @@
 <div *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
   <a (click)="dropCourse()" mat-raised-button color="warn" class="button">Drop Course</a>
+
+  <span *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
+            && activePowerpoint">
+    <a (click)="displayPowerpoint()" mat-raised-button class="button mat-primary">View Slides</a>
+  </span>
 </div>
 
 <div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
   <a (click)="createQuiz()" mat-raised-button color="primary" class="button">Create New Quiz</a>
   <a (click)="openResults()" mat-raised-button color="primary" class="button">Check Quiz Results</a>
+  <a (click)="showSlideUploadDialog()" mat-raised-button color="primary" class="button">Upload New Slides</a>
 </div>
 
 <div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
@@ -88,7 +94,11 @@
       </div>
     </mat-card-content>
   </mat-card>
+  </div>
 
 <app-create-quiz #createQuizDialog [courseID]="courseData.id"></app-create-quiz>
 <app-take-quiz #takeQuiz></app-take-quiz>
 <app-course-quiz #seeResults></app-course-quiz>
+<app-view-powerpoint-dialog #viewPowerpoint [powerpointSource]="activePowerpoint"></app-view-powerpoint-dialog>
+<app-file-upload-dialog #fileUploadDialog></app-file-upload-dialog>
+<app-slide-upload-dialog #slideUploadDialog></app-slide-upload-dialog>
