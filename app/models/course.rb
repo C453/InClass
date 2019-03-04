@@ -1,6 +1,7 @@
 class Course < ApplicationRecord
     has_and_belongs_to_many :users
     has_many :documents
+    has_many: slides
     has_many :quizzes
     has_many :questions
 
