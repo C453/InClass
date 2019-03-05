@@ -16,7 +16,16 @@ class AttendancesController < ApplicationController
 
   # POST /attendances
   def create
+    course = Course.find(params[:course_id])
     unless course.admins.include? current_user.id.to_s
+      output = {error: "Not an instrucor"}.to_json
+      render :json => output
+      return
+    end
+
+    unless Attendance.find_by(course_id: params[:course_id], open: true).nil?
+      output = {error: "Attendance already open"}.to_json
+      render :json => output
       return
     end
     
