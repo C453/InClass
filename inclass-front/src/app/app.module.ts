@@ -12,6 +12,7 @@ import { Angular2TokenService } from 'angular2-token';
 import {AuthService} from "./services/auth.service";
 import { ActionCableService, Channel } from 'angular2-actioncable';
 import {AuthGuard} from "./guards/auth.guard";
+import { QRCodeModule } from 'angular2-qrcode';
 
 import {
   MatAutocompleteModule,
@@ -66,6 +67,7 @@ import { CreateCourseDialogComponent } from './create-course-dialog/create-cours
 import { TakeQuizComponent } from './quizzes/take-quiz/take-quiz.component';
 import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dialog.component';
 import { AttendanceDialogComponent } from './attendance-dialog/attendance-dialog.component';
+import {QRCodeComponent} from 'angular2-qrcode';
 
 @NgModule({
   declarations: [
@@ -85,7 +87,9 @@ import { AttendanceDialogComponent } from './attendance-dialog/attendance-dialog
     CreateQuizComponent,
     TakeQuizComponent,
     FileUploadDialogComponent,
-    AttendanceDialogComponent
+    AttendanceDialogComponent,
+    QRCodeComponent
+
   ],
   imports: [
     BrowserModule,
@@ -129,8 +133,8 @@ import { AttendanceDialogComponent } from './attendance-dialog/attendance-dialog
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatTreeModule,
-  ],
+    MatTreeModule
+    ],
   providers: [ 
     Angular2TokenService,
     AuthService,
