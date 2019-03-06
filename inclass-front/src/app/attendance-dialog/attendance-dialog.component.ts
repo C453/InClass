@@ -13,7 +13,7 @@ import { Angular2TokenService } from "angular2-token";
   selector: 'my-qr-code-component',
   template: `
     <div>
-      <qr-code [value]="'All QR Code data goes here!'" [size]="150"></qr-code>
+      <qr-code [value]="" [size]="150"></qr-code>
     </div>
   `
 })

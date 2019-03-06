@@ -16,6 +16,7 @@ import { Question } from '../models/question.model';
 import { ActionCableService, Channel } from 'angular2-actioncable';
 import { NavbarService } from '../services/navbar.service';
 import { AttendanceDialogComponent } from '../attendance-dialog/attendance-dialog.component';
+import { CodeNode } from 'source-list-map';
 
 @Component({
   selector: 'app-course-detail',
@@ -253,9 +254,10 @@ export class CourseDetailComponent implements OnInit {
   takeAttendance() {
     var date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
 
-    this.authTokenService.post('attendances', { date: date, course_id: this.courseData.id }).subscribe(res => {
+    this.authTokenService.post('attendances', { date: date, course_id: this.courseData.id}).subscribe(res => {
       res = res.json();
       console.log(res);
+      this.openAttendanceDialog();
     });
 
     // TODO: Get generated QR Code from response and display it in a dialog.

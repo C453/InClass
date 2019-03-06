@@ -1,41 +1,39 @@
-<div *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
+<div class ="buttonsinline" *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
   <a (click)="dropCourse()" mat-raised-button color="warn" class="button">Drop Course</a>
 </div>
 
-<div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
+<div class ="buttonsinline" *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()) && open === false ">
+  <a (click)="takeAttendance()" mat-raised-button color="primary" class="button">Open Attendance</a>
+</div>
+
+<div class ="buttonsinline" *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()) && open === true ">
+  <a (click)="closeAttendance()" mat-raised-button color="primary" class="button">Close Attendance</a>
+</div>
+
+<div class ="buttonsinline" *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()) && open === true ">
+  <a (click)="studentTakeAttendance()" mat-raised-button color="primary" class="button">Take Attendance</a>
+</div>
+<div class ="buttonsinline" *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
   <a (click)="createQuiz()" mat-raised-button color="primary" class="button">Create New Quiz</a>
   <a (click)="openResults()" mat-raised-button color="primary" class="button">Check Quiz Results</a>
 </div>
 
-
-<div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()) && open === false ">
-    <a (click)="takeAttendance()" mat-raised-button color="primary" class="button">Open Attendance</a>
-</div>
-
-<div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()) && open === true ">
-    <a (click)="closeAttendance()" mat-raised-button color="primary" class="button">Close Attendance</a>
-</div>
-
-<div *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()) && open === true ">
-    <a (click)="openAttendanceDialog()" mat-raised-button color="primary" class="button">Take Attendance</a>
-</div>
-
-<div *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()) && open === false ">
+<div class ="buttonsinline" *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()) && open === false ">
     <a (click)="studentTakeAttendance()" mat-raised-button class="btn disabled">Attendance closed</a>
 </div>
 
-<div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
+<div class ="buttonsinline" *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
             && activeQuiz">
   <a (click)="closeQuiz()" mat-raised-button color="warn" class="button">Close Current Quiz</a>
 </div>
 
-<div *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
+<div class ="buttonsinline" *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
             && activeQuiz">
   <a (click)="displayQuiz()" mat-raised-button class="take-quiz-button">Take Active Quiz</a>
 
 </div>
 
-<div *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
+<div class ="buttonsinline" *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
   <a (click)="displayQuiz()" mat-raised-button class="btn disabled">No Active Quiz</a>
 </div>
 

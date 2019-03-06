@@ -1,24 +1,22 @@
 <div class="modal modal-form" materialize="modal" [materializeActions]="modalActions">
-
-
-  <div class="modal-content">
-
-    <div class="row">
-
+    <div class="modal-content">
+  
       <div class="row">
-
-        <span class="modal-close right">
-          <i class="fa fa-times" aria-hidden="true"></i>
-        </span>
-      </div>
-
-      <div class="row">
+  
+        <div class="row">
+  
+          <span class="modal-close right">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </span>
+          <span class="modal-close left">
+            <h3 float:left class="grey-text text-darken-2">Attendance QR Code:</h3>
+          </span>
+        </div>
+  
         <div>
-          <qr-code [value]="'All QR Code data goes here!'" [size]="150"></qr-code>
-      </div>
-      </div>
+            <qr-code [value]="'All QR Code data goes here!aslkdfjajkdsfjk'" [size]="250"></qr-code>
+        </div>
+  
     </div>
-
+  
   </div>
-
-</div>

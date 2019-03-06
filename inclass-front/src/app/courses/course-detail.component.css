@@ -8,10 +8,15 @@
 		margin-top: 20px;
 	
 }
-.btn{
+
+.btn.disabled{
+	margin-right: 10px;
+    margin-bottom: 10px;
+		margin-top: 20px;
+}
+.buttonsinline{
 
 	display: inline-block;
-
 
 }
 
