@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   resources :attendances
+  post 'check_attendance', to: 'check_attendance#check_attendance'
+  post 'close_attendance', to: 'close_attendance#close_attendance'
   post 'take_attendance', to: 'take_attendance#take_attendance'
   post 'yeah', to: 'yeah_question#yeah'
   post 'unyeah', to: 'yeah_question#unyeah'

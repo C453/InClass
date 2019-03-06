@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from '../models/course.model';
 import { RouterModule, Routes } from '@angular/router';
 import {formatDate} from '@angular/common';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import { CreateQuizComponent } from '../quizzes/create-quiz/create-quiz.component';
 import { CourseQuizComponent } from "../quizzes/course-quiz/course-quiz.component";
@@ -39,9 +40,10 @@ export class CourseDetailComponent implements OnInit {
   questionArea: string;
   recentQuiz;
   recentQuizQuestions;
+  open;
 
   constructor(public authTokenService: Angular2TokenService,
-    public authService: AuthService, private actr: ActivatedRoute, private router: Router, private cableService: ActionCableService, public nav: NavbarService) {
+    public authService: AuthService, private actr: ActivatedRoute, private router: Router, private cableService: ActionCableService, public nav: NavbarService, public dialog: MatDialog) {
       this.actr.data.map(data => data.cres.json()).subscribe(res => {
         this.courseData = res;
         this.getActiveQuiz();
@@ -49,6 +51,8 @@ export class CourseDetailComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.checkAttendanceOpen();
+
     // returns either all documents if the user is an admin, or only public documents if the user is just a student
     this.authTokenService.get('documents', { params: { course: this.courseData.id } }).subscribe(res => {
       this.courseDocuments = res.json();
@@ -228,6 +232,34 @@ export class CourseDetailComponent implements OnInit {
     this.courseQuizComponent.seeResults(this.recentQuiz.id, this.courseData.id)
   }
 
+  checkAttendanceOpen() {
+    this.authTokenService.post('check_attendance', { course: this.courseData.id }).subscribe(res => {
+      res = res.json();
+      console.log(res);
+      this.open = res.status; 
+    });
+  }
+  
+  studentTakeAttendance(){
+	  this.authTokenService.post('take_attendance', { course: this.courseData.id, code:'' }).subscribe(res => {
+      res = res.json();
+      console.log(res);
+    });
+	  
+    }
+    
+
+    openDialog(): void {
+      const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+        width: '250px'
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+    }
+
+
   takeAttendance() {
     var date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
 
@@ -238,6 +270,26 @@ export class CourseDetailComponent implements OnInit {
 
     // TODO: Get generated QR Code from response and display it in a dialog.
   }
+
+  closeAttendance() {
+    this.authTokenService.post('close_attendance', { course: this.courseData.id }).subscribe(res => {
+      res = res.json();
+      console.log(res);
+    });
+  }
 }
 
+@Component({
+  selector: 'course-detail.popup',
+  templateUrl: 'course-detail.popup.html',
+})
+export class DialogOverviewExampleDialog {
 
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
