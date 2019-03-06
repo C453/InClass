@@ -17,7 +17,7 @@
 </div>
 
 <div *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()) && open === true ">
-    <a (click)="openDialog()" mat-raised-button color="primary" class="button">Take Attendance</a>
+    <a (click)="openAttendanceDialog()" mat-raised-button color="primary" class="button">Take Attendance</a>
 </div>
 
 <div *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()) && open === false ">
@@ -107,5 +107,6 @@
   </mat-card>
 
 <app-create-quiz #createQuizDialog [courseID]="courseData.id"></app-create-quiz>
+<app-attendance-dialog #attendanceDialog></app-attendance-dialog>
 <app-take-quiz #takeQuiz></app-take-quiz>
 <app-course-quiz #seeResults></app-course-quiz>

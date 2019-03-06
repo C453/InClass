@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from '../models/course.model';
 import { RouterModule, Routes } from '@angular/router';
 import {formatDate} from '@angular/common';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import { CreateQuizComponent } from '../quizzes/create-quiz/create-quiz.component';
 import { CourseQuizComponent } from "../quizzes/course-quiz/course-quiz.component";
@@ -16,6 +15,7 @@ import { Subscription } from 'rxjs';
 import { Question } from '../models/question.model';
 import { ActionCableService, Channel } from 'angular2-actioncable';
 import { NavbarService } from '../services/navbar.service';
+import { AttendanceDialogComponent } from '../attendance-dialog/attendance-dialog.component';
 
 @Component({
   selector: 'app-course-detail',
@@ -31,6 +31,7 @@ export class CourseDetailComponent implements OnInit {
   @ViewChild('createQuizDialog') createQuizComponent: CreateQuizComponent;
   @ViewChild('seeResults') courseQuizComponent: CourseQuizComponent;
   @ViewChild('takeQuiz') takeQuizComponent: TakeQuizComponent;
+  @ViewChild('attendanceDialog') attendanceDialogComponent: AttendanceDialogComponent;
 
   courseData: Course;
   courseDocuments: Object[];
@@ -43,7 +44,7 @@ export class CourseDetailComponent implements OnInit {
   open;
 
   constructor(public authTokenService: Angular2TokenService,
-    public authService: AuthService, private actr: ActivatedRoute, private router: Router, private cableService: ActionCableService, public nav: NavbarService, public dialog: MatDialog) {
+    public authService: AuthService, private actr: ActivatedRoute, private router: Router, private cableService: ActionCableService, public nav: NavbarService) {
       this.actr.data.map(data => data.cres.json()).subscribe(res => {
         this.courseData = res;
         this.getActiveQuiz();
@@ -247,17 +248,6 @@ export class CourseDetailComponent implements OnInit {
     });
 	  
     }
-    
-
-    openDialog(): void {
-      const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-        width: '250px'
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-      });
-    }
 
 
   takeAttendance() {
@@ -271,25 +261,14 @@ export class CourseDetailComponent implements OnInit {
     // TODO: Get generated QR Code from response and display it in a dialog.
   }
 
+  openAttendanceDialog() {
+    this.attendanceDialogComponent.openDialog();
+  }
+
   closeAttendance() {
     this.authTokenService.post('close_attendance', { course: this.courseData.id }).subscribe(res => {
       res = res.json();
       console.log(res);
     });
   }
-}
-
-@Component({
-  selector: 'course-detail.popup',
-  templateUrl: 'course-detail.popup.html',
-})
-export class DialogOverviewExampleDialog {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
 }

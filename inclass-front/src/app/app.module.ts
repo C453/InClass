@@ -29,7 +29,7 @@ import {
   MatGridListModule,
   MatIconModule,
   MatInputModule,
-  MatListModule,
+MatListModule,
   MatMenuModule,
   MatNativeDateModule,
   MatPaginatorModule,
@@ -65,6 +65,7 @@ import { CreateQuizComponent } from './quizzes/create-quiz/create-quiz.component
 import { CreateCourseDialogComponent } from './create-course-dialog/create-course-dialog.component';
 import { TakeQuizComponent } from './quizzes/take-quiz/take-quiz.component';
 import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dialog.component';
+import { AttendanceDialogComponent } from './attendance-dialog/attendance-dialog.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dial
     CourseQuizComponent,
     CreateQuizComponent,
     TakeQuizComponent,
-    FileUploadDialogComponent
+    FileUploadDialogComponent,
+    AttendanceDialogComponent
   ],
   imports: [
     BrowserModule,
