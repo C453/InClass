@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'get_grade', to: 'grades#get_grade'
   resources :attendances
   post 'check_attendance', to: 'check_attendance#check_attendance'
   post 'close_attendance', to: 'close_attendance#close_attendance'
