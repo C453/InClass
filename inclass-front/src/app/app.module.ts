@@ -13,6 +13,8 @@ import {AuthService} from "./services/auth.service";
 import { ActionCableService, Channel } from 'angular2-actioncable';
 import {AuthGuard} from "./guards/auth.guard";
 import { QRCodeModule } from 'angular2-qrcode';
+import { NgQrScannerModule } from 'angular2-qrscanner';
+
 
 import {
   MatAutocompleteModule,
@@ -135,7 +137,8 @@ import { StudentAttendanceDialogComponent } from './student-attendance-dialog/st
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatTreeModule
+    MatTreeModule,
+    NgQrScannerModule
     ],
   providers: [ 
     Angular2TokenService,
