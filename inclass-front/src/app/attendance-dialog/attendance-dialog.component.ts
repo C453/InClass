@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input } from '@angular/core';
 import { MaterializeAction } from "angular2-materialize";
 import { AuthService } from "../services/auth.service";
 import { Angular2TokenService } from "angular2-token";
@@ -20,6 +20,15 @@ import { Angular2TokenService } from "angular2-token";
 
 export class AttendanceDialogComponent implements OnInit {
 
+  @Input() code;
+  @Input() courseId;
+
+  modalParams = [
+    {
+      dismissible: false
+    }
+  ]
+
   modalActions = new EventEmitter<string|MaterializeAction>();
 
   constructor(public authTokenService: Angular2TokenService,
@@ -36,6 +45,12 @@ export class AttendanceDialogComponent implements OnInit {
     this.modalActions.emit({action:"modal", params:['close']});
   }
 
-
+  closeAttendance() {
+    this.closeDialog();
+    this.authTokenService.post('close_attendance', { course: this.courseId }).subscribe(res => {
+      res = res.json();
+      console.log(res);
+    });
+  }
   
 }

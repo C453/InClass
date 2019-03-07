@@ -43,6 +43,7 @@ export class CourseDetailComponent implements OnInit {
   recentQuiz;
   recentQuizQuestions;
   open;
+  code: string;
 
   constructor(public authTokenService: Angular2TokenService,
     public authService: AuthService, private actr: ActivatedRoute, private router: Router, private cableService: ActionCableService, public nav: NavbarService) {
@@ -141,10 +142,12 @@ export class CourseDetailComponent implements OnInit {
   getActiveQuiz() {
     this.authTokenService.get('get_active_quiz/' + this.courseData.id).subscribe(res => {
       this.activeQuiz = res.json();
+      if(this.activeQuiz) {
       this.authTokenService.get('get_active_quiz_questions/' + this.activeQuiz.id)
         .subscribe(questionRes => {
         this.activeQuizQuestions = questionRes.json();
       });
+    }
     });
   }
 
@@ -256,7 +259,7 @@ export class CourseDetailComponent implements OnInit {
 
     this.authTokenService.post('attendances', { date: date, course_id: this.courseData.id}).subscribe(res => {
       res = res.json();
-      console.log(res);
+      this.code = res["code"];
       this.openAttendanceDialog();
     });
 
