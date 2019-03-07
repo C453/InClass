@@ -41,7 +41,7 @@ export class TakeQuizComponent implements OnInit {
       // Put this out side of conditional for bug, it will keep adding score
       this.authTokenService.post("quiz_submissions",
         { quiz_id: this.curQuiz.id, score: this.grade, course_id: this.curQuiz.course_id }).subscribe(result => {
-        if(result.status == 200) {
+        if(result.status == 200 || result.status == 201) {
           this.closeQuiz();
         }
       })

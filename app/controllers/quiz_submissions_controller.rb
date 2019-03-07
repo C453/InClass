@@ -15,7 +15,7 @@ class QuizSubmissionsController < ApplicationController
 
   # POST /quiz_submissions
   def create
-    if !QuizSubmission.where(user_id: current_user.id, quiz_id: params[:quiz_id])
+    if !QuizSubmission.where(user_id: current_user.id, quiz_id: params[:quiz_id]).exists?
       @quiz_submission = QuizSubmission.new(quiz_submission_params)
       @quiz_submission.user_id = current_user.id
 
@@ -25,7 +25,7 @@ class QuizSubmissionsController < ApplicationController
         render json: @quiz_submission.errors, status: :unprocessable_entity
       end
     else
-      puts "Update"
+      puts QuizSubmission.where(user_id: current_user.id, quiz_id: params[:quiz_id])
       update_quiz
     end
   end
