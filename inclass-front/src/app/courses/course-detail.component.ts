@@ -16,6 +16,7 @@ import { Question } from '../models/question.model';
 import { ActionCableService, Channel } from 'angular2-actioncable';
 import { NavbarService } from '../services/navbar.service';
 import { AttendanceDialogComponent } from '../attendance-dialog/attendance-dialog.component';
+import {StudentAttendanceDialogComponent} from '../student-attendance-dialog/student-attendance-dialog.component';
 import { CodeNode } from 'source-list-map';
 
 @Component({
@@ -33,6 +34,8 @@ export class CourseDetailComponent implements OnInit {
   @ViewChild('seeResults') courseQuizComponent: CourseQuizComponent;
   @ViewChild('takeQuiz') takeQuizComponent: TakeQuizComponent;
   @ViewChild('attendanceDialog') attendanceDialogComponent: AttendanceDialogComponent;
+  @ViewChild('studentAttendanceDialog') StudentAttendanceDialogComponent: StudentAttendanceDialogComponent;
+
 
   courseData: Course;
   courseDocuments: Object[];
@@ -268,6 +271,10 @@ export class CourseDetailComponent implements OnInit {
 
   openAttendanceDialog() {
     this.attendanceDialogComponent.openDialog();
+  }
+
+  openStudentAttendanceDialog() {
+    this.StudentAttendanceDialogComponent.openDialog();
   }
 
   closeAttendance() {

@@ -68,6 +68,7 @@ import { TakeQuizComponent } from './quizzes/take-quiz/take-quiz.component';
 import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dialog.component';
 import { AttendanceDialogComponent } from './attendance-dialog/attendance-dialog.component';
 import {QRCodeComponent} from 'angular2-qrcode';
+import { StudentAttendanceDialogComponent } from './student-attendance-dialog/student-attendance-dialog.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import {QRCodeComponent} from 'angular2-qrcode';
     TakeQuizComponent,
     FileUploadDialogComponent,
     AttendanceDialogComponent,
-    QRCodeComponent
+    QRCodeComponent,
+    StudentAttendanceDialogComponent
 
   ],
   imports: [

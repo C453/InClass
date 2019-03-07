@@ -26,6 +26,7 @@
     "angular2-actioncable": "^6.0.0",
     "angular2-materialize": "^15.1.10",
     "angular2-qrcode": "^2.0.1",
+    "angular2-qrscanner": "^1.0.7",
     "angular2-token": "^0.2.0",
     "core-js": "^2.6.4",
     "font-awesome": "^4.7.0",
