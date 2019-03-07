@@ -20,17 +20,16 @@
                 <label for="name">File Name</label>
               </div>
               <div class="input-field col s12">
-                <label for="file">Choose File</label>
                 <input type="file"
                        id="file"
                        (change)="onFileChange($event.target.files)">
               </div>
 
-              <div class="input-field col s12"  style="display: inline-flex;">
+              <!--<div class="input-field col s12"  style="display: inline-flex;">
                   <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="fileUpload.expires" name="expires" >
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker class="validate"></mat-datepicker>
-                </div>
+                </div> -->
 
               <div class="col s12">
                 <button type="submit" [disabled]="!(f.valid)"  mat-raised-button color="primary" class="button">
