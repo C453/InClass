@@ -70,7 +70,6 @@ import { TakeQuizComponent } from './quizzes/take-quiz/take-quiz.component';
 import { ViewPowerpointDialogComponent } from './view-powerpoint-dialog/view-powerpoint-dialog.component';
 import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dialog.component';
 import { AttendanceDialogComponent } from './attendance-dialog/attendance-dialog.component';
-import {QRCodeComponent} from 'angular2-qrcode';
 import { StudentAttendanceDialogComponent } from './student-attendance-dialog/student-attendance-dialog.component';
 import { GradesDialogComponent } from './grades-dialog/grades-dialog.component';
 import { SlideUploadDialogComponent } from './slide-upload-dialog/slide-upload-dialog.component';
@@ -94,13 +93,11 @@ import { SlideUploadDialogComponent } from './slide-upload-dialog/slide-upload-d
     TakeQuizComponent,
     FileUploadDialogComponent,
     AttendanceDialogComponent,
-    QRCodeComponent,
     StudentAttendanceDialogComponent,
     GradesDialogComponent,
     ViewPowerpointDialogComponent,
     FileUploadDialogComponent,
     SlideUploadDialogComponent
-
   ],
   imports: [
     BrowserModule,
@@ -146,7 +143,8 @@ import { SlideUploadDialogComponent } from './slide-upload-dialog/slide-upload-d
     MatTooltipModule,
     MatTreeModule,
     NgQrScannerModule,
-    PdfViewerModule
+    PdfViewerModule,
+    QRCodeModule,
     ],
   providers: [ 
     Angular2TokenService,

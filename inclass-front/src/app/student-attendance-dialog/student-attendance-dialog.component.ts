@@ -11,15 +11,6 @@ import { QrScannerComponent } from 'angular2-qrscanner';
   styleUrls: ['./student-attendance-dialog.component.css']
 })
 
-@Component({
-  selector: 'my-qr-code-component',
-  template: `
-    <div>
-      <qr-code [value]="" [size]="150"></qr-code>
-    </div>
-  `
-})
-
 export class StudentAttendanceDialogComponent implements OnInit {
 
   @Input() code;

@@ -9,15 +9,6 @@ import { Angular2TokenService } from "angular2-token";
   styleUrls: ['./attendance-dialog.component.css']
 })
 
-@Component({
-  selector: 'my-qr-code-component',
-  template: `
-    <div>
-      <qr-code [value]="" [size]="150"></qr-code>
-    </div>
-  `
-})
-
 export class AttendanceDialogComponent implements OnInit {
 
   @Input() code;
