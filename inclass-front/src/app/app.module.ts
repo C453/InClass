@@ -71,6 +71,7 @@ import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dial
 import { AttendanceDialogComponent } from './attendance-dialog/attendance-dialog.component';
 import {QRCodeComponent} from 'angular2-qrcode';
 import { StudentAttendanceDialogComponent } from './student-attendance-dialog/student-attendance-dialog.component';
+import { GradesDialogComponent } from './grades-dialog/grades-dialog.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { StudentAttendanceDialogComponent } from './student-attendance-dialog/st
     FileUploadDialogComponent,
     AttendanceDialogComponent,
     QRCodeComponent,
-    StudentAttendanceDialogComponent
+    StudentAttendanceDialogComponent,
+    GradesDialogComponent
 
   ],
   imports: [

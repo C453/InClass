@@ -39,6 +39,10 @@
   <a (click)="displayQuiz()" mat-raised-button class="btn disabled">No Active Quiz</a>
 </div>
 
+<div class ="buttonsinline" *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
+  <a (click)="openGradesDialog()" mat-raised-button color="primary" class="button">Attendance History</a>
+</div>
+
 <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="32px" fxLayoutAlign="flex-start" class="courseLayout">
   <mat-card class="course-card" fxFlex="0 1 calc(50% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%">
     <mat-card-header>
@@ -109,6 +113,7 @@
 <app-create-quiz #createQuizDialog [courseID]="courseData.id"></app-create-quiz>
 <app-attendance-dialog #attendanceDialog [code]="code" [courseId]="courseData.id"></app-attendance-dialog>
 <app-student-attendance-dialog #studentAttendanceDialog></app-student-attendance-dialog>
+<app-grades-dialog #gradesDialog  [courseId]="courseData.id"></app-grades-dialog>
 <app-take-quiz #takeQuiz></app-take-quiz>
 <app-file-upload-dialog #fileUploadDialog [courseID]="courseData.id"></app-file-upload-dialog>
 <app-course-quiz #seeResults></app-course-quiz>
