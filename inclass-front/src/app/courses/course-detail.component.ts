@@ -45,13 +45,14 @@ export class CourseDetailComponent implements OnInit {
 
   courseData: Course;
   courseDocuments: Object[];
+  courseSlides: Object[];
   courseQuestions: Question[];
   activeQuiz;
   activeQuizQuestions;
   questionArea: string;
   recentQuiz;
   recentQuizQuestions;
-  activePowerpoint = "../../../assets/Test Presentation.pdf";
+  activePowerpoint;
   open;
   code: string;
 
@@ -69,7 +70,15 @@ export class CourseDetailComponent implements OnInit {
     // returns either all documents if the user is an admin, or only public documents if the user is just a student
     this.authTokenService.get('documents', { params: { course: this.courseData.id } }).subscribe(res => {
       this.courseDocuments = res.json();
-      console.log(this.courseDocuments);
+    });
+
+    this.authTokenService.get('slides', { params: { course: this.courseData.id } }).subscribe( res => {
+      this.courseSlides = res.json();
+      console.log(this.courseSlides);
+      if (this.courseSlides.length == 1) {
+        this.activePowerpoint = "http://127.0.0.1:3000" + this.courseSlides[0]['url'];
+        console.log('Active powerpoint: ' + this.activePowerpoint);
+      }
     });
 
     const addQuizChannel: Channel = this.cableService
@@ -141,8 +150,8 @@ export class CourseDetailComponent implements OnInit {
         } else if (data.status === 'attendance') {
           // TODO: when someone marks themselves present
         } else if (data.status === 'document') {
-          this.courseDocuments.push({name: data.file.name, url: data.file.url})
-        } 
+          this.courseDocuments.push({name: data.file.name, url: data.file.url});
+        }
       });
     })
 

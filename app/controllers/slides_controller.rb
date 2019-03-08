@@ -3,7 +3,12 @@ class SlidesController < ApplicationController
 
   # GET /slides
   def index
-    @slides = Slide.all
+    params.require(:course)
+    course = Course.find(params[:course])
+    @slides = []
+    Slide.where(course_id: params[:course]).each do |doc|
+      @slides << doc.get_file
+    end
 
     render json: @slides
   end
@@ -15,6 +20,8 @@ class SlidesController < ApplicationController
 
   # POST /slides
   def create
+    Slide.where(course: slide_params[:course]).destroy_all
+
     course = Course.find(slide_params[:course])
     @slide = Slide.new(name: slide_params[:name], expires: slide_params[:expires], file: slide_params[:file], public: true, course: course)
 
@@ -46,7 +53,8 @@ class SlidesController < ApplicationController
     end
 
     # Only allow a trusted parameter "white list" through.
+    # Only allow a trusted parameter "white list" through.
     def slide_params
-      params.fetch(:slide, {})
+      params.permit(:name, :expires, :file, :public, :course)
     end
 end

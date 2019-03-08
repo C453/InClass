@@ -9,20 +9,19 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./slide-upload-dialog.component.css']
 })
 export class SlideUploadDialogComponent implements OnInit {
+
   fileToUpload: File = null;
 
   fileUpload = {
+    name: '',
     expires: '2019-01-01',
-    topic: '',
-    name: ''
   }
   @Input() courseID;
   modalActions = new EventEmitter<string|MaterializeAction>();
   expiresActions = new EventEmitter<string|MaterializeAction>();
 
-  constructor(public authTokenService: Angular2TokenService, public authService: AuthService) { }
-
-  ngOnInit() { }
+  constructor(public authTokenService: Angular2TokenService,
+    public authService: AuthService) { }
 
   openDialog(){
     this.modalActions.emit({action:"modal", params:['open']});
@@ -32,18 +31,14 @@ export class SlideUploadDialogComponent implements OnInit {
     this.modalActions.emit({action:"modal", params:['close']});
   }
 
+  ngOnInit() { 
+  }
+
   uploadFile() {
 
     let formData = new FormData();
-    let params = { slide: 
-      { topic: this.fileUpload.topic, 
-        expires: this.fileUpload.expires, 
-        file: this.fileToUpload, 
-        course: this.courseID
-      }
-    };
-    
-    formData.set('topic', this.fileUpload.topic)
+    let params = { document: { name: this.fileUpload.name, expires: this.fileUpload.expires, file: this.fileToUpload, course: this.courseID}}
+    formData.set('name', this.fileUpload.name)
     formData.set('expires', this.fileUpload.expires)
     formData.set('course', this.courseID)
     formData.set('file', this.fileToUpload)

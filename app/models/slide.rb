@@ -4,7 +4,7 @@ class Slide < ApplicationRecord
     do_not_validate_attachment_file_type :file
 
     def get_file
-        slides = {}
+        file = {}
         file[:name] = self.name
         file[:expires] = self.expires
         file[:url] = self.file.url
