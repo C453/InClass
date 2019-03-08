@@ -7,10 +7,14 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "prod": "ng build --prod --output-hashing=none",
+    "heroku-postbuild": "npm run prod"
   },
   "private": true,
   "dependencies": {
+    "@angular/cli": "^7.2.4",
+    "@angular/compiler-cli": "^7.2.4",
     "@angular/animations": "^7.2.4",
     "@angular/cdk": "^7.3.2",
     "@angular/common": "^7.2.4",
