@@ -4,7 +4,7 @@
             <div class="">
                 <h4 class="grey-text text-darken-2">Quiz Results | Average: {{this.average}}%</h4>
                     <div *ngFor="let question of recentQuizQuestions; let i = index">
-                    <h3 class="grey-text text-darken-2">{{question.text}}</h3>
+                    <h3 class="grey-text text-darken-2">place h o l d e r</h3>
                     <form (ngSubmit)="openQuiz()" #f="ngForm">
                         <ul class="bar-graph">
                             <li class="bar-graph-axis">
@@ -15,9 +15,9 @@
                             <div class="bar-graph-label">20%</div>
                             <div class="bar-graph-label">0%</div>
                             </li>
-                                <li *ngFor="let answer of question.answers; let j = index" class="bar primary" style="height: 50%;" title="95">
-                                    <div class="percent">95<span>%</span></div>
-                                    <div class="description">{{answer}}</div>
+                                <li *ngFor="let answer of question.answers; let j = index" class="bar primary" style="height: {{this.average}}%;" title="95">
+                                    <div class="percent">{{this.average}}<span>%</span></div>
+                                    <div class="description">{{question.text}}</div>
                                 </li>                            
                         </ul>
                     </form>
