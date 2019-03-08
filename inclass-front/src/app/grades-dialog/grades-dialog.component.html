@@ -9,14 +9,32 @@
           </span>
         </div>
 
-        <div class="row">
+        <div *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())" class="row">
           <span class="modal-close left">
-            <h3 float:left class="grey-text text-darken-2">Your Attendance History:</h3>
+            <h3 class="grey-text text-darken-2">Your Attendance History:</h3>
           </span>
         </div>
 
-        <div class="row">
+        <div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())" class="row">
+            <span class="modal-close left">
+              <h3 class="grey-text text-darken-2">Class Attendance History:</h3>
+            </span>
+          </div>
+  
+
+        <div *ngIf="grades && !courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())" class="row">
+            <h4 class="grey-text text-darken-2">Total attendance days: {{grades.grades.attendance.total_attendances}}</h4>
+            <h4 class="grey-text text-darken-2">Total missed attendance days: {{grades.grades.attendance.total_missed}}</h4>
         </div>
+
+        <div *ngIf="grades && courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())" class="row">
+
+
+            <div *ngFor="let attendance of grades">
+                <h4 class="grey-text text-darken-2">Total attendance days: {{grades.grades.attendance.user}}</h4>
+            </div>
+
+          
     </div>
   
   </div>

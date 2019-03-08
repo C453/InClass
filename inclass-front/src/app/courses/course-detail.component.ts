@@ -54,6 +54,7 @@ export class CourseDetailComponent implements OnInit {
   activePowerpoint = "../../../assets/Test Presentation.pdf";
   open;
   code: string;
+  grades;
 
   constructor(public authTokenService: Angular2TokenService,
     public authService: AuthService, private actr: ActivatedRoute, private router: Router, private cableService: ActionCableService, public nav: NavbarService) {
@@ -70,6 +71,10 @@ export class CourseDetailComponent implements OnInit {
     this.authTokenService.get('documents', { params: { course: this.courseData.id } }).subscribe(res => {
       this.courseDocuments = res.json();
       console.log(this.courseDocuments);
+    });
+
+    this.authTokenService.post('get_grade', { course: this.courseData.id }).subscribe(res => {
+      this.grades = res.json();
     });
 
     const addQuizChannel: Channel = this.cableService
