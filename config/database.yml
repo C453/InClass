@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: InClass_production
-  username: inclass
-  password: <%= ENV['INCLASS_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>

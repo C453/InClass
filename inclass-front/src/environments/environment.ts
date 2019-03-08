@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   token_auth_config: {
-    apiBase: 'http://localhost:3000'
+    apiBase: 'http://localhost:3000',
+    socketBase: 'ws://127.0.0.1:3000/cable'
   }
 };
 
