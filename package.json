@@ -11,6 +11,10 @@
     "prod": "ng build --prod --output-hashing=none",
     "heroku-postbuild": "npm run prod"
   },
+  "engines": {
+    "node": "11.7.0",
+    "npm": "6.8.0"
+  },
   "private": true,
   "dependencies": {
     "@angular/cli": "^7.2.4",
