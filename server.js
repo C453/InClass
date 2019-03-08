@@ -13,4 +13,4 @@ res.sendFile(path.join(__dirname+'/dist/inclass-front/index.html'));
 });
 
 // Start the app by listening on the default Heroku port
-app.listen(80);
+app.listen(8080);
