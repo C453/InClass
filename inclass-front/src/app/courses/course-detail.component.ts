@@ -132,6 +132,7 @@ export class CourseDetailComponent implements OnInit {
           this.getActiveQuiz();
         } else if (data.status === 'close_quiz') {
           this.activeQuiz = undefined;
+          this.getRecentQuiz();
         } else if (data.status === 'open_attendance') {
           this.open = true;
           // TODO: when attendance is opened

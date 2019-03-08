@@ -31,12 +31,10 @@ export class CourseQuizComponent implements OnInit {
   seeResults (quizId, courseId) {
     this.quiz = quizId
     this.course = courseId
-
     this.authTokenService.get('get_recent_quiz_questions/' + quizId).subscribe(result =>{
       this.recentQuizQuestions = result.json()
       this.authTokenService.get('get_quiz_submissions/' + this.course + '/' + this.quiz).subscribe(result => {
         this.submissions = result.json()
-        console.log(this.submissions)
         this.processSubmissions()
       })
     })
