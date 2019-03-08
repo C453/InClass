@@ -15,12 +15,18 @@ class QuizSubmissionsController < ApplicationController
 
   # POST /quiz_submissions
   def create
-    @quiz_submission = QuizSubmission.new(quiz_submission_params)
+    if !QuizSubmission.where(user_id: current_user.id, quiz_id: params[:quiz_id]).exists?
+      @quiz_submission = QuizSubmission.new(quiz_submission_params)
+      @quiz_submission.user_id = current_user.id
 
-    if @quiz_submission.save
-      render json: @quiz_submission, status: :created, location: @quiz_submission
+      if @quiz_submission.save
+        render json: @quiz_submission, status: :created, location: @quiz_submission
+      else
+        render json: @quiz_submission.errors, status: :unprocessable_entity
+      end
     else
-      render json: @quiz_submission.errors, status: :unprocessable_entity
+      puts QuizSubmission.where(user_id: current_user.id, quiz_id: params[:quiz_id])
+      update_quiz
     end
   end
 
@@ -30,9 +36,10 @@ class QuizSubmissionsController < ApplicationController
   end
 
   # PATCH/PUT /quiz_submissions/1
-  def update
+  def update_quiz
+    @quiz_submission = QuizSubmission.where(user_id: current_user.id, quiz_id: params[:quiz_id])
     if @quiz_submission.update(quiz_submission_params)
-      render json: @quiz_submission
+      render json: @quiz_submission, status: :ok
     else
       render json: @quiz_submission.errors, status: :unprocessable_entity
     end
@@ -44,6 +51,8 @@ class QuizSubmissionsController < ApplicationController
   end
 
   private
+    
+
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz_submission
       @quiz_submission = QuizSubmission.find(params[:id])
