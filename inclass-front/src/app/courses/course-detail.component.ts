@@ -4,6 +4,7 @@ import { Angular2TokenService } from "angular2-token";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from '../models/course.model';
 import { RouterModule, Routes } from '@angular/router';
+import {formatDate} from '@angular/common';
 
 import { CreateQuizComponent } from '../quizzes/create-quiz/create-quiz.component';
 import { CourseQuizComponent } from "../quizzes/course-quiz/course-quiz.component";
@@ -14,8 +15,12 @@ import { Subscription } from 'rxjs';
 import { Question } from '../models/question.model';
 import { ActionCableService, Channel } from 'angular2-actioncable';
 import { NavbarService } from '../services/navbar.service';
+import { AttendanceDialogComponent } from '../attendance-dialog/attendance-dialog.component';
+import {StudentAttendanceDialogComponent} from '../student-attendance-dialog/student-attendance-dialog.component';
+import {GradesDialogComponent} from '../grades-dialog/grades-dialog.component';
 import { ViewPowerpointDialogComponent } from '../view-powerpoint-dialog/view-powerpoint-dialog.component';
 import { SlideUploadDialogComponent } from '../slide-upload-dialog/slide-upload-dialog.component';
+import { CodeNode } from 'source-list-map';
 
 @Component({
   selector: 'app-course-detail',
@@ -31,8 +36,12 @@ export class CourseDetailComponent implements OnInit {
   @ViewChild('createQuizDialog') createQuizComponent: CreateQuizComponent;
   @ViewChild('seeResults') courseQuizComponent: CourseQuizComponent;
   @ViewChild('takeQuiz') takeQuizComponent: TakeQuizComponent;
+  @ViewChild('attendanceDialog') attendanceDialogComponent: AttendanceDialogComponent;
+  @ViewChild('studentAttendanceDialog') StudentAttendanceDialogComponent: StudentAttendanceDialogComponent;
+  @ViewChild('gradesDialog') GradesDialogComponent: GradesDialogComponent; 
   @ViewChild('viewPowerpoint') viewPowerpointDialogComponent: ViewPowerpointDialogComponent;
   @ViewChild('slideUploadDialog') slideUploadDialogComponent: SlideUploadDialogComponent
+
 
   courseData: Course;
   courseDocuments: Object[];
@@ -43,6 +52,8 @@ export class CourseDetailComponent implements OnInit {
   recentQuiz;
   recentQuizQuestions;
   activePowerpoint = "../../../assets/Test Presentation.pdf";
+  open;
+  code: string;
 
   constructor(public authTokenService: Angular2TokenService,
     public authService: AuthService, private actr: ActivatedRoute, private router: Router, private cableService: ActionCableService, public nav: NavbarService) {
@@ -53,6 +64,8 @@ export class CourseDetailComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.checkAttendanceOpen();
+
     // returns either all documents if the user is an admin, or only public documents if the user is just a student
     this.authTokenService.get('documents', { params: { course: this.courseData.id } }).subscribe(res => {
       this.courseDocuments = res.json();
@@ -119,7 +132,17 @@ export class CourseDetailComponent implements OnInit {
           this.getActiveQuiz();
         } else if (data.status === 'close_quiz') {
           this.activeQuiz = undefined;
-        }
+        } else if (data.status === 'open_attendance') {
+          this.open = true;
+          // TODO: when attendance is opened
+        } else if (data.status === 'close_attendance') {
+          this.open = false;
+          // TODO: when attendance is closed
+        } else if (data.status === 'attendance') {
+          // TODO: when someone marks themselves present
+        } else if (data.status === 'document') {
+          this.courseDocuments.push({name: data.file.name, url: data.file.url})
+        } 
       });
     })
 
@@ -133,10 +156,12 @@ export class CourseDetailComponent implements OnInit {
   getActiveQuiz() {
     this.authTokenService.get('get_active_quiz/' + this.courseData.id).subscribe(res => {
       this.activeQuiz = res.json();
+      if(this.activeQuiz) {
       this.authTokenService.get('get_active_quiz_questions/' + this.activeQuiz.id)
         .subscribe(questionRes => {
         this.activeQuizQuestions = questionRes.json();
       });
+    }
     });
   }
 
@@ -233,6 +258,52 @@ export class CourseDetailComponent implements OnInit {
   showSlideUploadDialog() {
     this.slideUploadDialogComponent.openDialog();
   }
+
+  checkAttendanceOpen() {
+    this.authTokenService.post('check_attendance', { course: this.courseData.id }).subscribe(res => {
+      res = res.json();
+      console.log(res);
+      this.open = res.status; 
+    });
+  }
+  
+  studentTakeAttendance(){
+	  this.authTokenService.post('take_attendance', { course: this.courseData.id, code:'' }).subscribe(res => {
+      res = res.json();
+      console.log(res);
+    });
+	  
+    }
+
+
+  takeAttendance() {
+    var date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+
+    this.authTokenService.post('attendances', { date: date, course_id: this.courseData.id}).subscribe(res => {
+      res = res.json();
+      this.code = res["code"];
+      this.openAttendanceDialog();
+    });
+
+    // TODO: Get generated QR Code from response and display it in a dialog.
+  }
+
+  openAttendanceDialog() {
+    this.attendanceDialogComponent.openDialog();
+  }
+
+  openStudentAttendanceDialog() {
+    this.StudentAttendanceDialogComponent.openDialog();
+  }
+
+  openGradesDialog(){
+    this.GradesDialogComponent.openDialog(); 
+  }
+
+  closeAttendance() {
+    this.authTokenService.post('close_attendance', { course: this.courseData.id }).subscribe(res => {
+      res = res.json();
+      console.log(res);
+    });
+  }
 }
-
-

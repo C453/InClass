@@ -1,0 +1,24 @@
+<div class="modal modal-form" materialize="modal" [materializeActions]="modalActions" [materializeParams]="modalParams">
+  <div class="modal-content">
+  
+      <div class="row">
+        <div class="row">
+
+          <span class="modal-close right">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </span>
+        </div>
+        <div class="row">
+          <span class="modal-close left">
+            <qr-scanner
+        [debug]="false"
+        [canvasWidth]="1080" 
+        [canvasHeight]="720" 
+        [stopAfterScan]="true"
+        [updateTime]="500">
+</qr-scanner>
+          </span>
+        </div>
+    </div>
+  
+  </div>

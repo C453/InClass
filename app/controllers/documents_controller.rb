@@ -34,6 +34,8 @@ class DocumentsController < ApplicationController
     @document = Document.new(name: document_params[:name], expires: document_params[:expires], file: document_params[:file], public: true, course: course)
 
     if @document.save
+      ActionCable.server.broadcast "course:#{@document.course_id}_channel", status: 'document',
+      file: @document.get_file
       render json: @document, status: :created, location: @document
     else
       render json: @document.errors, status: :unprocessable_entity

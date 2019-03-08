@@ -12,6 +12,8 @@ import { Angular2TokenService } from 'angular2-token';
 import {AuthService} from "./services/auth.service";
 import { ActionCableService, Channel } from 'angular2-actioncable';
 import {AuthGuard} from "./guards/auth.guard";
+import { QRCodeModule } from 'angular2-qrcode';
+import { NgQrScannerModule } from 'angular2-qrscanner';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 import {
@@ -30,7 +32,7 @@ import {
   MatGridListModule,
   MatIconModule,
   MatInputModule,
-  MatListModule,
+MatListModule,
   MatMenuModule,
   MatNativeDateModule,
   MatPaginatorModule,
@@ -67,6 +69,10 @@ import { CreateCourseDialogComponent } from './create-course-dialog/create-cours
 import { TakeQuizComponent } from './quizzes/take-quiz/take-quiz.component';
 import { ViewPowerpointDialogComponent } from './view-powerpoint-dialog/view-powerpoint-dialog.component';
 import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dialog.component';
+import { AttendanceDialogComponent } from './attendance-dialog/attendance-dialog.component';
+import {QRCodeComponent} from 'angular2-qrcode';
+import { StudentAttendanceDialogComponent } from './student-attendance-dialog/student-attendance-dialog.component';
+import { GradesDialogComponent } from './grades-dialog/grades-dialog.component';
 import { SlideUploadDialogComponent } from './slide-upload-dialog/slide-upload-dialog.component';
 
 @NgModule({
@@ -86,9 +92,15 @@ import { SlideUploadDialogComponent } from './slide-upload-dialog/slide-upload-d
     CourseQuizComponent,
     CreateQuizComponent,
     TakeQuizComponent,
+    FileUploadDialogComponent,
+    AttendanceDialogComponent,
+    QRCodeComponent,
+    StudentAttendanceDialogComponent,
+    GradesDialogComponent,
     ViewPowerpointDialogComponent,
     FileUploadDialogComponent,
     SlideUploadDialogComponent
+
   ],
   imports: [
     BrowserModule,
@@ -133,8 +145,9 @@ import { SlideUploadDialogComponent } from './slide-upload-dialog/slide-upload-d
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+    NgQrScannerModule,
     PdfViewerModule
-  ],
+    ],
   providers: [ 
     Angular2TokenService,
     AuthService,
