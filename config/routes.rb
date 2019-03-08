@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
   resources :slides
+  post 'get_grade', to: 'grades#get_grade'
+  resources :attendances
+  post 'check_attendance', to: 'check_attendance#check_attendance'
+  post 'close_attendance', to: 'close_attendance#close_attendance'
+  post 'take_attendance', to: 'take_attendance#take_attendance'
   post 'yeah', to: 'yeah_question#yeah'
   post 'unyeah', to: 'yeah_question#unyeah'
   post 'answer_question', to: 'yeah_question#answer_question'

@@ -1,4 +1,4 @@
-<div *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
+<div class ="buttonsinline" *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
   <a (click)="dropCourse()" mat-raised-button color="warn" class="button">Drop Course</a>
 
   <span *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
@@ -7,25 +7,46 @@
   </span>
 </div>
 
-<div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
+<div class ="buttonsinline" *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()) && open === false ">
+  <a (click)="takeAttendance()" mat-raised-button color="primary" class="button">Open Attendance</a>
+</div>
+
+<div class ="buttonsinline" *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()) && open === true ">
+  <a (click)="closeAttendance()" mat-raised-button color="primary" class="button">Close Attendance</a>
+</div>
+
+<div class ="buttonsinline" *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()) && open === true ">
+  <a (click)="openStudentAttendanceDialog()" mat-raised-button color="primary" class="button">Take Attendance</a>
+</div>
+
+
+<div class ="buttonsinline" *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
   <a (click)="createQuiz()" mat-raised-button color="primary" class="button">Create New Quiz</a>
   <a (click)="openResults()" mat-raised-button color="primary" class="button">Check Quiz Results</a>
   <a (click)="showSlideUploadDialog()" mat-raised-button color="primary" class="button">Upload New Slides</a>
 </div>
 
-<div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
+<div class ="buttonsinline" *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()) && open === false ">
+    <a (click)="studentTakeAttendance()" mat-raised-button class="btn disabled">Attendance closed</a>
+</div>
+
+<div class ="buttonsinline" *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
             && activeQuiz">
   <a (click)="closeQuiz()" mat-raised-button color="warn" class="button">Close Current Quiz</a>
 </div>
 
-<div *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
+<div class ="buttonsinline" *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
             && activeQuiz">
   <a (click)="displayQuiz()" mat-raised-button class="take-quiz-button">Take Active Quiz</a>
+
 </div>
 
-<div *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())
-            && !activeQuiz">
+<div class ="buttonsinline" *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
   <a (click)="displayQuiz()" mat-raised-button class="btn disabled">No Active Quiz</a>
+</div>
+
+<div class ="buttonsinline" *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
+  <a (click)="openGradesDialog()" mat-raised-button color="primary" class="button">Attendance History</a>
 </div>
 
 <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="32px" fxLayoutAlign="flex-start" class="courseLayout">
@@ -97,8 +118,11 @@
   </div>
 
 <app-create-quiz #createQuizDialog [courseID]="courseData.id"></app-create-quiz>
+<app-attendance-dialog #attendanceDialog [code]="code" [courseId]="courseData.id"></app-attendance-dialog>
+<app-student-attendance-dialog #studentAttendanceDialog></app-student-attendance-dialog>
+<app-grades-dialog #gradesDialog  [courseId]="courseData.id"></app-grades-dialog>
 <app-take-quiz #takeQuiz></app-take-quiz>
+<app-file-upload-dialog #fileUploadDialog [courseID]="courseData.id"></app-file-upload-dialog>
 <app-course-quiz #seeResults></app-course-quiz>
 <app-view-powerpoint-dialog #viewPowerpoint [powerpointSource]="activePowerpoint"></app-view-powerpoint-dialog>
-<app-file-upload-dialog #fileUploadDialog></app-file-upload-dialog>
 <app-slide-upload-dialog #slideUploadDialog></app-slide-upload-dialog>

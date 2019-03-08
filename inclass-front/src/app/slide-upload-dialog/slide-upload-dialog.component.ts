@@ -14,6 +14,7 @@ export class SlideUploadDialogComponent implements OnInit {
   fileUpload = {
     expires: '2019-01-01',
     topic: '',
+    name: ''
   }
   @Input() courseID;
   modalActions = new EventEmitter<string|MaterializeAction>();

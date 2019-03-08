@@ -15,6 +15,23 @@ ActiveRecord::Schema.define(version: 2019_03_04_203248) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "attendances", force: :cascade do |t|
+    t.date "date"
+    t.bigint "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "code"
+    t.boolean "open"
+    t.index ["course_id"], name: "index_attendances_on_course_id"
+  end
+
+  create_table "attendances_users", id: false, force: :cascade do |t|
+    t.bigint "attendance_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["attendance_id", "user_id"], name: "index_attendances_users_on_attendance_id_and_user_id"
+    t.index ["user_id", "attendance_id"], name: "index_attendances_users_on_user_id_and_attendance_id"
+  end
+
   create_table "courses", force: :cascade do |t|
     t.string "name"
     t.string "code"
@@ -132,6 +149,7 @@ ActiveRecord::Schema.define(version: 2019_03_04_203248) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "attendances", "courses"
   add_foreign_key "documents", "courses"
   add_foreign_key "questions", "courses"
   add_foreign_key "questions", "users"

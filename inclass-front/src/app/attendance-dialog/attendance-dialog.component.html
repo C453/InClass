@@ -1,0 +1,22 @@
+<div class="modal modal-form" materialize="modal" [materializeActions]="modalActions" [materializeParams]="modalParams">
+  <div class="modal-content">
+  
+      <div class="row">
+  
+        <div class="row">
+          <span class="modal-close left">
+            <h3 float:left class="grey-text text-darken-2">Attendance QR Code:</h3>
+          </span>
+        </div>
+  
+        <div>
+            <qr-code [value]="code" [size]="250"></qr-code>
+        </div>
+        <br>
+        <div class ="buttonsinline">
+          <a (click)="closeAttendance()" mat-raised-button color="primary" class="button">Close Attendance</a>
+        </div>
+
+    </div>
+  
+  </div>
