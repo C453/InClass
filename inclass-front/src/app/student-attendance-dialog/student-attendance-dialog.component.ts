@@ -62,8 +62,14 @@ export class StudentAttendanceDialogComponent implements OnInit {
       }
   });
 
-  this.qrScannerComponent.capturedQr.subscribe(result => {
-      console.log(result);
+  this.qrScannerComponent.capturedQr.subscribe(code => {
+    this.authTokenService.post('take_attendance', {code: code}).subscribe(res => {
+      res = res.json();
+      console.log(res);
+      if((res.status as unknown) as string === 'success') {
+        this.closeDialog();
+      }
+    });
   });
   }
 

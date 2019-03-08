@@ -127,12 +127,16 @@ export class CourseDetailComponent implements OnInit {
         } else if (data.status === 'close_quiz') {
           this.activeQuiz = undefined;
         } else if (data.status === 'open_attendance') {
+          this.open = true;
           // TODO: when attendance is opened
         } else if (data.status === 'close_attendance') {
+          this.open = false;
           // TODO: when attendance is closed
         } else if (data.status === 'attendance') {
           // TODO: when someone marks themselves present
-        }
+        } else if (data.status === 'document') {
+          this.courseDocuments.push({name: data.file.name, url: data.file.url})
+        } 
       });
     })
 
