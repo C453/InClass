@@ -10,6 +10,7 @@ import { CreateCourseDialogComponent } from "../create-course-dialog/create-cour
 import { Subscription } from 'rxjs';
 import { ActionCableService, Channel } from 'angular2-actioncable';
 import { NavbarService } from '../services/navbar.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-courses',
@@ -36,7 +37,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
       this.courseData = response.json();
 
       const coursesChannel: Channel = this.cableService
-        .cable('ws://127.0.0.1:3000/cable')
+        .cable(environment.token_auth_config.socketBase)
         .channel('CoursesChannel', { user_id: this.authTokenService.currentUserData.id });
       console.log(coursesChannel);
 
