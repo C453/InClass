@@ -8,7 +8,9 @@ import { Course } from '../models/course.model';
   selector: 'app-grades-dialog',
   templateUrl: './grades-dialog.component.html',
   styleUrls: ['./grades-dialog.component.css']
+
 })
+
 
 
 export class GradesDialogComponent implements OnInit {

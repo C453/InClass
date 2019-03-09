@@ -25,7 +25,6 @@ export class StudentAttendanceDialogComponent implements OnInit {
   @Input() code;
   @Input() courseId;
   @ViewChild(QrScannerComponent) qrScannerComponent: QrScannerComponent ;
-
   modalParams = [
     {
       dismissible: false
@@ -67,7 +66,10 @@ export class StudentAttendanceDialogComponent implements OnInit {
       res = res.json();
       console.log(res);
       if((res.status as unknown) as string === 'success') {
+        alert("Attendance taken!");
         this.closeDialog();
+      }else{
+        alert("Attendance failed!");
       }
     });
   });

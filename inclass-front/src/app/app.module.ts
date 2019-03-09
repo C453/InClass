@@ -1,3 +1,18 @@
+import { Pipe, PipeTransform } from '@angular/core';
+import * as _ from 'lodash'; 
+@Pipe({
+  name: 'unique',
+  pure: false
+})
+
+export class UniquePipe implements PipeTransform {
+    transform(value: any): any{
+        if(value!== undefined && value!== null){
+            return _.uniqBy(value, 'date');
+        }
+        return value;
+    }
+}
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -99,7 +114,8 @@ import { SlideUploadDialogComponent } from './slide-upload-dialog/slide-upload-d
     GradesDialogComponent,
     ViewPowerpointDialogComponent,
     FileUploadDialogComponent,
-    SlideUploadDialogComponent
+    SlideUploadDialogComponent,
+    UniquePipe
 
   ],
   imports: [
@@ -147,6 +163,7 @@ import { SlideUploadDialogComponent } from './slide-upload-dialog/slide-upload-d
     MatTreeModule,
     NgQrScannerModule,
     PdfViewerModule
+
     ],
   providers: [ 
     Angular2TokenService,
@@ -157,3 +174,4 @@ import { SlideUploadDialogComponent } from './slide-upload-dialog/slide-upload-d
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
