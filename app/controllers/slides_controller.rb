@@ -26,6 +26,7 @@ class SlidesController < ApplicationController
     @slide = Slide.new(name: slide_params[:name], expires: slide_params[:expires], file: slide_params[:file], public: true, course: course)
 
     if @slide.save
+      ActionCable.server.broadcast "course:#{@slide.course}_channel", status: 'slides', file: @slide.get_file
       render json: @slide, status: :created, location: @slide
     else
       render json: @slide.errors, status: :unprocessable_entity
@@ -39,6 +40,10 @@ class SlidesController < ApplicationController
     else
       render json: @slide.errors, status: :unprocessable_entity
     end
+  end
+
+  def move_page
+    ActionCable.server.broadcast "course:#{params[:course]}_channel", status: 'move_page', page: params[:page_number]
   end
 
   # DELETE /slides/1

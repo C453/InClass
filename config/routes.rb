@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   resources :documents
   post 'get_courses', to: 'get_courses#get_courses'
   post 'get_owned_courses', to: 'get_courses#get_owned_courses'
+  resources :slides
+  post 'move_page', to: 'slides#move_page'
   resources :courses
   post 'register_course', to: 'add_user_to_course#register_course'
   post 'drop_course', to: 'add_user_to_course#drop_course'

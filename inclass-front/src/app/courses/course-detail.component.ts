@@ -42,7 +42,6 @@ export class CourseDetailComponent implements OnInit {
   @ViewChild('viewPowerpoint') viewPowerpointDialogComponent: ViewPowerpointDialogComponent;
   @ViewChild('slideUploadDialog') slideUploadDialogComponent: SlideUploadDialogComponent
 
-
   courseData: Course;
   courseDocuments: Object[];
   courseSlides: Object[];
@@ -151,6 +150,9 @@ export class CourseDetailComponent implements OnInit {
           // TODO: when someone marks themselves present
         } else if (data.status === 'document') {
           this.courseDocuments.push({name: data.file.name, url: data.file.url});
+        } else if (data.status === 'slides') {
+          console.log('NEW SLIDES BABY!');
+          console.log(data);
         }
       });
     })
