@@ -1,5 +1,7 @@
 # InClass
 
+-Deployed at: https://project-inclass.herokuapp.com/
+
 ## Requirements
 - Ruby 2.6.0
 - Rails 5.2.2
