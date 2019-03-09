@@ -60,7 +60,9 @@ export class StudentAttendanceDialogComponent implements OnInit {
       if((res.status as unknown) as string === 'success') {
         alert("Attendance taken!");
         this.closeDialog();
-      }else{
+      } else if ((res.status as unknown) as string === 'not in class') {
+        alert('Attendance failed! Not near class!')
+      } else {
         alert("Attendance failed!");
       }
     });
