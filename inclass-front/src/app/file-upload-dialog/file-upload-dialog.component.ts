@@ -65,5 +65,4 @@ export class FileUploadDialogComponent implements OnInit {
       this.closeDialog();
     });
   }
-
 }
