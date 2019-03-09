@@ -23,6 +23,7 @@ export class StudentAttendanceDialogComponent implements OnInit {
   ]
 
   modalActions = new EventEmitter<string|MaterializeAction>();
+  location;
 
   constructor(public authTokenService: Angular2TokenService,
     public authService: AuthService) { }
@@ -53,13 +54,15 @@ export class StudentAttendanceDialogComponent implements OnInit {
   });
 
   this.qrScannerComponent.capturedQr.subscribe(code => {
-    this.authTokenService.post('take_attendance', {code: code}).subscribe(res => {
+    this.authTokenService.post('take_attendance', {code: code, lat: this.location.latitude, long: this.location.longitude}).subscribe(res => {
       res = res.json();
       console.log(res);
       if((res.status as unknown) as string === 'success') {
         alert("Attendance taken!");
         this.closeDialog();
-      }else{
+      } else if ((res.status as unknown) as string === 'not in class') {
+        alert('Attendance failed! Not near class!')
+      } else {
         alert("Attendance failed!");
       }
     });
@@ -67,6 +70,12 @@ export class StudentAttendanceDialogComponent implements OnInit {
   }
 
   openDialog(){
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(position => {
+        this.location = position.coords;
+        console.log(position.coords); 
+      });
+    }
     this.modalActions.emit({action:"modal", params:['open']});
   }
 

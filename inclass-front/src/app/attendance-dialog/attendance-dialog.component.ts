@@ -13,6 +13,7 @@ export class AttendanceDialogComponent implements OnInit {
 
   @Input() code;
   @Input() courseId;
+  location;
 
   modalParams = [
     {
@@ -29,6 +30,14 @@ export class AttendanceDialogComponent implements OnInit {
   }
 
   openDialog(){
+    
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(position => {
+        this.location = position.coords;
+        console.log(position.coords); 
+      });
+    }
+
     this.modalActions.emit({action:"modal", params:['open']});
   }
 

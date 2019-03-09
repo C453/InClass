@@ -2,6 +2,7 @@ import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import { Angular2TokenService } from 'angular2-token';
 import { MaterializeAction } from 'angular2-materialize';
 import { AuthService } from '../services/auth.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-slide-upload-dialog',
@@ -57,7 +58,7 @@ export class SlideUploadDialogComponent implements OnInit {
 
     this.authTokenService.request({
       method: 'post',
-      url: `http://localhost:3000/slides`,
+      url: environment.token_auth_config.apiBase + `/slides`,
       body: formData,
       headers: options.headers
     }).subscribe(res => {

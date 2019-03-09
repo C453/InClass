@@ -1,1 +1,0 @@
-rails s & cd inclass-front && ng serve && fg

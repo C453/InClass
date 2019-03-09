@@ -56,6 +56,7 @@ export class CourseDetailComponent implements OnInit {
   open;
   code: string;
   grades;
+  location;
 
   constructor(public authTokenService: Angular2TokenService,
     public authService: AuthService, private actr: ActivatedRoute, private router: Router, private cableService: ActionCableService, public nav: NavbarService) {
@@ -68,6 +69,13 @@ export class CourseDetailComponent implements OnInit {
   ngOnInit() {
     this.checkAttendanceOpen();
 
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(position => {
+        this.location = position.coords;
+        console.log(position.coords); 
+      });
+    }
+
     // returns either all documents if the user is an admin, or only public documents if the user is just a student
     this.authTokenService.get('documents', { params: { course: this.courseData.id } }).subscribe(res => {
       this.courseDocuments = res.json();
@@ -77,7 +85,7 @@ export class CourseDetailComponent implements OnInit {
       this.courseSlides = res.json();
       console.log(this.courseSlides);
       if (this.courseSlides.length == 1) {
-        this.activePowerpoint = "http://127.0.0.1:3000" + this.courseSlides[0]['url'];
+        this.activePowerpoint = environment.token_auth_config.apiBase + this.courseSlides[0]['url'];
         console.log('Active powerpoint: ' + this.activePowerpoint);
       }
     });
@@ -258,7 +266,7 @@ export class CourseDetailComponent implements OnInit {
   }
 
   downloadFile(file) {
-    window.open("http://127.0.0.1:3000" + file.url);
+    window.open(environment.token_auth_config.apiBase + file.url);
   }
 
   uploadFile() {
@@ -297,7 +305,7 @@ export class CourseDetailComponent implements OnInit {
   takeAttendance() {
     var date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
 
-    this.authTokenService.post('attendances', { date: date, course_id: this.courseData.id}).subscribe(res => {
+    this.authTokenService.post('attendances', { date: date, course_id: this.courseData.id, latitude: this.location.latitude, longitude: this.location.longitude}).subscribe(res => {
       res = res.json();
       this.code = res["code"];
       this.openAttendanceDialog();

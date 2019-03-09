@@ -10,6 +10,4 @@
 
 ## Run
 - `rails s`
-- `cd inclass-front && ng serve`
-
-Additionally, there is a `run.sh` included script to run all both servers at once.
+- `ng serve`

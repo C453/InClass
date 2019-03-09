@@ -5,6 +5,7 @@ import { Angular2TokenService } from 'angular2-token';
 import { Channel, ActionCableService } from 'angular2-actioncable';
 import { CourseDetailComponent } from '../courses/course-detail.component';
 import { Course } from '../models/course.model';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-view-powerpoint-dialog',
@@ -24,7 +25,7 @@ export class ViewPowerpointDialogComponent implements OnInit {
   constructor(public authTokenService: Angular2TokenService,
     public authService: AuthService, private cableService: ActionCableService) { 
       const courseChannel: Channel = this.cableService
-      .cable('ws://127.0.0.1:3000/cable')
+      .cable(environment.token_auth_config.socketBase)
       .channel('CourseChannel', { user_id: this.authTokenService.currentUserData.id });
 
       this.subscription = courseChannel.received().subscribe(data => { 

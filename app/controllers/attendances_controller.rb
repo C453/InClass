@@ -68,6 +68,6 @@ class AttendancesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def attendance_params
-      params.require(:attendance).permit(:date, :course_id)
+      params.require(:attendance).permit(:date, :course_id, :latitude, :longitude)
     end
 end
