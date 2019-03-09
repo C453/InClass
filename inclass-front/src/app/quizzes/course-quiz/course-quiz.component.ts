@@ -31,17 +31,13 @@ export class CourseQuizComponent implements OnInit {
   seeResults (quizId, courseId) {
     this.quiz = quizId
     this.course = courseId
-
     this.authTokenService.get('get_recent_quiz_questions/' + quizId).subscribe(result =>{
       this.recentQuizQuestions = result.json()
-
       this.authTokenService.get('get_quiz_submissions/' + this.course + '/' + this.quiz).subscribe(result => {
         this.submissions = result.json()
         this.processSubmissions()
       })
     })
-
-    
 
     this.modalActions.emit({action:"modal", params:['open']});
   }
@@ -54,8 +50,8 @@ export class CourseQuizComponent implements OnInit {
     for (var i = 0; i < amt; i++) {
       this.average += this.submissions[i].score
     }
-    this.average = (this.average / total) * 100
-    
+    this.average = (this.average / i) * 100
+    this.average = this.average.toFixed(2)
   }
 
   closeResults () {

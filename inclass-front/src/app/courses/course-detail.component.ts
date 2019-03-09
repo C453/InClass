@@ -21,6 +21,7 @@ import {GradesDialogComponent} from '../grades-dialog/grades-dialog.component';
 import { ViewPowerpointDialogComponent } from '../view-powerpoint-dialog/view-powerpoint-dialog.component';
 import { SlideUploadDialogComponent } from '../slide-upload-dialog/slide-upload-dialog.component';
 import { CodeNode } from 'source-list-map';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-course-detail',
@@ -81,11 +82,11 @@ export class CourseDetailComponent implements OnInit {
     });
 
     const addQuizChannel: Channel = this.cableService
-    .cable('ws://127.0.0.1:3000/cable')
+    .cable(environment.token_auth_config.socketBase)
     .channel('AddQuizChannel', { user_id: this.authTokenService.currentUserData.id });
 
     const closeQuizChannel: Channel = this.cableService
-    .cable('ws://127.0.0.1:3000/cable')
+    .cable(environment.token_auth_config.socketBase)
     .channel('CloseQuizChannel', { user_id: this.authTokenService.currentUserData.id });
 
     // get all questions via REST
@@ -95,7 +96,7 @@ export class CourseDetailComponent implements OnInit {
 
       // create connection to stream course data
       const courseChannel: Channel = this.cableService
-        .cable('ws://127.0.0.1:3000/cable')
+        .cable(environment.token_auth_config.socketBase)
         .channel('CourseChannel', { course_id: this.courseData.id });
       console.log(courseChannel);
 
@@ -140,6 +141,7 @@ export class CourseDetailComponent implements OnInit {
           this.getActiveQuiz();
         } else if (data.status === 'close_quiz') {
           this.activeQuiz = undefined;
+          this.getRecentQuiz();
         } else if (data.status === 'open_attendance') {
           this.open = true;
           // TODO: when attendance is opened

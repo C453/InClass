@@ -41,7 +41,7 @@ export class TakeQuizComponent implements OnInit {
       // Put this out side of conditional for bug, it will keep adding score
       this.authTokenService.post("quiz_submissions",
         { quiz_id: this.curQuiz.id, score: this.grade, course_id: this.curQuiz.course_id }).subscribe(result => {
-        if(result.status == 201) {
+        if(result.status == 200 || result.status == 201) {
           this.closeQuiz();
         }
       })
@@ -50,7 +50,6 @@ export class TakeQuizComponent implements OnInit {
     else{
       alert("Please fill out the whole quiz")
     }
-    
   }
 
   processQuestions () {
@@ -75,11 +74,11 @@ export class TakeQuizComponent implements OnInit {
   validForm () {
     var buttons = 0
     var form;
+    console.log(this.curQuizQuestions.length)
 
     for(var i = 0; i < this.curQuizQuestions.length; i++) {
 
       form = document.forms[`quiz${i}`]
-
 
       var inputs = form.getElementsByTagName("input")
 
@@ -87,13 +86,10 @@ export class TakeQuizComponent implements OnInit {
         if ((inputs[j].checked == true)) {
           buttons++;
         }
-        else {
-          buttons--;
-        }
       }
     }
 
-    if (buttons < 0) {
+    if (buttons !== this.curQuizQuestions.length) {
       return false
     }
     return true

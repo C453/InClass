@@ -40,7 +40,7 @@
 
 </div>
 
-<div class ="buttonsinline" *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
+<div class ="buttonsinline" *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()) && !activeQuiz">
   <a (click)="displayQuiz()" mat-raised-button class="btn disabled">No Active Quiz</a>
 </div>
 
