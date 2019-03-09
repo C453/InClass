@@ -55,6 +55,7 @@ export class CourseDetailComponent implements OnInit {
   activePowerpoint;
   open;
   code: string;
+  grades;
 
   constructor(public authTokenService: Angular2TokenService,
     public authService: AuthService, private actr: ActivatedRoute, private router: Router, private cableService: ActionCableService, public nav: NavbarService) {
@@ -79,6 +80,10 @@ export class CourseDetailComponent implements OnInit {
         this.activePowerpoint = "http://127.0.0.1:3000" + this.courseSlides[0]['url'];
         console.log('Active powerpoint: ' + this.activePowerpoint);
       }
+    });
+
+    this.authTokenService.post('get_grade', { course: this.courseData.id }).subscribe(res => {
+      this.grades = res.json();
     });
 
     const addQuizChannel: Channel = this.cableService

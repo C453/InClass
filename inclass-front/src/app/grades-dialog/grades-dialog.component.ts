@@ -2,18 +2,21 @@ import { Component, OnInit, EventEmitter, Input } from '@angular/core';
 import { MaterializeAction } from "angular2-materialize";
 import { AuthService } from "../services/auth.service";
 import { Angular2TokenService } from "angular2-token";
+import { Course } from '../models/course.model';
 
 @Component({
   selector: 'app-grades-dialog',
   templateUrl: './grades-dialog.component.html',
   styleUrls: ['./grades-dialog.component.css']
+
 })
+
 
 
 export class GradesDialogComponent implements OnInit {
   
-  @Input() courseId;
-  grades: Object; 
+  @Input() grades;
+  @Input() courseData; 
 
   modalParams = [
     {
@@ -27,23 +30,17 @@ export class GradesDialogComponent implements OnInit {
     public authService: AuthService) { }
 
   ngOnInit() {
-    this.getGrades();
   }
 
   openDialog(){
+    console.log(this.grades);
+    console.log(this.courseData);
+
     this.modalActions.emit({action:"modal", params:['open']});
   }
 
   closeDialog(){
     this.modalActions.emit({action:"modal", params:['close']});
-  }
-  
-  getGrades(){
-    this.authTokenService.post('get_grade', { course: this.courseId }).subscribe(res => {
-      this.grades = res.json();
-      console.log(res);
-    });
-    
   }
 
 

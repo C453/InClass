@@ -9,14 +9,43 @@
           </span>
         </div>
 
-        <div class="row">
+        <div *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())" class="row">
           <span class="modal-close left">
-            <h3 float:left class="grey-text text-darken-2">Your Attendance History:</h3>
+            <h3 class="grey-text text-darken-2">Your Attendance History:</h3>
           </span>
         </div>
 
-        <div class="row">
-        </div>
-    </div>
+        <div *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())" class="row">
+            <span class="modal-close left">
+              <h3 class="grey-text text-darken-2">Class Attendance History:</h3>
+            </span>
+          </div>
   
+
+        <div *ngIf="grades && !courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())" class="row">
+            <h4 class="grey-text text-darken-2">Total attendance days: {{grades.grades.attendance.total_attendances}}</h4>
+            <h4 class="grey-text text-darken-2">Total missed attendance days: {{grades.grades.attendance.total_missed}}</h4>
+        </div>
+
+        <div *ngIf="grades && courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())" class="row">
+
+              <mat-form-field>
+                  <mat-select [(value)]="selected">
+                    <mat-option *ngFor="let date of grades.grades.attendance | unique"  value="{{date.date}}">{{date.date}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                           
+            <div *ngFor="let attendance of grades.grades.attendance; ">
+                <div *ngIf="attendance.date === selected">
+                  <b>{{attendance.date}}</b>
+                    <div *ngFor="let user of attendance.users;">
+                        <div *ngIf="user.name != this.authTokenService.currentUserData.name.toString()">
+                        <div *ngIf="user.signed_in === false">{{user.name}}: Absent</div>
+                        <div *ngIf="user.signed_in === true">{{user.name}}: Present</div>
+                      </div>
+                    </div>  
+                    <br>
+                </div>
+            </div>
+    </div>
   </div>
