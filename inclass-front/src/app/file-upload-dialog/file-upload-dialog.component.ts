@@ -3,6 +3,8 @@ import { MaterializeAction } from "angular2-materialize";
 
 import { AuthService } from "../services/auth.service";
 import { Angular2TokenService } from "angular2-token";
+import { environment } from '../../environments/environment';
+
 
 @Component({
   selector: 'app-file-upload-dialog',
@@ -58,7 +60,7 @@ export class FileUploadDialogComponent implements OnInit {
 
     this.authTokenService.request({
       method: 'post',
-      url: `http://localhost:3000/documents`,
+      url: environment.token_auth_config.apiBase + `/documents`,
       body: formData,
       headers: options.headers
     }).subscribe(res => {

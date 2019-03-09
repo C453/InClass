@@ -77,7 +77,7 @@ export class CourseDetailComponent implements OnInit {
       this.courseSlides = res.json();
       console.log(this.courseSlides);
       if (this.courseSlides.length == 1) {
-        this.activePowerpoint = "http://127.0.0.1:3000" + this.courseSlides[0]['url'];
+        this.activePowerpoint = environment.token_auth_config.apiBase + this.courseSlides[0]['url'];
         console.log('Active powerpoint: ' + this.activePowerpoint);
       }
     });
@@ -258,7 +258,7 @@ export class CourseDetailComponent implements OnInit {
   }
 
   downloadFile(file) {
-    window.open("http://127.0.0.1:3000" + file.url);
+    window.open(environment.token_auth_config.apiBase + file.url);
   }
 
   uploadFile() {
