@@ -53,6 +53,8 @@ export class StudentAttendanceDialogComponent implements OnInit {
       }
   });
 
+  this.qrScannerComponent.videoElement.setAttribute('playsinline', 'true');
+
   this.qrScannerComponent.capturedQr.subscribe(code => {
     this.authTokenService.post('take_attendance', {code: code, lat: this.location.latitude, long: this.location.longitude}).subscribe(res => {
       res = res.json();
