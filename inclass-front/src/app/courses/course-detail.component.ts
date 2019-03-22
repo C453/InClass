@@ -244,8 +244,8 @@ export class CourseDetailComponent implements OnInit {
   autoGrowTextZone(e) {
     e.target.style.height = "0px";
     e.target.style.height = (e.target.scrollHeight + 25) + "px";
-    if (e.target.scrollHeight > 200) {
-      e.target.style.height = "200px";
+    if (e.target.scrollHeight > 1000) {
+      e.target.style.height = "1000px";
     }
   }
   createQuiz() {

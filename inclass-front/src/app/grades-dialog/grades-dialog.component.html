@@ -32,7 +32,7 @@
                 </mat-form-field>
                            
             <div *ngFor="let attendance of grades.grades.attendance">
-                <div *ngIf="attendance.date === selected">
+                <div>
                   <b>{{attendance.date}}</b>
                     <div *ngFor="let user of attendance.users">
                         <div *ngIf="user.name !== this.authTokenService.currentUserData.name.toString()">
