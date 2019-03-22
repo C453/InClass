@@ -3,6 +3,7 @@ import { MaterializeAction } from 'angular2-materialize';
 
 import { AuthService } from "../../services/auth.service";
 import { Angular2TokenService } from "angular2-token";
+import * as questions from '../../globals';
 
 @Component({
   selector: 'app-take-quiz',
@@ -17,11 +18,12 @@ export class TakeQuizComponent implements OnInit {
   curQuiz;
   grade;
 
+
   constructor(public authTokenService: Angular2TokenService,
     public authService: AuthService) {
     this.curQuiz = {}
     this.selectedAnswers = [];
-    
+
   }
 
   ngOnInit() {
@@ -65,7 +67,7 @@ export class TakeQuizComponent implements OnInit {
 
         for (var j = 0; j < inputs.length; j++) {
           if ((inputs[j].checked == true) && (j == correctAnswer)) {
-            this.grade++
+            this.grade = this.grade + questions.ANS
           }
         }
       }
