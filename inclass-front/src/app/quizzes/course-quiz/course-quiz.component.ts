@@ -45,13 +45,15 @@ export class CourseQuizComponent implements OnInit {
   processSubmissions () {
     this.average = 0;
     var total = this.recentQuizQuestions.length
+    console.log(total)
     var amt = this.submissions.length
-
-    for (var i = 0; i < amt; i++) {
-      this.average += this.submissions[i].score
+    for (var j = 0; j < total; j++) { //Check the amt for each question
+      for (var i = 0; i < amt; i++) {
+        this.average += this.submissions[i].score
+      }
+      this.average = (this.average / i) * 100
+      this.average = this.average.toFixed(2)
     }
-    this.average = (this.average / i) * 100
-    this.average = this.average.toFixed(2)
   }
 
   closeResults () {

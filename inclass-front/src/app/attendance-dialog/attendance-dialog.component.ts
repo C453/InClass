@@ -17,7 +17,7 @@ export class AttendanceDialogComponent implements OnInit {
 
   modalParams = [
     {
-      dismissible: false
+      dismissible: true
     }
   ]
 

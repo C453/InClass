@@ -39,7 +39,7 @@ class QuizSubmissionsController < ApplicationController
   def update_quiz
     @quiz_submission = QuizSubmission.where(user_id: current_user.id, quiz_id: params[:quiz_id])
     if @quiz_submission.update(quiz_submission_params)
-      render json: @quiz_submission, status: :ok
+      render json: @quiz_submission, status: :not_found
     else
       render json: @quiz_submission.errors, status: :unprocessable_entity
     end

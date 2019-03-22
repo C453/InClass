@@ -4,12 +4,12 @@
             <div class="">
                 <h4 class="grey-text text-darken-2">Quiz Results | Average: {{this.average}}%</h4>
                     <div *ngFor="let question of recentQuizQuestions; let i = index">
-                    <h3 class="grey-text text-darken-2">{{question.text}}</h3>
+                    <h3 class="grey-text text-darken-2">{{question}}</h3>
                     <form (ngSubmit)="openQuiz()" #f="ngForm">
                             <ul style="list-style-type: none">
                                 <li *ngFor="let answer of question.answers; let j = index">
-                                   <div *ngIf="j === (this.question.correct)" class="card-panel light-green darken-1">{{answer}}</div>
-                                   <div *ngIf="j !== (this.question.correct)" class="card-panel red darken-1">{{answer}}</div>
+                                   <div *ngIf="j === (this.question.correct - 1)" class="card-panel light-green darken-1">{{answer}}</div>
+                                   <div *ngIf="j !== (this.question.correct - 1)" class="card-panel red darken-1">{{answer}}</div>
                                 </li>
                             </ul>
                     </form>
