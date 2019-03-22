@@ -89,7 +89,7 @@ export class TakeQuizComponent implements OnInit {
       }
     }
 
-    if (buttons !== this.curQuizQuestions.length) {
+    if (buttons === this.curQuizQuestions.length) {
       return false
     }
     return true
