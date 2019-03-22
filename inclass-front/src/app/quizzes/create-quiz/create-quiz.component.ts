@@ -32,11 +32,6 @@ export class CreateQuizComponent implements OnInit {
 
   addQuestion() {
     // Handle empty questions
-    if (this.newQuestionText.trim() === '') {
-      this.newQuestionText = '';
-      return;
-    }
-
     this.quizQuestions.push({ 
       id: this.quizCount++,
       text: this.newQuestionText,
