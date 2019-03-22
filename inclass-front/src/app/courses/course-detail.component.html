@@ -14,19 +14,19 @@
   <a (click)="closeAttendance()" mat-raised-button color="primary" class="button">Close Attendance</a>
 </div>
 
-<div class ="buttonsinline" *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString()) && open === true ">
+<div>
   <a (click)="openStudentAttendanceDialog()" mat-raised-button color="primary" class="button">Take Attendance</a>
 </div>
 
 <div class ="buttonsinline" *ngIf="!courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
-    <a (click)="openGradesDialog()" mat-raised-button color="primary" class="button">Attendance History</a>
+   <a (click)="openGradesDialog()" mat-raised-button color="primary" class="button">Attendance History</a>
   </div>
   
   <div class ="buttonsinline" *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
       <a (click)="openGradesDialog()" mat-raised-button color="primary" class="button">Class Attendance History</a>
     </div>
 
-<div class ="buttonsinline" *ngIf="courseData?.admins.includes(this.authTokenService.currentUserData.id.toString())">
+<div class ="buttonsinline">
   <a (click)="createQuiz()" mat-raised-button color="primary" class="button">Create New Quiz</a>
   <a (click)="openResults()" mat-raised-button color="primary" class="button">Check Quiz Results</a>
   <a (click)="showSlideUploadDialog()" mat-raised-button color="primary" class="button">Upload New Slides</a>
