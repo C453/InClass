@@ -48,7 +48,13 @@ export class SlideUploadDialogComponent implements OnInit {
   }
 
   onFileChange(files) {
-    this.fileToUpload = files.item(0);
+    console.log(files);
+    if (files.item(0).name.includes('.pdf')) {
+      this.fileToUpload = files.item(0);
+    } else {
+      alert('Invalid file format!');
+      this.fileToUpload = null;
+    }
   }
 
   uploadFiles(formData) {
