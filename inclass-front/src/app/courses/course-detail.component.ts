@@ -39,7 +39,7 @@ export class CourseDetailComponent implements OnInit {
   @ViewChild('takeQuiz') takeQuizComponent: TakeQuizComponent;
   @ViewChild('attendanceDialog') attendanceDialogComponent: AttendanceDialogComponent;
   @ViewChild('studentAttendanceDialog') StudentAttendanceDialogComponent: StudentAttendanceDialogComponent;
-  @ViewChild('gradesDialog') GradesDialogComponent: GradesDialogComponent; 
+  @ViewChild('gradesDialog') GradesDialogComponent: GradesDialogComponent;
   @ViewChild('viewPowerpoint') viewPowerpointDialogComponent: ViewPowerpointDialogComponent;
   @ViewChild('slideUploadDialog') slideUploadDialogComponent: SlideUploadDialogComponent
 
@@ -72,7 +72,7 @@ export class CourseDetailComponent implements OnInit {
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(position => {
         this.location = position.coords;
-        console.log(position.coords); 
+        console.log(position.coords);
       });
     }
 
@@ -174,7 +174,7 @@ export class CourseDetailComponent implements OnInit {
 
     // Get the most recent quiz that isn't active
     this.getRecentQuiz();
-    
+
     // set the title of the navbar to the course name
     this.nav.title = this.courseData.name;
   }
@@ -207,13 +207,14 @@ export class CourseDetailComponent implements OnInit {
 
   postQuestion() {
     if (this.questionArea === null || this.questionArea === '') {
-      alert("No blank questions!");
+      //Added defect
+      //alert("No blank questions!");
       return;
     }
 
     this.authTokenService.post('questions', { question: { user_id: this.authTokenService.currentUserData.id, question: this.questionArea, yeah_count: 0, course_id: this.courseData.id, answered: false } }).subscribe(res => {
       this.questionArea = null;
-    }) 
+    })
   }
 
   yeahQuestion(question: Question) {
@@ -228,15 +229,16 @@ export class CourseDetailComponent implements OnInit {
       }
 
       console.log(question.yeahs.includes(this.authTokenService.currentUserData.id.toString()));
-      
+
       document.getElementById("yeah_" + question.id).innerHTML = question.yeahs.includes(this.authTokenService.currentUserData.id.toString()) ? "Unyeah! " + question.yeah_count : "Yeah! " + question.yeah_count
     })
   }
 
   answerQuestion(question: Question) {
-    this.authTokenService.post('answer_question', { question: question.id }).subscribe(res => {
-      console.log(res.json());
-    });
+    //Added defect
+    //this.authTokenService.post('answer_question', { question: question.id }).subscribe(res => {
+    //  console.log(res.json());
+    //});
   }
 
   InputOverviewExample() { }
@@ -289,16 +291,16 @@ export class CourseDetailComponent implements OnInit {
     this.authTokenService.post('check_attendance', { course: this.courseData.id }).subscribe(res => {
       res = res.json();
       console.log(res);
-      this.open = res.status; 
+      this.open = res.status;
     });
   }
-  
+
   studentTakeAttendance(){
 	  this.authTokenService.post('take_attendance', { course: this.courseData.id, code:'' }).subscribe(res => {
       res = res.json();
       console.log(res);
     });
-	  
+
     }
 
 
@@ -323,7 +325,7 @@ export class CourseDetailComponent implements OnInit {
   }
 
   openGradesDialog(){
-    this.GradesDialogComponent.openDialog(); 
+    this.GradesDialogComponent.openDialog();
   }
 
   closeAttendance() {
