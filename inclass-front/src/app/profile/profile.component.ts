@@ -21,6 +21,10 @@ export class ProfileComponent implements OnInit {
     this.authService.logOutUser().subscribe(() => this.router.navigate(['/']));
   }
 
+  logou() {
+
+  }
+
   ngOnInit() {
     this.nav.title = "Profile"
   }
