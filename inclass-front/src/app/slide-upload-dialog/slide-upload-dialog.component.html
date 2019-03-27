@@ -30,7 +30,7 @@
               </div>
 
             <div class="col s12">
-              <button type="submit" [disabled]="!(f.valid)"  mat-raised-button color="primary" class="button">
+              <button type="submit" [disabled]="!(f.valid) || !fileToUpload"  mat-raised-button color="primary" class="button">
                 Upload File
               </button>
             </div>

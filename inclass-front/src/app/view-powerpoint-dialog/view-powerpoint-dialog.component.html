@@ -3,11 +3,13 @@
     <div class="pdf-container">
       <div class="viewer-container">
         <pdf-viewer
+          [show-all]="false"
           [original-size]="false"
           [src]="powerpointSource" 
           [render-text]="true"
           [page]="page"
-          [show-all]="false"
+          [fit-to-page]="true"
+          [zoom]="false"
           ></pdf-viewer>
         </div>
     </div>

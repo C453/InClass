@@ -17,8 +17,10 @@ export class ViewPowerpointDialogComponent implements OnInit {
   @Input() courseID: number;
   @Input() courseData: Course;
   page: number = 1;
+  maxPages: number;
   professorPage: number = 1;
   subscription;
+  pdfjsLib = require('pdfjs-dist');
 
   modalActions = new EventEmitter<string|MaterializeAction>();
 
@@ -46,6 +48,18 @@ export class ViewPowerpointDialogComponent implements OnInit {
 
   openDialog(){
     this.modalActions.emit({action:"modal", params:['open']});
+    // Stupid hack to fix the auto-zoom on PDF viewer. To be totally honest
+    // this was the only way I could figure out how to get around this, so it needs to stay.
+    this.page = 0;
+    window.setTimeout(() => {
+      this.page++;
+    }, 100);
+
+    console.log(this.powerpointSource);
+
+    this.pdfjsLib.getDocument(this.powerpointSource).then(function (doc) {
+      this.maxPages = doc.numPages;
+    }.bind(this));
   }
 
   closeDialog(){
@@ -58,8 +72,10 @@ export class ViewPowerpointDialogComponent implements OnInit {
   }
 
   goForward() {
-    this.page++;
-    this.sendPageMovementData();
+    if (this.page < this.maxPages) {
+      this.page++;
+      this.sendPageMovementData();
+    }
   }
 
   catchUpPage() {

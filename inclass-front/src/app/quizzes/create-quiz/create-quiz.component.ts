@@ -16,6 +16,7 @@ export class CreateQuizComponent implements OnInit {
   quizQuestions = [];
   newQuestionText = '';
   quizCount = 0;
+  submissionIsDisabled = true;
   
   constructor(private authTokenService: Angular2TokenService) { }
 
@@ -47,6 +48,7 @@ export class CreateQuizComponent implements OnInit {
     });
 
     this.newQuestionText = '';
+    this.updateValidSubmission();
   }
 
   addAnswer(questionIndex) {
@@ -54,10 +56,13 @@ export class CreateQuizComponent implements OnInit {
       text: '',
       correct: false,
     });
+
+    this.updateValidSubmission();
   }
 
   changeAnswer(answer, event) {
     answer.text = event.target.value;
+    this.updateValidSubmission();
   }
 
   selectCorrectAnswer(question, newAnswer) {
@@ -105,5 +110,19 @@ export class CreateQuizComponent implements OnInit {
 
       this.authTokenService.post('quiz_questions', questionObject);
     });
+  }
+
+  updateValidSubmission() {
+    let disabled = false;
+
+    this.quizQuestions.forEach((question) => {
+      question.answers.forEach(answer => {
+        if (answer.text.trim() === '') {
+          disabled = true;
+        }
+      });
+    });
+
+    this.submissionIsDisabled = disabled;
   }
 }

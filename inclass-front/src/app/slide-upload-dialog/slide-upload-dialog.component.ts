@@ -54,6 +54,7 @@ export class SlideUploadDialogComponent implements OnInit {
     } else {
       alert('Invalid file format!');
       this.fileToUpload = null;
+      this.fileUpload.name = '';
     }
   }
 
