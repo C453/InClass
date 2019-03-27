@@ -6,6 +6,7 @@ import { Channel, ActionCableService } from 'angular2-actioncable';
 import { CourseDetailComponent } from '../courses/course-detail.component';
 import { Course } from '../models/course.model';
 import { environment } from '../../environments/environment';
+import * as pdfjsLib from 'pdfjs-dist/build/pdf';
 
 @Component({
   selector: 'app-view-powerpoint-dialog',
@@ -20,7 +21,6 @@ export class ViewPowerpointDialogComponent implements OnInit {
   maxPages: number;
   professorPage: number = 1;
   subscription;
-  pdfjsLib = require('pdfjs-dist');
 
   modalActions = new EventEmitter<string|MaterializeAction>();
 
@@ -57,7 +57,7 @@ export class ViewPowerpointDialogComponent implements OnInit {
 
     console.log(this.powerpointSource);
 
-    this.pdfjsLib.getDocument(this.powerpointSource).then(function (doc) {
+    pdfjsLib.getDocument(this.powerpointSource).then(function (doc) {
       this.maxPages = doc.numPages;
     }.bind(this));
   }
