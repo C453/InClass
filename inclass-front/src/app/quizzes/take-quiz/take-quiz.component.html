@@ -9,8 +9,9 @@
                         <h4 class="grey-text text-darken-2">{{question.text}}</h4>
                         <p *ngFor="let answer of question.answers; let j = index">
                                 <label>
-                                    <input class="with-gap" name="selectedAnswer" value={{j}} type="radio" />
-                                    <span>{{answer}}</span>
+                                    <input *ngIf="j != 2" class="with-gap" name="selectedAnswer" value={{j}} type="radio" />
+                                    <input *ngIf="j == 2" class="with-gap" name="selectedAnswer" value={{j}} type="radio" disabled="disabled" />
+                                    <span>{{question}}</span>
                                 </label>
                         </p>
                     </form>

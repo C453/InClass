@@ -40,7 +40,6 @@ export class TakeQuizComponent implements OnInit {
     if (this.validForm()){
       this.grade = 0;
       this.processQuestions()
-      // Put this out side of conditional for bug, it will keep adding score
       this.authTokenService.post("quiz_submissions",
         { quiz_id: this.curQuiz.id, score: this.grade, course_id: this.curQuiz.course_id }).subscribe(result => {
         if(result.status == 200 || result.status == 201) {
@@ -91,7 +90,7 @@ export class TakeQuizComponent implements OnInit {
       }
     }
 
-    if (buttons === this.curQuizQuestions.length) {
+    if (buttons !== this.curQuizQuestions.length) {
       return false
     }
     return true
