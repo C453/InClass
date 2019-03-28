@@ -30,6 +30,7 @@ import {AuthGuard} from "./guards/auth.guard";
 import { QRCodeModule } from 'angular2-qrcode';
 import { NgQrScannerModule } from 'angular2-qrscanner';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 import {
   MatAutocompleteModule,
@@ -161,7 +162,8 @@ import { SlideUploadDialogComponent } from './slide-upload-dialog/slide-upload-d
     MatTreeModule,
     NgQrScannerModule,
     PdfViewerModule,
-    QRCodeModule
+    QRCodeModule,
+    ZXingScannerModule
     ],
   providers: [ 
     Angular2TokenService,

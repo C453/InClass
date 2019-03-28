@@ -10,13 +10,7 @@
         </div>
         <div class="row">
           <span class="modal-close left">
-            <qr-scanner
-        [debug]="false"
-        [canvasWidth]="1080" 
-        [canvasHeight]="720" 
-        [stopAfterScan]="true"
-        [updateTime]="500">
-</qr-scanner>
+            <zxing-scanner #scanner start="true" [device]="selectedDevice" (scanSuccess)="handleQrCodeResult($event)"></zxing-scanner>
           </span>
         </div>
     </div>
