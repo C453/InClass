@@ -42,7 +42,7 @@ export class StudentAttendanceDialogComponent implements OnInit {
     console.log('Devices: ', devices);
     this.availableDevices = devices;
 
-    this.scanner.scan(devices[0].deviceId);
+    this.scanner.scan(devices[devices.length-1].deviceId);
 
     // selects the devices's back camera by default
     // for (const device of devices) {
