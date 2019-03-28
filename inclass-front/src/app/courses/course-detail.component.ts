@@ -206,6 +206,7 @@ export class CourseDetailComponent implements OnInit {
   }
 
   postQuestion() {
+    console.log(this.questionArea);
     if (this.questionArea === null || this.questionArea === '') {
       alert("No blank questions!");
       return;
