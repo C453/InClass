@@ -1,6 +1,6 @@
 # InClass
 
-Deployed at: https://project-inclass.herokuapp.com/
+![Preview](https://i.imgur.com/NTzSr6M.png)
 
 ## Requirements
 - Ruby 2.6.0
